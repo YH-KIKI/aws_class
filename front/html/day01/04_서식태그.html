@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>서식 태그</title>
+</head>
+<body>
+	<!-- 
+	태그 종류
+	- block 태그
+		- 새 라인에서 시작, 해당 라인 전체를 공간으로 잡음
+		- 너비/높이를 이용하여 크기 변경 O 
+		- 시멘틱 태그, h1~h6, p, div 등
+	- inline 태그
+		- 현재 위치에서 시작
+		- 너비/높이를 이용하여 크기 변경 X
+		- 글자 크기를 이용하여 높이는 변경하는 것처럼 보일 수 있음
+		- a, span, i, b 등
+	- inline-block 태그
+		- 현재 위치에서 시작
+		- 너비/높이를 이용하여 크기 변경 O
+		- img, input 등
+	-->
+
+	<!-- 
+	교재 p.41
+	h1~h6 태그
+	- 제목 태그
+	- 숫자가 작을수록 큰 글씨 
+	-->
+	<h1>서식 태그</h1>
+	<h2>제목2</h2>
+	<h3>제목3</h3>
+	<h4>제목4</h4>
+	<h5>제목5</h5>
+	<h6>제목6</h6>
+
+	<!-- 
+	교재 p.43
+	p태그
+	- 문단을 지정하는 태그 
+	- 기본값
+		- 위 아래 margin이라는 여백이 있음
+		- p태그끼리 위 아래로 배치된 경우 여백이 하나로 통합
+
+	lorem숫자
+	- VS code에서 샘플 문자열이 필요한 경우 사용
+	- 숫자만큼 단어들이 나열
+	-->
+	<h1>p태그 예제</h1>
+	<hr>
+	<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloribus, impedit!</p>
+	<hr>
+	<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum amet inventore, harum nemo adipisci voluptate vero excepturi expedita esse suscipit.</p>
+	<hr>
+	<!-- 
+	교재 p.44
+	div태그
+	- 대표적인 block태그
+	- 요소들을 묶어서 관리할 때 사용
+	-->
+	<div>
+		<h1>기사 제목</h1>
+		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, facere.</p>
+		<p>Lorem ipsum dolor sit amet.</p>
+	</div>
+
+	<!-- 
+	교재 p.45
+	strong 태그
+	- 강조할 때 사용
+	- 화면상에 굵은 글씨
+	- inline 태그
+	- 스크린 리더기가 강하게 읽음
+	
+	em 태그
+	- 약한 강조할 때 사용
+	- 화면상에서 글자 기울임
+	- inline 태그
+	- 스크린 리더기가 강하게 읽음
+
+	b 태그
+	- 화면상에서 굵은 글씨
+	- inlive 태그
+
+	i 태그
+	- 화면상에서 글자 기울임
+	- inline 태그
+	- 아이콘을 표시할 때 사용
+	-->
+	<h1>strong, em, b, i태그 예제</h1>
+	<p>안녕하세요. 제 <strong>이름</strong>은 <em>홍길동</em> 입니다.</p>
+	<p>안녕하세요. 제 <b>이름</b>은 <i>홍길동</i> 입니다</p>
+
+	<!-- 
+	교재 p.47
+	span 태그
+	- 대표적인 inline 태그
+	- 기능X
+	- 보통 문자들을 묶거나 문자들 중 일부에 스타일을 적용할 때 사용
+	
+	br 태그
+	- 줄바꿈
+	- 자주 사용하지 말자. => 스크린 리더기가 br태그를 읽음
+
+	hr 태그
+	- 가로줄
+	-->
+	<h1>span 태그 예제</h1>
+	<p>안녕하세요. 제 이름은 <span style="color: red;">홍길동</span>입니다.</p>
+
+	<!-- 
+	교재 p.48
+	img 태그
+	- 이미지를 넣을 때 사용
+	- inline-block 태그
+	- 속성
+		- src : 가져올 이미지 주소
+		- alt : 이미지 로딩 실패 시 보여줄 문구이자 스크린 리더기가 읽을 문구
+		- width : 이미지 너비. 기본값은 원본 이미지 크기의 100% -->
+</body>
+</html>
