@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>form 관련 태그2</title>
+</head>
+<body>
+	<!-- 
+	input:checkbox
+	- 여러개중 0개 이상을 선택할 때 사용
+	- name을 동일하도록 설정
+	- checked 속성을 이용하여 초기 체크를 설정
+	- value 값을 반드시 설정 
+	
+	input:radio
+	- 여러개중 1개만을 선택할 때 사용
+	- name을 동일하도록 설정
+	- checked 속성을 이용하여 초기 체크를 설정
+	- value 값을 반드시 설정 
+
+	label 태그
+	- 입력 요소를 설명하는 태그
+	- for 속성을 이용하여 연관된 입력 요소를 지정
+	- label 태그를 클릭하면 연관된 입력 요소를 클릭한 것과 같음
+	-->
+	<h1>label과 checkbox</h1>
+	<form action="">
+		<input type="checkbox" name="fruit" value="사과"> 사과
+		<input type="checkbox" name="fruit" value="바나나"> 바나나
+		<input type="checkbox" name="fruit" value="오렌지"> 오렌지
+		<button type="submit">전송</button>
+	</form>
+	<form action="">
+		<label>
+			<input type="checkbox" name="fruit" value="사과"> 사과
+		</label>
+		<label>
+			<input type="checkbox" name="fruit" value="바나나"> 바나나
+		</label>
+		<label>
+			<input type="checkbox" name="fruit" value="오렌지"> 오렌지
+		</label>
+		<button type="submit">전송</button>
+	</form>
+	<form action="">
+		<input type="checkbox" name="fruit" value="사과" id="apple" checked>
+		<label for="apple">사과</label>
+		<input type="checkbox" name="fruit" value="바나나" id="banana">
+		<label for="banana">바나나</label>
+		<input type="checkbox" name="fruit" value="오렌지" id="orange">
+		<label for="orange">오렌지</label>
+		<button type="submit">전송</button>
+	</form>
+	<h1>radio</h1>
+	<form action="">
+		<label>
+			<input type="radio" name="gender" value="남성" checked>남성
+		</label>
+		<label>
+			<input type="radio" name="gender" value="여성">여성
+		</label>
+	</form>
+</body>
+</html>
