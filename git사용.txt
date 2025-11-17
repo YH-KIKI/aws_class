@@ -1,0 +1,7 @@
+학원에 오자마자 getch origin을 클릭후 pull할 것이 있으면 pull
+
+학원에서 수업할땐 커밋, 푸쉬
+
+집에서 getch origin을 클릭 후 pull
+
+집에서 복습을 하면 커밋, 푸쉬
