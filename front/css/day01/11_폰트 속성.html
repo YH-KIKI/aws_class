@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>폰트 속성 예제</title>
+	<!-- 
+	color (교재 p.105)
+	- 글자 색상
+
+	색상 지정 방식
+	1. 미리 지정된 색상 이름
+		- red, blue, green 등과 같이 100개 넘는 이름
+	2. 16진수로 표현
+		- #rrggbb형태로 표시
+		- rr : 빨강, gg : 녹색, bb : 파랑 색상 정보를 16진수로 표현 (0~9, a~f)
+		- 각 rr / gg / bb 값이 같으면 #rrggbb -> #rgb로 줄여 사용 가능
+		- ex) red = #ff0000 -> #f00
+		- ex) white = #ffffff -> #fff
+		- ex) black = #000000 -> #000
+	3. rgb.rgba함수
+		- rgb(숫자,숫자,숫자), rgba(숫자,숫자,숫자,투명도)
+			- 숫자는 0~255
+			- 투명도는 0~1사이의 실수. 1 : 불투명 / 0 : 투명
+		- ex) red = #f00 = rgb(255, 0, 0) = rgba(255, 0, 0, 1)
+	4. hsl(숫자,숫자,숫자), hsla(숫자,숫자,숫자,투명도)
+		- 색상 , 채도, 명도를 이용하여 색상을 표시
+
+	font-weight (교재 p.90)
+	- 폰트 굵기
+	- 100~900사이의 값을 100단위로 입력
+	- nomal : 400
+	- bold : 700
+	
+	font-size (교재 p.91)
+	- 폰트 크기
+	- 숫자와 단위를 함께 사용
+
+	font-family
+	- 폰트 종류를 지정
+	- 일반적으로 여러 폰트를 한번에 지정
+		- 왼쪽 폰트가 있으며 적용, 없으면 오른쪽 폰트로 이동
+		- 보통 제일 오른쪽은 기본 폰트 중 하나를 선택(monospace, serif, sans-serif)
+	- 폰트 이름이 한글인 경우 영문명도 함께 작성
+	- 폰트 이름이 여러 단어인 경우 ''나 ""를 반드시 붙여야 함
+	-->
+	<style>
+		.box1{ font-family: 'Courier New', Courier, monospace;}
+		.box2{ font-family: 'Times New Roman', Times, serif;}
+		.box3{ font-family: Arial, Helvetica, sans-serif ;}
+
+		.box4{ color: #f00;}
+		.box5{ color: rgba(255,0,0,0.5); font-weight: bold;}
+		.box6{ color: red; font-size: 30px;}
+	</style>
+</head>
+<body>
+	<h1>폰트 속성 예제</h1>
+	<h2>font-family</h2>
+	<div class="container1">
+		<div class="box1">안녕하세요 제 이름은 홍길동 입니다.</div>
+		<div class="box2">안녕하세요 제 이름은 홍길동 입니다.</div>
+		<div class="box3">안녕하세요 제 이름은 홍길동 입니다.</div>
+	</div>
+	<hr>
+	<h2>color, font-weight, font-size</h2>
+	<div class="container2">
+		<div class="box4">안녕하세요 제 이름은 홍길동 입니다.</div>
+		<div class="box5">안녕하세요 제 이름은 홍길동 입니다.</div>
+		<div class="box6">안녕하세요 제 이름은 홍길동 입니다.</div>
+	</div>
+</body>
+</html>

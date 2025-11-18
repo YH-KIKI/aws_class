@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>스타일 단위</title>
+	<!-- 
+	단위
+	- px : 고정 픽셀
+	- % : 기본값의 %
+	- em : 부모 요소의 배수
+	- rem : 최상위 요소(html태그)의 배수
+	- vh : view height, 현재 브라우저의 높이를 100으로 나눈 값 (1vh)
+	- vw : view width, 현재 브라우저의 높이를 100으로 나눈 값 (1vh)
+	- vmin/vmax : vh와 vw 중 최소값/최대값
+	- deg : 각도
+	-->
+	<style>
+		body{ font-size: 40px;}
+		html, body>*{ font-size: 10px;}
+		.box1{ font-size: 20px;}
+		.box2{ font-size: 0.5em;}
+		.box3{ font-size: 2rem;}
+		.box4{ font-size: 50%;}
+		.box5{ width:100vw; height: 100vh; background: yellow;}
+	</style>
+</head>
+<body>
+	<h1>단위 예제</h1>
+	<h2>px 예제</h2>
+	<div class="box1">글자 크기 20px</div>
+	<hr>
+	<div class="box2">글자 크기 0.5em : 부모인 body가 글자 크기가 40px이기 때문에 0.5배는 20px</div>
+	<hr>
+	<div class="box3">글자크기 2rem : html이 글자 크기가 10px이기 때문에 2배는 20px</div>
+	<hr>
+	<div class="box4">글자 크기 50% : 부모인 body가 글자 크기가 40px 이기 때문에 50%은 20px</div>
+	<hr>
+	<div class="box5">vh로 너비/높이를 설정하면 열린 브라우저 크기에 따라 크기가 바뀜</div>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>텍스트 속성 예제</title>
+	<!-- 
+	text-decoration 
+	- 글자에 줄 긋기
+	- 값
+		- underline : 밑줄
+		- overline : 윗줄
+		- line-through : 취소선(가운데줄)
+		- none : 없음
+	
+	white-space
+	- 공백 처리 방법을 설정
+	- 값
+		- nomal : 여러 공백을 하나로 처리. 기본값
+		- nowrap : 여러 공백을 하나로 처리. 줄 바꿈 없이 한줄 표시
+		- pre : 여러 공백을 그대로 처리
+		- pre-line : 여러 공백을 하나로 처리. 엔터 구분. 영역을 넘어가면 자동 줄 바꿈
+		- pre-wrap : 여러 공백을 그대로 처리. 영역을 넘어가면 자동 줄 바꿈
+	
+	letter-spacing (교재 p.111)
+	- 글자 간격 
+	
+	word-spacing (교재 p.107)
+	- 단어 간격
+
+	line-height (교재 p.107)
+	- 한 줄 높이. 한 줄에 글자를 상하 기준으로 가운데 배치
+	
+	text-align (교재 p.109)
+	- 글자 정렬 방법 
+	- 값
+		- center, left, right, justify(양쪽 정렬)
+	
+	text-overflow (텍스트)
+	- 영역을 벗어난 텍스트를 표시할 방법을 설정
+	- 값
+		- clip : 자름
+		- ellippssis : 말줄임(...)
+
+	overflow (요소)
+	- 영역을 벗어난 요소를 보여줄지 말지를 결정
+	- 값
+		- visible : 보여줌. 기본값
+		- hidden : 안보이게 감춤
+		- scroll : 스크롤을 이용
+		- auto : 요소가 넘어가면 스크롤이 추가 
+	-->
+		<style>
+			.decoration{ text-decoration: underline;}
+			[class^=space]{ border: 1px solid black; margin: 10px; width: 300px;}
+			.space-nowrap{ white-space: nowrap;}
+			.space-pre{ white-space: pre;}
+			.space-pre-line{ white-space: pre-line;}
+			.space-pre-wrap{ white-space: pre-wrap;}
+
+			.letter{ letter-spacing: 3px;}
+			.word{ word-spacing: 20px;}
+			.line{ line-height: 50px;}
+
+			[class^=to]{overflow: hidden; border: 1px solid black; white-space: nowrap;}
+			.to-clip{ text-overflow: clip;}
+			.to-ellipsis{text-overflow: ellipsis;}
+		</style>
+</head>
+<body>
+	<h1>텍스트 속성 예제</h1>
+	<h2>text-decoration</h2>
+	<div class="decoration">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi, dolorum?</div>
+	<h2>white-space</h2>
+	<div class="container">
+		<div class="space-nomal">
+			Lorem ipsum 
+			dolor sit amet consectetur, a
+			
+			dipisicing elit. Dolorum, soluta.
+		</div>
+		<div class="space-nowrap">
+			Lorem ipsum 
+			dolor sit amet consectetur, a
+			
+			dipisicing elit. Dolorum, soluta.
+		</div>
+		<div class="space-pre">
+			Lorem ipsum 
+			dolor sit amet consectetur, a
+			
+			dipisicing elit. Dolorum, soluta.
+		</div>
+		<div class="space-pre-line">
+			Lorem ipsum 
+			dolor sit amet consectetur, a
+			
+			dipisicing elit. Dolorum, soluta.
+		</div>
+		<div class="space-pre-wrap">
+			Lorem ipsum 
+			dolor sit amet consectetur, a
+			
+			dipisicing elit. Dolorum, soluta.
+		</div>
+	</div>
+
+	<h2>간격</h2>
+	<div class="container">
+		<div>Lorem ipsum dolor sit amet.</div>
+		<div class="letter">Lorem ipsum dolor sit amet. (글자 사이간격) </div>
+		<div class="word">Lorem ipsum dolor sit amet. (단어 사이 간격)</div>
+		<div class="line">Lorem ipsum dolor sit amet. (한줄 높이) </div>
+	</div>
+
+	<h2>text-overflow</h2>
+	<div class="container">
+		<div class="to">Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, deserunt.</div>
+		<div class="to-clip">Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, deserunt.</div>
+		<div class="to-ellipsis">Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, deserunt.</div>
+	</div>
+</body>
+</html>
