@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>구조(순서) 선택자 예제</title>
+	<!-- 
+	형태 구조 선택자(교재. p78~82) 
+	- 몇번째 위치에 있는 요소인지를 선택
+	- 태그명과 함께 사용. 클래스나 아이디등 다른 선택자는 의미가 ㅇ벗음
+	- of-type이 포함
+	- 태그명: nth-of-type(숫자)
+		- 태그들 중 숫자번째 위치에 있는 요소
+	- 태그명: nth-of-type(수열)
+		- 태그들 중 수열번째 위치에 있는 요소
+		- 예 : 2n(짝수번째 요소를 선택), 2n-1(홀수번째 요소를 선택)
+	- 태그명: first-of-type
+		- 태그들 중 첫번째 위치에 있는 요소
+		- nth-of-type(1)과 같은 결과
+	- 태그명: last-of-type
+		- 태그들 중 마지막 위치에 있는 요소
+
+	일반 구조 선택자
+	- 태그 종류 상관없이 순서에 맞는 요소를 선택
+	- child를 포함
+	- nth-child(숫자), nth-child(수열), first-child, last-child
+	-->
+	<style> /*(, 콤마) -> 같은 선택자를 사용할때 사용*/
+		.container1 > *,
+		.container2 > * { margin:10px 0; padding: 10px;
+		border: 3px solid black;}
+
+		/* of type */
+		.container1 > p:first-of-type{ color: red;}
+		.container1 > p:last-of-type{ background: yellow;}
+		.container1 > p:nth-of-type(3){ border-color: red;}
+		.container1 > p:nth-of-type(2n){ border-style: dashed;}
+
+		/* child */
+		.container2 > :first-child{ color: red;}
+		.container2 > :last-child{ background: yellow;}
+		.container2 > :nth-child(3){ border-color: red;}
+		.container2 > :nth-child(2n){ border-style: dashed;} 
+	</style>
+</head>
+<body>
+	<h1>구조 선택자 예제</h1>
+	<h2>of-type 예제</h2>
+	<div class="container1">
+		<p class="item">p1</p>
+		<p class="item">p2</p>
+		<p class="item">p3</p>
+		<div class="item">d1</div>
+		<p class="item">p4</p>
+		<div class="item">d2</div>
+	</div>
+	<h2>child 예제</h2>
+	<div class="container2">
+		<p class="item">p1</p>
+		<p class="item">p2</p>
+		<p class="item">p3</p>
+		<div class="item">d1</div>
+		<p class="item">p4</p>
+		<div class="item">d2</div>
+	</div>
+</body>
+</html>

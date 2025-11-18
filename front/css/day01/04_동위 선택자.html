@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>동위 선택자</title>
+	<!-- 
+	동위 선택자
+	- 같은 부모를 가진 요소를 선택
+	- 형제 요솔르 선택 
+
+	선택자A + 선택자B
+	- 선택자A 바로 뒤에 있는 선택자B를 선택
+
+	선택자A ~ 선택자B
+	- 선택자A 뒤에 있는 선택자B를 선택
+
+	한 요소를 구체적으로 선택하는 선택자
+	- 선택자를 공백없이 나열
+	- 태그명이 들어가는 경우 태그명을 제일 앞에 작성
+	-->
+	<style>
+		.first + .item { color:red;}
+		.first ~ .item { background-color:yellow;}
+		div.first{ color:green;} /*태그명(div).클래스(.first) 순서로 쓸것!*/
+	</style>
+</head>
+<body>
+	<h1>동위 선택자 예제</h1>
+	<ul>
+		<li class="item first">1</li>
+		<li class="item">2</li>
+		<li class="item">3</li>
+		<li class="item">4</li>
+		<li class="item">5</li>
+	</ul>
+	<div>
+		<div class="item first">1</div>
+		<div class="item">2</div>
+		<div class="item">3</div>
+		<div class="item">4</div>
+		<div class="item">5</div>
+	</div>
+</body>
+</html>

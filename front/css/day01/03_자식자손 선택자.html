@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>자식 자손 선택자 예제</title>
+	<!-- 
+	자식 선택자 (교재 p.76)
+	- 부모선택자 > 자식선택자
+	- 요소 안에 있는 자식을 선택
+
+	자손 선택자 (공백으로 구분) / (교재 p.75)
+	- 조상선택자 자손선택자 
+	- 요소 안에 있는 자손을 선택
+	- 자식 요소도 포함
+	-->
+	<style>
+		.box{ color:red;}
+		/* 우선순위가 같으면 밑에 있는 속성이 적용 */
+		.container .link{ color:blue;}
+		.box > .link { color:green;}
+	</style>
+</head>
+<body>
+	<h1>자식 자손 선택자 예제</h1>
+	<!-- 
+	.container의 자손 요소는? 
+	- .box와 .link
+	.container의 자식 요소는? 
+	- .box
+	-->
+	<div class="container">
+		container
+		<div class="box">
+			box
+			<a href="#" class="link">링크</a>
+		</div>
+	</div>
+	<div class="box">
+		box2
+		<a href="#" class="link">링크</a>
+	</div>
+	<div class="box">
+		box3
+		<span href="#" class="link">링크</span>
+	</div>
+	<div class="container">
+			* box / box2 링크의 색이 변화하지 않는 이유는 a태그가 가지고 있는 본연의 색이 우선순위이므로
+	</div>
+</body>
+</html>

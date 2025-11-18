@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>선택자 연습 예제</title>
+	<style>
+		/* 
+		1에 글자색을 빨강으로 변경하려고 할 때 올바른 선택자를 입력하세요. 
+		*/
+		/* 내 풀이 */
+		li:first-of-type{ color:red;}
+
+		/* 답안 .first, */
+		li:first-of-type{ color:red;}
+		.item.first{ color:red;}
+		.ex1 > :first-child{ color:red;}
+		/* 위와 같이 3가지 방법으로 표현 가능 */
+
+		/* 
+		-li태그에 hover했을 대 배경색이 노랑이 되도록 다음과 같이 설정했는데,
+		정상적으로 동작하지 않음. 올바르게 수정하세요. 
+		*/
+		.item :hover{ background: yellow;}
+
+		/* 내풀이 */
+		ex1 > .item:hover{ background: yellow;}
+
+		/* 답안 .first, */
+		.item:hover{ background: yellow;}
+		.ex1 :hover{ background: yellow;}
+		.ex1>li:hover{ background: yellow;}
+
+		/* 예제3 스타일 */
+		.hover:hover{ color: red;}
+		/* P속성으로 하려면 ? */
+		/* p:hover .hover{ color: red;} */
+
+	</style>
+</head>
+<body>
+	<h1>선택자 연습 예제</h1>
+	<h2>예제1</h2>
+	<ul class="ex1">
+		<li class="item first">1</li>
+		<li class="item">2</li>
+		<li class="item">3</li>
+		<li class="item">4</li>
+	</ul>
+	<h2>예제3</h2>
+	<!-- 아래 요소를 hover하면 홍길동이 빨강이 되도록 코드를 수정하세요. -->
+	 <p>안녕하세요. 제 이름은 홍길동입니다.</p>
+
+	 <p>안녕하세요. 제 이름은 <span class="hover">홍길동</span>입니다.</p>
+
+</body>
+</html>

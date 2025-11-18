@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>반응 상태 선택자 예제</title>
+	<!-- 
+	교재 p.84
+	
+	* 반응 선택자
+	선택자:hover
+	- 요소에 마우스를 올렸을 때
+	선택자:active
+	- 요소를 클릭했을 때
+
+	* 상태 선택자
+	선택자:checked
+	- checked된 상태인 요소를 선택
+	- input태그 중 checkbox나 radio가 체크된 상태
+	
+	선택자:focus
+	- 요소가 활성화된 상태
+
+	선택자:enabled
+	- 요소가 사용가능한 상태
+
+	선택자:disabled
+	- 요소가 사용 불가능한 상태
+	-->
+	<style>
+		.box1:hover{ color: red;}
+		.box2:active{ background: yellow;}
+
+		#checkbox:checked + label{ background: yellow;}
+		input[type=text]:focus{ color: red;}
+		input[type=text]:enabled{ background: skyblue;}
+		input[type=text]:disabled{background: gray;}
+	</style>
+</head>
+<body>
+	<h1>반응 상태 선택자 예제</h1>
+	<h2>반응 선택자</h2>
+	<div class="box1">안녕(hover:마우스를대시오)</div>
+	<div class="box2">홍길동(active:클릭해보시오)</div>
+	<h2>상태 선택자</h2>
+	<input type="checkbox" id="checkbox">
+	<label for="checkbox">선택</label>
+	<br><br>
+	<input type="text" value="123">
+	<input type="text" value="123" readonly>
+	<input type="text" value="123" disabled>
+</body>
+</html>

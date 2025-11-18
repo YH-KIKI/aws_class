@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>스타일 적용 방법</title>
+	<!-- 
+	방법1. link 태그를 이용
+	- 미리 만들어 놓은 스타일을 가져와서 사용(css파일) 
+	- 최초 1회만 다운로드, 이후에는 캐시에서 가져다 사용
+	
+	방법2. style 태그를 이용
+	- 같은 문서에서 style 태그를 이용하여 사용
+	- 문서가 로딩될 때 스타일이 함께 로딩
+
+	방법3. style 속성을 이용
+	- 모든 태그에 style 속성을 사용할 수 있음
+	- 우선순위가 가장 높음
+	- 비추천
+	-->
+	<!-- 
+	스타일 적용하기 
+	선택자{
+		속성명 : 값;
+		속성명 : 값;
+	}
+	-->
+	<style>
+		#box2{
+			color: blue;
+		}
+	</style>
+	<link rel="stylesheet" href="01_스타일 적용 방법.css">
+</head>
+<body>
+	<h1>link 태그 이용</h1>
+	<div id="box1">안녕하세요</div>
+
+	<h1>style 태그 이용</h1>
+	<div id="box2">안녕하세요</div>
+
+	<h1>style 속성 이용</h1>
+	<div style="color: red;">안녕하세요</div>
+</body>
+</html>
