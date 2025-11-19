@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>목록 속성 예제</title>
+	<!-- 
+	ul, ol태그와 관련된 스타일
+
+	list-style-type
+	- 마커 종류
+	- 값
+		- ul태그 : disc(기본값), circle, squre
+		- ol태그
+			- decimal(기본값), decimal-leading-zero,
+			- lower-roman/upper-roman
+			- lower-alpha/upper-alpha
+			- lower-latin/upper-latin
+		- 공통 : none
+
+	list-style-image
+	- 마커를 이미지로 대체
+	- url함수를 이용
+
+	list-style-position
+	- 마커의 위치
+	- 값
+		- inside : li태그 안쪽
+		- outside : li태그 바깥쪽
+
+	list-style
+	- list-style-type, list-style-position, list-style-image를 한번에 적용하는 단축 속성
+	- list-style : none을 이용하여 마커를 제거
+	-->
+	<style>
+		ul, ol{background-color: pink;}
+		li{background-color: yellow;}
+		.list1{
+			/* list-style-type: circle;
+			list-style-position: inside; */
+			list-style:circle inside; /*위 코드랑 결과값은 동일*/
+		}
+		.list2{
+			list-style-type: decimal-leading-zero;
+			list-style-position: outside;
+		}
+		.list3{
+			list-style-image: url(../../../static/img/마커.png);
+		}
+	</style>
+</head>
+<body>
+	<h1>목록 속성 예제</h1>
+	<ul class="list1">
+		<li>사과</li>
+		<li>포도</li>
+		<li>바나나</li>
+	</ul>
+	<ul class="list2">
+		<li>사과</li>
+		<li>포도</li>
+		<li>바나나</li>
+	</ul>
+	<ul class="list3">
+		<li>사과</li>
+		<li>포도</li>
+		<li>바나나</li>
+	</ul>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>배경 예제</title>
+	<!-- 
+	background-color(교재 p.127)
+	- 배경색 
+
+	(교재 p.129)
+	background-image
+	- 배경 이미지
+	- 값
+		- URL(이미지경로)
+	background-repeat
+	- 배경 이미지 반복
+	- 보통 요소가 배경 이미지보다 큰 경우 의미가 있음
+	- 값
+		- repeat : x축, y축 반복
+		- reapet-x : x축 반복
+		- reapet-y : y축 반복
+		- no-reapet : 반복 안함
+	background-position
+	- 배경 이미지의 시작 위치를 지정
+	- x축 방향 y축 방향순으로 위치를 입력
+	- 값
+	- 고정 px, %, 
+	- left, center, right : x축 방향 
+	- top, center, bottom : y축 방향
+	사용 예시
+		- background-position : 100px 100px
+		- background-position : center center
+	background-size
+	- 배경 이미지 크기를 변경
+	- 너비 높이 순으로 입력
+	- 값
+		- 고정px, %
+		- auto : 이미지 윈본 크기
+		- contain : 이미지가 요소 안으로 들어갈 수 있게 확대/축소. 여백이 생길 수 있음
+		- cover : 요소를 이미지가 덮을 수 있도록 확대/축소. 여백이 생기지 않음
+	background-attachment
+	- 배경 이미지가 움직이지 않게 고정하는 속성
+	- 값
+		- scroll : 기본값, 배경 이미지가 움직임
+		- fixed : 배경 이미지가 움직이지 않게 고정
+	background-clip
+	- 박스 모델에서 어디까지 배경으로 볼지를 결정하는 속성
+	- 값
+		- border-box : 테두리까지 배경으로 봄
+		- padding-box : 패딩까지 배경으로 봄
+		- content-box : 컨텐츠만 배경으로 봄
+	background-origin
+	- 배경 이미지를 배치할 기준
+	- 값
+		- border-box : 테두리부터 배경 이미지 배치
+		- padding-box : 패딩부터 배경 이미지 배치
+		- content-box : 컨텐츠만 배경 이미지 배치
+
+	backgroud
+	- color image repeat attachment position clip origin size를 한번에 적용하는 단축 속성
+	-->
+		<style>
+			.box{ 
+				width: 200px; height: 200px; box-sizing: border-box;
+				padding: 20px; border: 10px solid transparent;
+				background-color: yellow; margin-bottom: 20px;
+			}
+			.clip1{ background-clip: border-box;}
+			.clip2{ background-clip: padding-box;}
+			.clip3{ background-clip: content-box;}
+
+			.bg-img{ background-image: url(../../../static/img/강쥐.jfif);
+			background-repeat: no-repeat; }
+			.bg1{ background-position: center;}
+			.bg2{ background-position: 50px 50px;}
+			.bg3{ background-position: -50px 50px;}
+
+			.origin1{ background-origin: border-box;}
+			.origin2{ background-origin: content-box;}
+
+			.size1{background-size: 100px 100px;}
+			.size2{background-size: 50% 50%;}
+			.size3{background-size: cover;}
+			.size4{background-size: contain;}
+
+			[class*=repeat]{background-size: 25% 25%;}
+			.repeat{background-repeat: repeat;}
+			.repeat-x{background-repeat: repeat-x;}
+			.repeat-y{background-repeat: repeat-y;}
+			.no-repeat{background-repeat: no-repeat;}
+
+			.box2{ width: 500px; height: 800px; margin-bottom: 10px;}
+			.attachment1{background-attachment: fixed;}
+
+		</style>
+</head>
+<body>
+	<h1>배경 속성 예제</h1>
+	<h2>clip</h2>
+	<div class="container">
+		<div class="box clip1">border-box</div>
+		<div class="box clip2">padding-box</div>
+		<div class="box clip3">content-box</div>
+	</div>
+	<h2>배경 이미지</h2>
+	<h3>background-position (배경이미지 시작 위치 지정)</h3>
+	<div class="container">
+		<div class="box bg-img"></div>
+		<div class="box bg-img bg1">background-position : center center</div>
+		<div class="box bg-img bg2">background-position : 50px 50px</div>
+		<div class="box bg-img bg3">background-position : -50px -50px</div>
+	</div>
+	<h3>background-origin (배경이미지를 배치할 기준)</h3>
+	<div class="container">
+		<div class="box bg-img">background-origin : padding-box</div>
+		<div class="box bg-img origin1">background-origin : border-box</div>
+		<div class="box bg-img origin2">background-origin : content-box</div>	
+		</div>
+	<h3>background-size (배경이미지 크기를 변경)</h3>	
+	<div class="container">
+		<div class="box bg-img">background-size : auto</div>
+		<div class="box bg-img size1">background-size : 100px</div>
+		<div class="box bg-img size2">background-size : 50%</div>
+		<div class="box bg-img size3">background-size : cover</div>
+		<div class="box bg-img size4">background-size : contain</div>
+	</div>
+	<h3>background-repeat</h3>
+	<div class="container">
+		<div class="box bg-img repeat">repeat</div>
+		<div class="box bg-img repeat-x">repeat-x</div>
+		<div class="box bg-img repeat-y">repeat-y</div>
+		<div class="box bg-img no-repeat">no-repeat</div>
+	</div>
+	<h3>background-attachment(배경 이미지가 움직이지 않게 고정하는 속성)</h3>
+	<div class="container">
+		<div class="bg-img box2">background-attachment : scroll</div>
+		<div class="bg-img box2 attachment1">background-attachment : fixed</div>
+</body>
+</html>

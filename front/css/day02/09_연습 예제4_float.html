@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>float 연습 예제</title>
+	<style>
+		body{ margin: 0;}
+		.container{
+			background: yellow; width: 100vw; height: 100vh;
+		}
+		.left{ 
+			background: red; width: 50%; height: 100%; float: left;
+		}
+		.right{ 
+			background: blue; width: 50%; height: 100%; float: right;
+		}
+		/* ::after는 float사용시 거의 무조건 쓰는 공식이라고 외우면 편함 */
+		.container::after{
+			content: ''; display: block; clear: both;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	브라우저를 기준으로 화면이 2분할 되도록 화면을 구성하세요
+	왼쪽은 빨강 배경, 오른쪽은 파랑 배경 / 여백은 0
+	-->
+	<div class="container">
+		<div class="left">왼쪽</div>
+		<div class="right">오른쪽</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>영역 속성 예제</title>
+	<!-- 
+	box-sizing
+	- width/height의 기준을 정하는 속성
+	- 값
+		- border-box : 너비/높이가 컨텐츠 + 패딩 + 테두리를 합친 width/height
+		- content-box : 기본값, 너비/높이가 컨텐츠의 width/height
+
+	width/height(교재 P.113)
+	- 요소의 너비/높이를 지정
+	- box-sizing 값에 따라 의미가 달라짐
+
+	margin (교재 p.115)
+	- 요소의 테두리 밖 여백을 지정하는 속성
+	- 액자의 위치를 설정
+	- margin-top, margin-right, margin-bottom, margin-left를 줄여 쓴 단축 속성
+	- 방향은 위를 기준으로 시계방향. 상 > 우 > 하 > 좌
+	- 사용 예시
+		- margin : 10px 20px 30px 40px
+			- 상 : 10px, 우 : 20px, 하 : 30px, 좌 : 40px
+		- margin : 10px 20px 30px => 좌우 동일
+			- 상 : 10px, 우 : 20px, 하 : 30px, 좌 : 20px
+		- margin : 10px 20px -> 상하 동일 / 좌우 동일
+			- 상 : 10px, 우 : 20px, 하 : 10px, 좌 : 20px
+		- margin : 10px
+			- 상 : 10px, 우 : 10px, 하 : 10px, 좌 : 10px	
+		- margin : 0 auto
+			- 위아래 0, 좌우 자동 배치 -> width가 고정px일 때 가운데 배치 
+
+	padding(교재 p.118)
+	- 요소의 테두리 안 여백을 지정하는 속성
+	- 액자안의 사진 시작 위치를 지정
+	- 사용 방식은 margin과 동일
+	- padding-top, padding-right, padding-bottom, padding-left를 줄여 쓴 단축 속성
+
+	테두리(교재 p.121)
+	위치 : top, right, bottom, left
+	border-width
+	- 테두리 두께
+	- border-위치-width를 줄여 쓴 단축 속성
+	- 방향은 위를 기준으로 시계방향. 상 > 우 > 하 > 좌
+
+	border-color
+	- 테두리 색상
+	- border-위치-color를 줄여 쓴 단축 속성
+	- 방향은 위를 기준으로 시계방향. 상 > 우 > 하 > 좌
+
+	border-style
+	- 테두리 종류
+	- border-위치-style을 줄여 쓴 단축 속성
+	- 방향은 위를 기준으로 시계방향. 상 > 우 > 하 > 좌
+	- 값
+		- solid, dashed, dotted, none, hidden, double, groove, ridge, inset, outset 등
+		- solid(실선), none(없음)을 많이 사용
+
+	border
+	- 모든 테두리 정보를 한번에 지정하는 속성
+	- border-width, border-color, border-style을 줄여 쓴 속성
+	- 모든 테두리(상하좌우)를 동일하게 지정
+	- 사용 예시
+		- border : 1px solid black;
+	
+	border-위치
+	- 각 위치의 테두리 정보를 한번에 지정하는 속성
+	- 사용 예시
+		- border-top : 1px solid black;
+
+	border-radious
+	- 둥근 테두리를 지정하는 속성
+	- border-위치1-위치2-radious를 줄여 쓴 단축 속성
+		- 위치1: top,bottom / 위치2: left=right
+	- 왼쪽 위 모서리를 기준으로 시계방향
+	- 보통 단위로 px을 사용, %를 이용하면 원이나 타원을 만들 수 있음
+	-->
+	<style>
+		.box{ border: 1px solid black; height: 100px;}
+		.box1{margin: 10px 20px 30px 40px;}
+		.box2{width: 200px; margin: 0 auto;}
+
+		.box3,.box4,.box5{ width: 300px; height: 300px;} /*(,콤마)로인해 .box3 .box4 .box5 동시적용*/
+		.box4{ padding: 20px;}
+		.box5{ padding:20px; box-sizing: border-box;}
+
+		.border-container > div{ 
+			margin-bottom: 10px; height: 100px;
+			border: 3px solid black;
+			line-height: 100px; text-align: center;
+		}
+		.border-container > .box6{
+			border-top: 1px solid red;
+			border-right: 5px dotted green;
+			border-bottom: 10px dashed blue;
+			border-left: 15px double gray;
+		}
+		.border-container > .box7{
+			border-color: red green blue gray;
+		}
+		.border-container > .box8{
+			border-width: 3px 6px;
+		}
+		.border-container > .box9{
+			border-style: solid dashed double none;
+		}
+		.border-container > .box10{
+			border-radius: 10px;
+		}
+		.border-container > .box11{
+			border-radius: 50%; width: 200px; height: 200px; line-height: 200px;
+		}
+	</style>
+</head>
+<body>
+	<h1>영역 속성 예제</h1>
+	<h2>margin 예제</h2>
+	<div class="container">
+		<div class="box box1"></div>
+		<div class="box box2"></div>
+	</div>
+	<h2>padding 예제</h2>
+	<div class="container">
+		<div class="box box3">
+			width : 300px <br> 
+			height : 300px <br> 
+			box-sizing : content-box(기본값) <br>
+			padding : 0px <br>
+			실제 요소의 너비 <br>
+			300px(컨텐츠) <br>
+			+ 왼쪽테두리(1px) + 오른쪽테두리(1px) <br>
+			= 302px
+		</div>
+		<div class="box box4">
+			width : 300px <br> 
+			height : 300px <br> 
+			box-sizing : content-box(기본값) <br>
+			padding : 20px <br>
+			content-box에서 width는 컨텐츠 너비 <br>
+			따라서 실제 요소의 너비는? <br>
+			300px + 20px(왼쪽패딩) + 20px(오른쪽패딩) + 1px(왼쪽테두리) + 1px(오른쪽테두리) <br>
+			= 342px
+		</div>
+		<div class="box box5">
+			width : 300px <br> 
+			height : 300px <br> 
+			box-sizing : border-box <br>
+			padding : 20px <br>
+			border-box에서 width는 컨텐츠 + 패딩 + 테두리 너비 <br>
+			따라서 실제 컨텐츠의 너비는? <br>
+			300px(요소의 넓이) <br>
+			- 20px(왼쪽패딩) - 20px(오른쪽패딩) - 1px(왼쪽테두리) - 1px(오른쪽테두리) <br>
+			= 258px
+		</div>
+	</div>
+	<h2>border 예제</h2>
+	<div class="border-container">
+		<div class="box6">border</div>
+		<div class="box7">border-color</div>
+		<div class="box8">border-width</div>
+		<div class="box9">border-style</div>
+		<div class="box10">border-radious1</div>
+		<div class="box11">border-radious2</div>
+	</div>
+</body>
+</html>

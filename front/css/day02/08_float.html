@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>float 예제</title>
+	<!-- 
+	float(교재 p.141)
+	- 요소를 왼쪽, 오른쪽으로 배치할 때 사용하는 속성 
+	- inline, block에 상관 없이 왼쪽, 오른쪽으로 배치
+	- ☆엔터에 의한 공백을 없애 줌☆ (중요!!!)
+	- 요소에 width를 지정하지 않으면 요소 안에 있는 내용만큼 너비가 잡힘
+	- 부모 요소의 높이가 잡히지 않음
+
+	clear
+	- float 속서이 적용된 요소가 있으면 다음 요소에 영향을 미치는데 이를 초기화 하는 속성
+	- 값
+		- left : 왼쪽	float 요소의 높이를 계산한 후 배치
+		- right : 오른쪽 float 요소의 높이를 계산한 후 배치
+		- both : 왼쪽과 오른쪽 float float 요소의 높이 중 긴 요소를 기준으로 배치
+	-->
+	<style>
+		.box{
+			height: 100px; background: yellow; width: 150px;
+			border: 1px solid black;
+		}
+		.float-left{float: left;}
+		.float-right{float: right; height: 400px;}
+		.claerfix::after{
+			content:''; display: block; clear: both;
+		}
+		.container{ margin-bottom: 20px;}
+	</style>
+</head>
+<body>
+	<h1>flaot 속성 예제</h1>
+	<h2>clear 적용</h2>
+	<div class="container">
+		<div class="inner-box claerfix">
+			<div class="box float-left">float : left 1</div>
+			<div class="box float-right">float : right</div>
+			<div class="box float-left">float : left 2</div>
+		</div>
+		<div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dicta deleniti perferendis illum velit incidunt quos facilis alias explicabo nobis corrupti.</div>
+	</div>
+	<h2>clear 미적용</h2>
+	<div class="container">
+		<div class="inner-box">
+			<div class="box float-left">float : left 1</div>
+			<div class="box float-right">float : right</div>
+			<div class="box float-left">float : left 2</div>
+		</div>
+		<div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dicta deleniti perferendis illum velit incidunt quos facilis alias explicabo nobis corrupti.</div>
+	</div>	
+</body>
+</html>
