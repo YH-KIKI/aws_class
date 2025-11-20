@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>영역 연습 예제</title>
+	<style>
+		.container1{
+			border: 3px solid black; 
+			padding: 10px; float: left;
+		}
+		.box{ 
+			width: 100px; height: 150px; background: yellow; 
+			box-sizing:border-box; float: left;
+		}
+		.container1>div:nth-of-type(n+2){
+			margin-left: 10px;
+		}
+
+		.clearfix::after{
+			content: ''; display: block; clear: both;
+		}
+
+		/* ★ 답안 ★ */
+		
+		.container1-t{
+			border: 3px solid black;
+			/* 자식 요소에 float가 있고, 자식 요소를 감싸야 해서 필요한 요소 */
+			float: left;
+			/* box들과 container1-t 사이의 간격을 설정 */
+			padding: 10px;
+		}
+
+		/* container1-t 안에 있는 box만 영향가게끔 .클래스 > .클래스 */
+		.container1-t > .box{
+			width: 100px; height: 150px; background: yellow;
+		}
+
+		/* box사이의 간격을 위해 첫번째 요소를 제외한 나머지 box에 왼쪽 여백을 지정 */
+		.container1-t > .box ~ .box{
+			margin-left: 10px;
+		}
+		
+
+		/* 다른 방법 (container1-1)*/
+		.container1-1{
+			border: 3px solid black;
+			float: left;
+			padding: 10px;
+		}
+		.container1-1 .box1{
+			width: 100px; height: 150px; background: yellow;
+			float: left;
+			margin-left: 10px;
+		}
+		.container1-1 > .inner-container{
+			margin-left: -10px;
+		}
+
+		/* container2를 해봅시다 (calc를 이용한 3분할 ) */
+		.container2{
+			width: 500px; height: 200px;
+			border: 3px solid black;
+			padding: 10px;
+		}
+
+		.container2 > .box1{
+			width: calc((100% - 20px) / 3); height: 100%;
+			background: green; float: left;
+		}
+		.container2 > .box1 + .box1{
+			margin-left: 10px;
+		}
+
+		/* container2 답안 */
+		.container2-t{
+			width: 500px; height: 200px;
+			border: 3px solid black;
+			/* container1과 container1-1때문에 겹치는 현상을 임시로 해소 */
+			float: left;
+			/* container와 box사이의 간격 10px */
+			padding: 10px;
+		}
+		.container2-t > .box1{
+			background: green;
+			/* 높이는 container2 컨텐츠의 높이를 가져옴. 너비는 100%에서 사이 여백을 뺀 나머지를 3등분 */
+			width: calc((100% - 20px) / 3); height: 100%;
+			/* box를 한줄로 나란히 (나란히 놓을땐 보통 left)*/
+			float: left;
+		}
+		.container2-t > .box1 + .box1{
+			/* 2번째 box부터 왼쪽 여백을 지정 */
+			margin-left: 10px;
+			}
+
+	</style>
+</head>
+<body>
+	<h1>영역 분할 예제</h1>
+	<!-- 
+	자식 요소인 box의 크기가 정해질 때 3분할 예제
+	각 box의 너비/높이는 100px/150px
+	각 box 사이의 간격은 10px
+	box들과 container1 사이의 간격은 10px
+	container1의 테두리는 3px 실선 검은색
+	각 box는 배경이 노란색 
+	-->
+	<div class="clearfix">
+		<div class="container1">
+			<div class="box"></div>
+			<div class="box"></div>
+			<div class="box"></div>
+		</div>
+	</div>
+
+	<!-- 답안 사용  -->
+	 <div class="clearfix">
+		 <div class="container1-t">
+			 <div class="box"></div>
+			 <div class="box"></div>
+			 <div class="box"></div>
+		 </div>
+	 </div>
+
+	<!-- 
+	위 예제 방식과 다른 점
+	- 위에 있는 방식은 2,3 box에 왼쪽 여백을 지정하는데,
+		여기서 사용하는 방식은 모두 왼쪽 여백을 지정 -->
+
+		<div class="clearfix">
+			<div class="container1-1">
+				<div class="inner-container">
+					<div class="box1"></div>
+					<div class="box1"></div>
+					<div class="box1"></div>
+				</div>
+			</div>
+		</div>
+
+	<!-- 
+	container2의 컨텐츠 너비/높이가 500px/200px
+	container2의 테두리 3px 실선 검은색
+	container2와 box의 간격 10px
+	box사이의 간격 10px
+	box 색상 green
+	calc()함수 이용
+	-->
+<div class="clearfix">
+	<div class="container2">
+		<div class="box1"></div>
+		<div class="box1"></div>
+		<div class="box1"></div>
+	</div>
+</div>
+
+<div class="clearfix">
+	<div class="container2-t">
+		<div class="box1"></div>
+		<div class="box1"></div>
+		<div class="box1"></div>
+	</div>
+</div>
+</body>
+</html>

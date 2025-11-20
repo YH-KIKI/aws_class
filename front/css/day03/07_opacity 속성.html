@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>opacity 속성 예제</title>
+	<!-- 
+	opacity(교재 p.156) 
+	- 요소의 투명도를 설정
+	- 0~1사이의 실수
+	- 0이면 투명, 1이면 불투명
+	- 부모 요소에 투명도가 적용되면 자식 요소에도 적용 됨
+		-> 자식 요소에 투명도를 1로 해도 불투명이 안됨
+		-> 배경 색을 rgba로 이용하는게 좋을 수도 있음
+	-->
+	<style>
+		.container{
+			opacity: 0.4;
+			background: red;
+		}
+		.container > .box,
+		.container1 > .box{
+			height: 100px;
+			font-size: 40px;
+			font-weight: bold;
+			text-align: center;
+			line-height: 100px;
+			opacity: 1;
+		}
+		.container1{
+			background: rgba(255, 0, 0, 0.4);
+		}
+		.container2{
+			width: 397px;
+			height: 640px;
+			/* 글자의 기준으로 삼기 위해 */
+			position: relative;
+		}
+		.img{
+			background: url(../../../static/img/강쥐.jfif);
+			height: 100%;
+			opacity: 0.4;
+		}
+		.text{
+			/* p태그의 기본값이 있으면 제거하기 위해 */
+			margin: 0;
+			padding: 0;
+
+			width: 200px;
+			height: 50px;
+			line-height: 50px;
+			text-align: center;
+			font-size: 30px;
+			font-weight: bold;
+
+			position: absolute;
+			/* 글자를 가운데 배치 */
+			top: 50%;
+			left: 50%;
+			margin-left: -100px;
+			margin-top: -25px;
+		}
+	</style>
+</head>
+<body>
+	<h1>opacity 속성 예제</h1>
+	<h2>opacity 속성 적용</h2>
+	<div class="container">
+		<div class="box">안녕하세요</div>
+	</div>
+	<h2>배경에 rgba를 적용</h2>
+	<div class="container1">
+		<div class="box">안녕하세요.</div>
+	</div>
+	<h2>이미지 위에 글자 배치: opacity 속성 적용</h2>
+	<div class="container2">
+		<div class="img"></div>
+		<p class="text">가나디</p>
+	</div>
+</body>
+</html>

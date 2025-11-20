@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>position 속성 예제</title>
+	<!-- 
+	position (교재 p.145) 
+	- 요소를 배치하는 방식을 지정하는 속성
+	- 값
+		- static
+		- fixed
+			- 요소를 브라우저를 기준으로 위치를 고정
+			- 위로가기 버튼
+			- top, bottom, left, right 속성을 이용하여 위치를 조절
+				- +값이면 요소 안쪽으로 향하고, - 값이면 요소 바깥쪽으로 향함
+		- relative
+			- 요소의 상대위치를 계산해서 배치
+			- 요소가 원래 있어야할 위치에서 top, bottom, left, right 속성값에 따라 이동
+			- 자손 요소 중 position:absolute인 요소의 기준점이 된다
+		- absolute
+			- 기준 요소를 기준으로 배치
+			- top, bottom, left, right 속성을 이용하여 위치를 조절
+			- 기존 요소
+				- absolute가 적용된 요소의 조상 요소 중 
+					position:relatie나 position:absolute인 요소가 있는 가장 가까운 조상이 기준 요소
+				- 기준 요소가 없으면 브라우저가 기준
+			- top, bottom, left, right를 이용하여 width와 geight를 대신할 수 있음
+			- absolute가 적용된 요소는 부모 요소 높이에 영향을 주지 않음
+	-->
+		<style>
+			.container,.container-ex,.container2{
+				border: 3px solid black; padding: 100px;
+			}
+			.box{
+				width: 100px; height: 100px; background: yellow;
+				/* 글자 가운데 배치(상하, 좌우) */
+				line-height: 100px; text-align: center;
+				font-size: 30px;
+				border: 1px solid black;
+				display: inline-block;
+				vertical-align: bottom;
+				position: relative;
+			}
+
+			.container div:nth-of-type(1){
+				/* 원래 H가 있어야할 위치에서 아래로 50px 내림. 다른 요소에 영향이 X (position:relative 쓴 상태여야 함)*/
+				top: 50px;
+			}
+			.container div:nth-of-type(2){
+				/* 원래 E가 있어야할 위치에서 위로 50px 올림 */
+				top: -50px;
+			}
+			.container div:nth-of-type(3){
+				/* 원래 L이 있어야할 위치에서 오른쪽으로 50px 이동 */
+				left: 50px;
+			}
+			.container div:nth-of-type(4){
+				/* 원래 두번째 L이 있어야할 위치에서 오른쪽으로 50px 이동 */
+				right: -50px;
+			}
+			.container div:nth-of-type(5){
+				/* 원래 O가 있어야할 위치에서 오른쪽으로 50px 위로 50px 이동 */
+				left: 50px; bottom: 50px;
+			}
+
+			/* absolute예시 /  container2 */
+
+			.container2 [class^=box]{
+				background: skyblue; position: absolute;
+			}
+			.box1{
+				/* 조상 요소 position에 absolute에 relative가 없기 때문에
+				브라우저를 기준으로 아래에서 0, 왼쪽에서 0 위치에 배치
+				너비/높이를 따로 지정하지 않았기 때문에 내용만큼 너비 높이가 잡힘 */
+				bottom: 0; left:0;
+			}
+			.inner-container{
+				/* box2, box3의 기준 요소가 되기 위한 설정 */
+				position: relative; height: 300px;
+			}
+			.box2{
+				width: 100px; height: 100px;
+				/* box2의 기준 요소인 inner-container를 기준으로 오른쪽 위에 배치 */
+				top: 0; right: 0;
+			}
+			.box3{
+				top: 150px; bottom: 0; left: 0; right: 0;
+			}
+			
+			.container2 .box4{
+				/* 컬러 red를 적용하기 위해 container2 입력하여 우선순위를 높임 */
+				width: 100px; height: 100px; background: red;
+				/* box4의 시작점을 중앙에 배치 */
+				top: 50%; left: 50%;
+				/* 중앙에 배치된 시작점을 왼쪽위로 이동시켜 가운데 배치 */
+				margin-left: -50px; margin-top: -50px;
+			}
+			.box5{
+				position: fixed; width: 100px; height: 100px;
+				border: 1px solid black; background: yellow;
+				/* 브라우저 우측 하단에 배치 */
+				bottom: 20px; right: 20px;
+			}
+
+		</style>
+</head>
+<body>
+	<h1>position 속성 예제</h1>
+	<h1>원래 기준점</h1>
+		<div class="container-ex">
+			<div class="box">H</div>
+			<div class="box">E</div>
+			<div class="box">L</div>
+			<div class="box">L</div>
+			<div class="box">O</div>
+	</div>
+	<h2>relative</h2>
+		<div class="container">
+			<div class="box">H</div>
+			<div class="box">E</div>
+			<div class="box">L</div>
+			<div class="box">L</div>
+			<div class="box">O</div>
+		</div>
+		<div class="container2">
+			<div class="box1">1</div>
+			<div class="inner-container">
+				<div class="box2">2</div>
+				<div class="box3">3</div>
+				<div class="box4">4</div>
+			</div>
+		</div>
+		<h2>fixed 예제</h2>
+		<div class="box5">fixed</div>	
+</body>
+</html>

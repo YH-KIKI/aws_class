@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>display 소성 예제</title>
+	<!-- 
+	 display
+	 - 요소의 display를 변경하는 속성
+	 - 값 
+	 	- inline : 너비/높이를 이용하여 크기 변경 X
+		- inline-block : 너비/높이를 이용하여 크기 변경 O
+		- block : 너비/높이를 이용하여 크기 변경 O
+		- none : 안보이게 감춤
+	- 각 태그마다 기본 display값이 있는데 이를 변경하는 속성 
+	-->
+	<style>
+		[class^=box]{ 
+			width: 200px; height: 200px; 
+			border: 1px solid black;
+			background: yellow;
+		}
+		.box1{ display: block;}
+		.box2{ display: inline-block;}
+		.box3{ display: inline;}
+
+
+		.container2{
+			border: 3px solid black;
+			/* 앞 예제와 구분을 위해 공백주기*/
+			margin-top: 10px;
+		}
+		.container2 > .box{
+			/* 위 예제에서 사용한 값을 없애기 위해 */
+			border: 0; 
+			/* .container2를 3등분 하는 box를 만들기 위해 */
+			width: 33.3333%; 
+			/* 한 라인에 배치하기 위해 */
+			display: inline-block;
+		}
+	</style>
+</head>
+<body>
+	<h1>display 속성 예제</h1>
+	<div class="container">
+		<div class="box1">div태그입니다.(block) w: 200px / h: 200px</div>
+		<div class="box2">div태그입니다.(inline-block) w: 200px / h: 200px</div>
+		<div class="box3">div태그입니다.(inline) w: 200px / h: 200px</div>
+	</div>
+
+	<h2>이렇게 하면 안된다 예제</h2>
+	<div class="container2">
+		<!-- 
+		이렇게 배치하면 3분은 가능은 하나 보기가 불편
+		그렇다고 보기 편하게 엔터를 치면 엔터에 의한 공백 때문에 3등분이 안됨
+		box안에 숫자를 지우면 어긋나는 현상도 발생 -->
+		<div class="box">1</div><div class="box">2</div><div class="box">3</div>
+	</div>
+</body>
+</html>

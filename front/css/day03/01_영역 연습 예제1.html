@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>영역 연습 예제</title>
+	<style>
+		.container{ 
+			border: 5px solid black;
+			width: 500px; height: 500px; background: red;}
+		/* box-sizing: content-box;는 기본값으로 생략 */
+
+		.container1 {
+			width: 500px; height: 500px; background: blue;
+			padding: 20px; box-sizing: border-box;}
+
+		.container2 {
+			width: 500px; height: 500px; background: yellow;}
+		.box{ width: 50%; height: 100%;}
+		.left{ float: left; background: gray;}
+		.right{ float: right; background: skyblue;}
+		.container2::after{	content: ''; display: block; clear:both;}
+	</style>
+</head>
+<body>
+	<!-- 예제1
+	클래스 이름이 container인 박수를 하나 생성하여 다음 속성을 적용
+	1. 테두리는 5px 실선 검은색
+	2. 박스 컨텐츠 너비/높이는 500px/500px
+	3. 박스 배경색은 빨강
+	4.  
+	-->
+	<h4>예제1</h4>
+	<div class="container"></div>
+
+	<!-- 예제2
+	클래스 이름이 container1인 박스를 하나 생성하여 다음 속성을 적용
+	1. 안쪽 여백을 상하좌우 모두 20px
+	2. 요소 너비/높이는 500px/500px 
+	3. 박스 배경은 파랑
+	-->
+	<h4>예제2</h4>
+	<div class="container1"></div>
+
+	<!-- 예제3
+	클래스 이름이 container2인 요소를 생성
+	container2 안에 클래스 이름이 box인 요소를 2개 생성 
+	container2 
+	1. 컨텐츠 너비/높이 500px/500px
+	2. 확인용으로 배경은 노란색
+	
+	box
+	1. 요소 너비는 container의 반, 높이는 container 높이
+	2. 왼쪽 box 배경 : gray, 오른쪽 box 배경 : skyblue
+	3. 두 box는 하나는 왼쪽, 하나는 오른쪽으로 배치되서 container2를 2분할 하면 됨
+	-->
+	<h4>예제3(컨텐츠 500px/500px, 왼쪽:gary / 오른쪽 : skyblue)</h4>
+	<div class="container2">
+		<div class="box left"></div>
+		<div class="box right"></div>
+	</div>
+
+</body>
+</html>

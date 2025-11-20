@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>영역 연습 예제2</title>
+		<style>
+			.container{
+				border: 3px solid black; 
+			/* container와 box들 사이의 간격을 지정 */
+				padding: 10px;
+			/* container의 너비를 마지막 자식 요소의 위치까지 잡음 */
+				float: left;
+			}
+			/* 모든 box */
+			.box{
+				width: 150px; height: 200px; background: red;
+				/* 너비/높이를 요소의 너비/높이로 적용하기 위한 설정 */
+				box-sizing: border-box; 
+				/* box들을 block요소 상관없이 나열하기 위한 설정 */
+				float: left;
+			}
+			/* 2번째 box */
+			.container>div:nth-of-type(2){
+				background: blue; 
+				/* box사이의 간격을 지정하기 위해 오른쪽 box에 왼쪽 여백을 지정 (padding은 블루로 되니X) */
+				margin-left: 10px;
+			}
+			/* box에 float 속성을 적용해서 container의 높이가 0이 되는 현상이 있어서 해결하기 위한 설정 */
+			.container::after{
+				content: ''; display: block; clear: both;
+			}
+
+
+		</style>
+</head>
+<body>
+	<h1>영역 연습 예제</h1>
+	<!-- 
+	각 box 요소의 너비/높이는 150px/200px
+	각 box는 한 라인에 배치
+	box와 box 사이의 간격은 10px
+	왼쪽 box 배경은 red, 오른쪽 box 배경은 blue
+	container는 테두리3px 실선 검은색
+	container와 첫번째 박스 사이의 여백은 10px
+	container와 각 box사이의 위아래 여백은 10px
+	-->
+
+	<div class="container">
+		<div class="box"></div>
+		<div class="box"></div>
+	</div>
+</body>
+</html>
