@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>table 태그 예제</title>
+	<!-- 
+	table 작성 시 필요한 필수 태그
+	table 태그
+	- 테이블을 만들기 위한 태그
+
+	tr 태그
+	- 한 행을 나타내는 태그
+	- 한 행에는 여러 열이 포함
+
+	td 태그
+	- 한 열을 나타내는 태그
+	- 속성
+		- rowspan
+			- 행 병합.
+			- 값으로는 숫자가 옴
+		- colaspan
+			- 열 병합
+			- 값으로는 숫자가 옴
+	
+	th 태그
+	- 한 열을 나타내는 태그
+	- 주로 첫 행에 사용되며 가운데 정렬, 굵은 글자
+
+	table 작성 시 사용할 수 있는 태그
+	thead 태그
+	- 테이블의 첫 행(제목 행)
+	- 지식 요소로 tr태그가 옴
+
+	tbody 태그
+	- 테이블 본문을 구성하는 태그
+	- 대부분의 행들이 여기에 포함
+	- 자식요소로 tr태그들이 옴
+
+	tfoot 태그
+	- 테이블 하단에 합계와 같이 본문과 다른 행이 있는 경우 사용하는 태그
+
+-->
+</head>
+<body>
+	<h1>table 태그 예제</h1>
+	<table border="1">
+		<thead>
+			<tr>
+				<th>과목명</th>
+				<th>이름</th>
+				<th>점수</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td rowspan="3">HTML</td>
+				<td>홍길동</td>
+				<td>100</td>
+			</tr>
+			<tr>
+				<!-- <td>HTML</td> -->
+				<td>임꺽정</td>
+				<td>80</td>
+			</tr>
+			<tr>
+				<!-- <td>HTML</td> -->
+				<td>장길산</td>
+				<td>70</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th colspan="2">총점</th>
+				<!-- <th></th> -->
+				 <th>250</th>
+			</tr>
+		</tfoot>
+	</table>
+</body>
+</html>
