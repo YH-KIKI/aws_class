@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>그림자 속성</title>
+	<!-- 
+	교재 p.159
+	text-shadow
+	- 글자에 그림자 효과를 적용
+	- none : 적용 안함
+	- 수평거리 수직거리 번짐 색상 순으로 값을 지정
+		- 번짐은 퍼지는 정도
+	- 그림자 효과는 ,를 이용하여 여러 효과를 한번에 적용
+
+	box-shadow
+	- 박스에 그림자 효과를 적용
+	- 수평 수직 흐림 번짐 [inset] 순으로 적용
+		- 흐림은 그림자 선명도
+		- 번짐은 퍼지는 정도
+	- inset은 박스 안쪽으로 그림자 효과를 적용
+	- 박스 테두리를 활용
+
+	-->
+	<style>
+		.text-container{
+			font-size: 30px; 
+			font-weight: bold;
+		}
+		.text-container > div{
+			padding: 10px;
+		}
+		.text-shadow1{
+			text-shadow: 3px 0 0 red;
+		}
+		.text-shadow2{
+			text-shadow: 0 3px 0 red;
+		}
+		.text-shadow3{
+			text-shadow: 3px 3px 10px red;
+		}
+		.text-shadow4{
+			text-shadow: 3px 3px 3px black;
+			color: white;
+		}
+		.text-shadow5{
+			text-shadow: 0 0 1px black, 3px 3px 3px blue;
+			color: white;
+		}
+	</style>
+	<style>
+		/* 원래 style은 1개만 사용하는게 맞지만 일단 편의상 사용 */
+		.box-container > div{
+			margin: 30px 0;
+			width: 200px;
+			height: 100px;
+			background: yellow;
+		}
+		.box-shadow1{
+			/* 흐림0, 번짐 10px */
+			box-shadow: 10px 10px 0 10px red;
+		}
+		.box-shadow2{
+			/* 흐림 10px, 번짐 0 */
+			box-shadow: 10px 10px 10px 0 red; 
+		}
+		.box-shadow3{
+			/* 박스 그림자로 박스 테두리 적용 - 너비/높이에 영향을 미치지 않음 */
+			box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
+		}
+	</style>
+</head>
+<body>
+	<h1>그림자 속성</h1>
+	<div class="text-container">
+		<div class="text-shadow1">안녕하세요.1</div>
+		<div class="text-shadow2">안녕하세요.2</div>
+		<div class="text-shadow3">안녕하세요.3</div>
+		<div class="text-shadow4">안녕하세요.4</div>
+		<div class="text-shadow5">안녕하세요.5</div>
+	</div>
+	<h2>박스 그림자</h2>
+	<div class="box-container">
+		<div class="box-shadow1"></div>
+		<div class="box-shadow2"></div>
+		<div class="box-shadow3"></div>
+	</div>
+</body>
+</html>
