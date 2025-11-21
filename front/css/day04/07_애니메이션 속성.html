@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>애니메이션 예제</title>
+	<!-- 
+	애니메이션 적용 방법
+	1. 애니메이션을 등록
+	2. 등록된 애니메이션을 적용
+
+	애니메이션 등록
+	@keyframes 애니메이션명{
+		지점1{
+			속성명 : 값;
+			속성명 : 값
+		}
+		지점2{
+			속성명 : 값;
+			속성명 : 값
+		}
+		...
+	}
+	- 지점은 0% ~ 100%, 0%는 from, 100%는 to로 쓸 수 있음
+
+	애니메이션 적용 방법
+	- 애니메이션 관련 속성의 값들을 이용
+
+	animation-name
+	- 적용할 애니메이션 이름(등록된 애니메이션 중 선택)
+
+	animation-duration
+	- 애니메이션 적용 되는 시간
+
+	animation-direction
+	- 애니메이션을 반복할 때 진행 방향을 설정
+	- 값
+		- nomal : 기본, 처음부터
+		- alternate : 역순
+
+	animation-iterator-count
+	- 반복횟수
+	- 값
+		- 숫자 : 숫자만큼 반복
+		- infinite : 무한 반복
+
+	animation-timing-function
+	- 애니메이션 수행 속도, transition-timing-function 참고
+
+	animation-fill-mode
+	- 애니메이션 끝난 후 또는 시작 전의 상태를 지정
+	- 값
+		- none : 아무것도 적용하지 않음
+		- forward : 애니메이션이 끝난 후 키프레임 스타일을 유지(마지막 장면 유지)
+		- backward : 애니메이션이 시작하기 전 첫번째 키프레임 스타일을 유지(첫 장면 유지) 
+		- both : 애니메이션이 시작하기 전에는 첫번째 키프레임 스타일을, 끝난 후에는 마지막 키프레임 스타일을 유지
+	
+	animation-delay
+	- 애니메이션 시작 전 딜레이 시간
+
+	animation-play-state
+	- 애니메이션 재생 여부
+	- hover와 같이 특정 상황에서 일시정지 시킬 때 사용
+	- 값
+		- running : 기본 값, 재생
+		- paused : 일시정지
+
+	animation
+	- name duration timing-funtion delay iterator-count direction fill-mode를 
+		한 번에 적용하는 단축 속성
+	-->
+	<style>
+		.box{
+			/* 박스 크기 */
+			width: 100px; height: 100px;
+			/* 배경, 테두리 */
+			background: yellow; border: 3px solid black;
+			/* 글자 가운데 */
+			line-height: 100px; text-align: center;
+			font-weight: bold;
+			
+			/* 적용할 애니메이션 정보 */
+			animation-name: fontSizeUp;
+			animation-delay: 500ms;
+			animation-duration: 3s;
+			animation-direction: alternate;
+			animation-fill-mode: forwards;
+			animation-iteration-count: infinite;
+			animation: fontSizeUp 3s 500ms infinite alternate forwards;
+		}
+		@keyframes fontSizeUp{
+			from{
+				font-size: 20px;
+			}
+			to{
+				font-size: 60px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<h1>애니메이션 예제</h1>
+	<div class="container">
+		<div class="box">꽝</div>
+	</div>
+</body>
+</html>

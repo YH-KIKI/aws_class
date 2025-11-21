@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>transition 속성 예제</title>
+	<!-- 
+	transition(교재 p.177~180)
+	- 요소의 스타일이 변경되는 걸 감지해서 서서히 변하도록 해줌
+	- 애니메이션(부드럽게 움직임)효과를 줌
+	- 단축 속성
+		- property duration timing-function delay를 한번에 씀
+
+	transition-property
+	- 변화를 감지할 속성
+	- 값
+		- all : 모든 속성
+		- none : 아무 속성도 감지하지 않음
+		- 속성명 : 해당 속성만 감지. 여러개 속성인 경우 ,로 구분
+
+	transition-duration
+	- 변화가 지속되는 시간
+	- 단위 : ms, s
+	- 여러 속성인 경우 ,로 구분
+
+	transition-timing-function(교재 p.178)
+	- 트랜지션이 진행되는 구간별 시간을 지정하는 속성
+	- 값
+		- linear : 일정한 속도
+		- ease, ease-in, ease-out, ease-in-out : 지정된 값
+		- cubic-bezier(n,n,n,n) : 각 구간별로 속도를 지정. n값은 0~1사이
+
+	transition-delay
+	- 트랜지션이 두개 이상 있는 경우 하나의 트랜지션이 끝나고 다음 트랜지션이 시작되는 시간
+	- 단위 : ms, s
+	-->
+	<style>
+		.box{
+			/* 박스 크기 설정 */
+			width: 100px; height: 100px; 
+			/* 테두리 배경 설정 */
+			border: 3px solid black; background: yellow;
+			/* 폰트 설정 */
+			font-weight: bold; font-size: 20px;
+			/* 글자 가운데 배치 */
+			text-align: center; line-height: 100px; 
+			
+			transition-property: font-size, background;
+			transition-duration: 500ms, 2000ms;
+			transition-delay: 1s, 1s;
+		}
+		.box:hover{ font-size: 60px; background: gray;}
+
+		.box1{
+			width: 100px; height: 100px; background: yellow;
+			margin-bottom: 20px; position: relative;
+			transition: left 5s;
+			left: 0;
+		}
+		.c2:hover .box1{
+			left: calc(100vw - 100px);}
+		.ease{ transition-timing-function: ease;}
+		.ease-in{ transition-timing-function: ease-in;}
+		.ease-in-out{ transition-timing-function: ease-in-out;}
+		.linear{ transition-timing-function: linear;}
+	</style>
+</head>
+<body>
+	<h1>transition 속성 예제</h1>
+	<div class="container">
+		<div class="box">꽝</div>
+	</div>
+	<div class="container c2">
+		<div class="box1 ease">ease</div>
+		<div class="box1 ease-in">ease-in</div>
+		<div class="box1 ease-in-out">ease-in-out</div>
+		<div class="box1 linear">linear</div>
+	</div>
+</body>
+</html>

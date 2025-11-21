@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>overflow 속성 예제</title>
+	<!-- 
+	overflow
+	- 요소 안에 있는 컨텐츠(자손 요소들)가 요소 크기를 벗어났을 때 처리 방법을 설정
+	- 값
+		- visible : 넘어가는 부분을 보여줌. 기본값
+		- auto : 범위를 넘어가면 scroll, 없으면 hidden
+		- scroll : 스크롤을 추가해서 넘어가는 범위를 보게 함. 스크롤 반드시 추가
+		- hidden : 넘어가는 부분을 감춤
+	-->
+		<style>
+			.box{
+				width: 300px; height: 50px; border: 1px solid black;
+				margin-bottom: 50px;
+			}
+			.box1{ overflow: visible;}
+			.box2{ overflow: auto;}
+			.box3{ overflow: auto;}
+			.box4{ overflow: scroll;}
+			.box5{ overflow: scroll;}
+			.box6{ overflow: hidden;}
+			.box7{ 
+				font-size: 40px; height: 200px; overflow: auto;
+			/* 스크롤바 감추기 */
+			scrollbar-width:none;
+			}
+
+			/* 스크롤바 감추기*/
+			.box7::-webkit-scrollbar{
+				display: none;
+			}
+			/* 
+			접두어
+			- webket - : 크롬, 사파리
+			- moz - : 파이어폭스
+			- ms - : 익스플로러, 엣지(구버전)
+			- o - : 오페라
+			*/
+		</style>
+</head>
+<body>
+	<h1>overflow 속성 예제</h1>
+	<div class="container">
+		<div class="box box1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto dolores rerum non modi atque neque corporis delectus quo, eum magni.</div>
+		<div class="box box2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto dolores rerum non modi atque neque corporis delectus quo, eum magni.</div>
+		<div class="box box3">Lorem ipsum(넘어가는 부분이 없으면 스크롤 생성X) </div>
+		<div class="box box4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto dolores rerum non modi atque neque corporis delectus quo, eum magni.</div>
+		<div class="box box5">넘어가는 부분이 없어도 스크롤 생성</div>
+		<div class="box box6">넘어가는 부분이 있으면 넘어가는 부분을 감춤 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto dolores rerum non modi atque neque corporis delectus quo, eum magni.</div>
+		<div class="box box7">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto dolores rerum non modi atque neque corporis delectus quo, eum magni.</div>		
+	</div>
+</body>
+</html>
