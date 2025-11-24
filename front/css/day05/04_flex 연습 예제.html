@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>flex 연습 예제</title>
+  <style>
+    .container1 .box{
+      width: 100px; height: 100px; background: red;
+    }
+    .container1{
+      background: yellow; 
+      display: flex; 
+      /* 주축 방향(기본(flex-eirection:row)으로 가운데 정렬 */
+      justify-content: center;
+    }
+
+/* 예제2 */
+    .container2 .box{
+      width: 100px; height: 100px; background: red;
+    }
+    .container2{
+      background: yellow; margin-top: 30px; height: 200px;
+      display: flex;
+      /* 주축 가운데 정렬 */
+      justify-content: center;
+      /* 교차축 가운데 정렬 */
+      /* 교차축 정렬로. 위 아래 여백을 동일하게*/
+      flex-wrap: wrap;
+      align-content: space-evenly;
+       /* 간단하게 하는방법 : align-items: center; */
+    }
+/* 예제 3 */
+    .container3 .box{
+      width: 100px; height: 100px; background: skyblue;
+    }
+    .container3{
+      background: pink; margin-top: 30px;
+      display: flex; 
+      /* 주축 방향으로 양끝에 배치 */
+      justify-content: space-between;
+    }
+
+    /* 2, 3, 4 박스를 한 라인에 붙이기 위해*/
+    .container3-right{
+      display: flex;
+    }
+
+/* 예제4 */
+
+    .container4{
+      margin-top: 30px; background: yellow;
+      position: relative;
+    }
+    .container4 .box{
+      width: 50px; height: 50px; background: red;
+    }
+    .inner-container4-1{
+      display: flex; justify-content: center;
+    }
+    .inner-container4-2{
+      position: absolute; top: 0; right: 0;
+      display: flex;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- 
+   아래 같은 구조로 되어 있는 화면에서 flex를 이용하여 요소가 가운데(좌우) 정렬이 되도록 작성
+  -->
+  <div class="container1">
+    <div class="box">가운데 정렬</div>
+  </div>
+  <!-- 
+   아래 같은 구조로 되어 있는 화면에서 flex를 이용하여 요소가 가운데(상하, 좌우) 정렬이 되도록 작성
+  -->
+  <div class="container2">
+    <div class="box">가운데 정렬</div>
+  </div>
+
+  <div class="container3">
+    <div class="box">1</div>
+    <div class="container3-right">
+      <div class="box">2</div>
+      <div class="box">3</div>
+      <div class="box">4</div>
+    </div>
+  </div>
+
+  <!-- 예제 4 -->
+  <div class="container4">
+    <!-- display : flex -->
+    <div class="inner-container4-1">
+      <!-- 가운데 정렬 -->
+      <div class="box">1</div>
+    </div>
+    <!-- position:absolute로 우측에 정렬 -->
+    <div class="inner-container4-2">
+      <div class="box">2</div>
+      <div class="box">3</div>
+      <div class="box">4</div>
+    </div>
+  </div>
+
+</body>
+</html>

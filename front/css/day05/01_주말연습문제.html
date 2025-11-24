@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주말 연습 문제 예제</title>
+    <style>
+      /* p태그, body태그, ul태그 등에 자동을 들어가는 마진과 패딩을 제거 */
+      *{ margin: 0; padding: 0;}
+      /* ul태그의 마커를 제거 */
+      ul{ list-style: none;}
+      /* a태그 글자 색과 밑줄을 변경 */
+      a{ text-decoration: none; color: black;}
+
+      .shopping-item{
+        /* 쇼핑 아이템들을 한 라인에 여러개 배치하기 위해 */
+        float : left; margin-right: 10px;
+      }
+      .clearfix::after{
+        content: ''; display: block; clear: both; 
+      }
+      .shopping-img-container{
+        width: 150px; height: 200px; 
+        /* 상품 이미지를 확대했을 때 이미지가 커지는 걸 방지하기 위해 */
+        overflow: hidden;
+        /* 이 요소가 span태그여서 inline이기 때문에 block으로 해야 크기 조절 가능 */
+        display: block;
+        /* 둥근 테두리 */
+        border-radius: 5px;
+        box-shadow: 0 0 0 1px rgba( 0, 0, 0, 0.1);
+      }
+      .shopping-item:hover .shopping-img{
+        /* shopping-item에 있는 모든 (이미지/텍스를) hover하면 이미지(shooping-img)만 확대 */
+        transform: scale(1.03);
+      }
+      .shopping-img{
+        /* 서서히 확대되도록 자연스러운 움직임(애니메이션 효과)를 줌 */
+        transition: transform 0.3s;
+      }
+      .shopping-title{
+        /* span태그에 마진 적용 */
+        margin-top: 10px; display: block;
+      }
+      .shopping-title:hover{
+        /* 쇼핑 문구를 hover하면 밑줄 추가 */
+        text-decoration: underline;
+      }
+      .shopping-title p{
+        /* 쇼핑 문구 높이 지정 */
+        line-height: 16px; font-size: 14px;
+      }
+      .shopping-list{
+        margin: 30px;
+      }
+    </style>
+</head>
+<body>
+    <!-- 네이버 쇼핑몰 아이템 -->
+     <ul class="shopping-list clearfix">
+        <li class="shopping-item">
+            <a href="" class="shopping-link">
+              <span class="shopping-img-container">
+                <img class="shopping-img" src="https://asset.m-gs.kr/prod/1047504675/1/550" alt="" width="150" height="200">
+              </span>
+              <span class="shopping-title">
+                <p>할인</p>
+                <p>겨울 할인 행사</p>
+              </span>
+            </a>
+        </li>
+        <li class="shopping-item">
+          <a href="" class="shopping-link">
+            <span class="shopping-img-container">
+              <img class="shopping-img" src="https://asset.m-gs.kr/prod/1047504675/1/550" alt="" width="150" height="200">
+            </span>
+            <span class="shopping-title">
+              <p>할인</p>
+              <p>겨울 할인 행사</p>
+            </span>
+          </a>
+        </li>
+        <li class="shopping-item">
+          <a href="" class="shopping-link">
+            <span class="shopping-img-container">
+              <img class="shopping-img" src="https://asset.m-gs.kr/prod/1047504675/1/550" alt="" width="150" height="200">
+            </span>
+            <span class="shopping-title">
+              <p>할인</p>
+              <p>겨울 할인 행사</p>
+            </span>
+          </a>
+        </li>
+        <li class="shopping-item">
+          <a href="" class="shopping-link">
+            <span class="shopping-img-container">
+              <img class="shopping-img" src="https://asset.m-gs.kr/prod/1047504675/1/550" alt="" width="150" height="200">
+            </span>
+            <span class="shopping-title">
+              <p>할인</p>
+              <p>겨울 할인 행사</p>
+            </span>
+          </a>
+        </li>
+     </ul>
+</body>
+</html>
