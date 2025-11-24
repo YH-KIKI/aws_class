@@ -27,6 +27,7 @@
 		.float-left{float: left;}
 		.float-right{float: right; height: 400px;}
 		.claerfix::after{
+			/* after는 float사용시 공식! 부모요소에 적용 */
 			content:''; display: block; clear: both;
 		}
 		.container{ margin-bottom: 20px;}
