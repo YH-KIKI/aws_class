@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<htmlN lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>자료형 변환</title>
+</head>
+<body>
+  <h1>자료형 변환 예제</h1>
+  <script>
+    /* 
+    자료형을 다른 자료형으로 변환
+    1. 문자열 => 정수
+    - parseInt(문자열)
+      - 왼쪽부터 시작해서 정수로 바꿀 수 있는 부분만 바꿈
+    2. 문자열 => 실수
+    - parseFloat(문자열)
+      - 왼쪽부터 시작해서 실수로 바꿀 수 있는 부분만 바꿈
+    3. 문자열 => 숫자
+    - Number(문자열)
+      - 숫자가 아닌 값이 있으면 NaN을 반환
+    4. 숫자 => 문자열
+      - "" + 숫자 
+
+    화면에서 입력한 값들을 대부분 문자열 취급 
+    => 이럴때 문자열을 숫자(정수, 실수)로 변환하는 작업이 필요할 수도 있다. 
+    */
+    document.write(`parseInt("1") : ${parseInt("1")}, ${typeof parseInt("1")}<br>`)
+    document.write(`parseInt("1.23") : ${parseInt("1.23")}, ${typeof parseInt("1.23")}<br>`);
+    document.write(`parseInt("1px") : ${parseInt("1px")}, ${typeof parseInt("1px")}<br>`);
+    document.write(`<hr>`);
+    document.write(`Number("1") : ${Number("1")}, ${typeof Number("1")}<br>`);
+    document.write(`Number("1.23") : ${Number("1.23")}, ${typeof Number("1.23")}<br>`);
+    document.write(`Number("1px") : ${Number("1px")}, ${typeof Number("1px")}<br>`);
+    document.write(`<hr>`);
+    document.write(`"" + 2 : ${"" + 2}, ${typeof ("" + 2) }<br>`);
+
+  </script>
+</body>
+</htmlN

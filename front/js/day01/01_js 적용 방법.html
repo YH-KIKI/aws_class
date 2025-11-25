@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js 적용 방법</title>
+  <!-- 
+  방법1. script태그 안에 js코드를 작성
+  방법2. script태그를 이용하여 만들어진 js를 연결 
+    - 미리 만들어진 기능을 가져다 사용할 때 적용
+
+  ★주의사항
+    - script태그 위치에 따라 동작이 안될 수 있음
+    - 방법1과 방법2를 동시에 쓸 수 없음
+  -->
+<!-- 방법2 -->
+  <script src="01_js 적용 방법.js"></script>
+</head>
+<body>
+  <button type="button" id="btn">클릭</button>
+  <!-- script 태그가 요소들 제일 하단에 있으면 동작하고, head태그에 있으면 동작이 안될 수 있음 -->
+    <script>
+// 방법1.
+    // id가 btn인 요소를 선택
+    let btn = document.getElementById("btn");
+    // 요소에 클릭 이벤트를 등록
+    btn.onclick = ()=>{
+      // 알림창을 띄움
+      alert("알림창");
+    }
+  </script>
+</body>
+</html>

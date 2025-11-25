@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>연습 문제</title>
+</head>
+<body>
+  <h1>성적 출력 예제</h1>
+  <script>
+    /* 
+    성적을 입력받아(prompt) 학점을 출력하세요(document.write) 
+    90~100 : A
+    80~89 : B
+    70~79 : C
+    60~69 : D
+    0~59 : F
+    */
+
+    let num = prompt("성적을 입력하세요")
+    num = parseInt(num)
+
+    if(num >= 90 && num <= 100){
+      document.write(`${num}은 A학점 입니다<br>`);
+    }
+    else if(num >= 80 && num < 90){
+      document.write(`${num}은 B학점 입니다<br>`);
+    }
+    else if(num >= 70 && num < 80){
+      document.write(`${num}은 C학점 입니다<br>`);
+    }
+    else if(num >= 60 && num < 70){
+      document.write(`${num}은 D학점 입니다<br>`);
+    }
+    else{
+      document.write(`${num}은 F학점 입니다<br>`);
+    }
+
+
+  </script>
+</body>
+</html>

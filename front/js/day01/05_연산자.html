@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>연산자</title>
+</head>
+<body>
+  <h1>연산자 예제</h1>
+  <script>
+    /* 
+    산술 연산자
+    - +(더하기) , - (빼기), *(곱하기), /(나누기), % (나머지), **(제곱)
+    */
+   document.write(`2 + 3 = ${2 + 3}<br>`)
+   document.write(`2 - 3 = ${2 - 3}<br>`)
+   document.write(`2 * 3 = ${2 * 3}<br>`)
+   document.write(`2 / 3 = ${2 / 3}<br>`)
+   document.write(`2 % 3 = ${2 % 3}<br>`)
+   document.write(`2 ** 3 = ${2 ** 3}<br>`)
+
+   /* 
+   비교 연산자
+   - 크기 비교
+   - <, >, <=(작거나 같다) , >=(크거나 같다), ==(같다), !=(같지 않다)
+   - ==(값이 같다), != (값이 같지 않다)
+   - ===(값과 자료형이 같다), !==(값 또는 자료형이 같지 않다)
+   */
+
+   document.write(`2 <= 3 : ${2 <= 3}<br>`);
+   document.write(`2 == "2" : ${2 == "2"}<br>`); //타입(자료형)은 다르지만 값이 같으므로 ture-  `
+   document.write(`2 == "2" : ${2 === "2"}<br>`); //타입이 number와 srting이므로 자료형이 달라 false
+   
+   /* 
+   논리 연산자
+    -참과 거짓을 판별하는 연산자
+    - 거짓 
+      - false, 0, null, undefined, '', NaN
+    - 참
+      - 거짓이 아닌 값 (true, 1, '1')
+    
+    - || : or 연산자
+      - ~이거나
+      - 시험을 위한 신분증 준비 : 운전면허증 이거나 주민등록증 이거나 여권이거나 
+      - 하나라도 참이면 참
+    - && : and 연산자
+      - ~이고
+      - A학점 : 성적이 90점이상이고 100점 이하면 A
+      - 둘다 참이면 참 => 하나라도 거짓이면 거짓
+    - ! : not 연산자
+      - 반대
+      - 참이면 거짓, 거짓이면 참
+   */
+    let 면허증 = false; //면허증 안챙김
+    let 민증 = true;   //민증 챙김
+    let 여권 = false;  //여권 안챙김
+    document.write(`신분증을 챙겼나요? ${면허증|| 민증 || 여권}<br>`)
+
+    let score = 80;
+    document.write(`${score}점은 A학점인가요? ${score >= 90 && score <= 100}<br>`);
+    score = 95;
+    document.write(`${score}점은 A학점인가요? ${score >= 90 && score <= 100}<br>`);
+
+    let 남자 = true;
+    document.write(`당신의 성별은 여자인가요? ${!남자}<br>`)
+  </script>
+</body>
+</html>
