@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>객체 예제</title>
+
+</head>
+<body>
+	<h1>객체 예제</h1>
+	<script>
+		/* 
+		객체
+		- 관련이 있는 여러 정보를 묶을때 사용
+
+		객체 선언 방법
+		1. {}를 이용하여 재사용이 안되는 객체를 생성
+		let 객체명 = {
+			변수명 : 값,
+			변수명 : 값,
+			함수명 : function (){}
+		}
+		*/
+		//학생 정보
+		let age = 20, name = "홍길동", addr = "서울시";
+		let age1 = 23, name1 = "임꺽정", addr1 = "서울시";
+		
+		let std1 = {
+			age : 20,
+			name : "홍길동",
+			addr : "서울시"
+		}
+		let std2 = {
+			age : 23,
+			name : "임꺽정",
+			addr : "서울시"
+		}
+		/* 
+		2. 객체 생성함수 이용 => 재사용이 가능
+		function 함수명(v1, v2, ...){
+			return {
+				변수명 : v1,
+				변수명 : v2,
+				...
+			}
+		}
+		*/
+		function student(age, name, addr){
+			return {
+				age : age, //왼쪽 age는 이름이고, 오른쪽 age는 매개변수가 가진 값
+				name : name,
+				addr : addr
+			}
+		}
+		let std3 = student(20, "홍길동", "서울시");
+		let std4 = student(23, "임꺽정", "서울시");
+
+		/*
+		객체 사용 방법
+		- 객체 안에 있는 변수나 함수를 사용
+		객체명.변수명
+		*/
+		document.write(`이름 : ${std1.name}, 나이 : ${std1.age}, 주소 : ${std1.addr}<br>`);
+	</script>
+</body>
+</html>

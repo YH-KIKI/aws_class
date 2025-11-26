@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>함수 연습 예제</title>
+</head>
+<body>
+	<h1>함수 연습 예제</h1>
+	<script>
+		/* 
+		정수를 입력받아 입력받은 정수가 소수인지 아닌지 판별하는 예제를 함수를 이용하여
+		작성하세요.
+		*/
+		//방법1
+		/*
+			기능 : 주어진 정수의 소수 여부를 알려주는 함수
+			매개변수 : 정수 => num
+			반환값 : 소수이면 true, 아니면 false
+			함수명 : isPrime
+		*/
+		function isPrime(num){
+			let count;
+			for (i = 1, count = 0; i <= num; i++) {
+				if (num % i == 0) {
+					count++;
+				}
+			}
+			
+			/*if(count == 2){
+				return true;
+			}else{
+				return false;
+			}*/
+			let isPrime = false;
+			if(count == 2){
+				isPrime = true;
+			}
+			return isPrime;
+		}
+		
+		let num = 10;
+		
+		if(isPrime(num)){
+			document.write(`${num}는 소수<br>`);
+		}else{
+			document.write(`${num}는 소수 아님<br>`);
+		}
+
+		//방법2
+		function isPrime2(num){
+			if(num == 1){
+				return false;
+			}
+			//1과 자기자신을 제외하고 약수를 찾는 반복문
+			for(i = 2; i < num; i++){
+				//1과 자기자신을 제외한 약수가 있으면 소수가 아님
+				if(num % i == 0){
+					return false;
+				}
+			}
+			//1과 자기자신을 제외한 수중에 약수가 없으면 소수
+			return true;
+		}
+		
+		if( !isPrime2(num)){
+			document.write(`${num}는 소수 아님<br>`);
+		}
+		else{
+			document.write(`${num}는 소수<br>`);
+		}
+	</script>
+</body>
+</html>
