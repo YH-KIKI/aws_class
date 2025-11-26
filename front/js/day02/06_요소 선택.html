@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>요소 선택</title>
+</head>
+<body>
+  <h1>요소 선택 예제</h1>
+
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#">메뉴1</a></li>
+        <li><a href="#">메뉴2</a></li>
+        <li><a href="#">메뉴3</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <div class="left-box">
+      <section>
+        <article>컨텐츠1</article>
+        <article>컨텐츠2</article>
+      </section>
+    </div>
+    <div class="right-box"></div>
+  </main>
+  <footer>
+    푸터
+  </footer>
+  <script>
+    /* 
+    DOM : Document Object Model
+    - HTML 문서를 트리 구조로 표현
+    - 문서의 각 요소(태그)를 객체로 표현
+    
+    document
+    - 현재 탭 페이지의 HTML 문서를 참조하는 객체
+    - document 객체를 통해 요소를 선택할 수 있음
+
+    요소 선택
+    - 객체를 기준으로 요솔르 선택
+    - document.xxx으로 선택하면 문서 전체를 기준으로 찾고,
+      특정요소.xxx으로 선택하면 특정 요소를 기준으로 찾음
+
+
+    //예시는 document이나 꼭 document가 아니여도 되지만 주로 사용됨  
+    1. 아이디를 이용 //아이디는 중복 불가능 해서 Element
+    document.getElementById(아이디명);
+    - 검색 결과가 0 또는 1개
+    - id 속성의 값이 일치하는 요소를 선택
+
+    2. 클래스명 이용 //클래스는 중복 가능하니 Elements(복수로 표기)
+    document.getElementsByClassName(클래스)
+    - 검색 결과가 0개 이상. 배열처럼 사용
+    - class 속성에 클래스명이 있으면(정확히 일치하지 않아도 OK라는 뜻) 요소를 선택
+
+    3. 태그명을 이용
+    document.getElementsByTagName(태그명)
+    - 검색 결과가 0개 이상. 배열처럼 사용
+    - 태그명이 일치하는 요소를 선택
+
+    ★ 위 3개와 형태가 약간 다름
+    4. 선택자를 이용
+    document.querySellectorAll(선택자);
+    - 선택자에 맞는 요소를 선택
+    - 배열처럼 사용
+    document.querySellector(선택자);
+    - 선택자에 맞는 첫번째 요소를 선택 => 0개 또는 1개
+
+      방법 2,3은 forEach를 사용하지 못함.
+      방법 4는 forEach를 사용함
+    */
+
+    let sections = document.getElementsByTagName("article");
+    document.write(`<hr>`);
+    document.write(`article 태그 개수 : ${sections.length}<br>`);
+
+    let leftBox = document.getElementsByClassName("left-box");
+    leftBox[0].style.border = `1px solid red`;
+
+    let list = document.querySelectorAll("li");
+    // forEach를 이용하여 li태그들에게 테두리를 적용(아직 안배움 확인용)
+    list.forEach(el=> el.style.border = `1px solid blue`)
+
+  </script>
+</body>
+</html>

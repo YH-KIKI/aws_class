@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>요소의 텍스트, html 변경/가져오기 예제</title>
+</head>
+<body>
+  <h1>요소의 텍스트 변경/가져오기 예제</h1>
+  <button class="btn" id="btn1">텍스트 가져오기</button>
+  <button class="btn" id="btn2">텍스트 변경하기</button>
+  <div class="box1">안녕하세요</div>
+
+  <h1>요소의 HTML 변경/가져오기 예제</h1>
+  <button class="btn" id="btn3">HTML 가져오기</button>
+  <button class="btn" id="btn4">HTML 변경하기</button>
+  <button class="btn" id="btn5">HTML 추가하기</button>
+  <div class="box2">
+    <div class="inner-box">이너 박스</div>
+		<a href="#">링크</a>
+		<button>버튼</button>
+  </div>
+
+  <script>
+    /* 
+    요소.innerText
+    - 요소 안에 있는 글자를 가져오거나 변경 
+    - 스타일에 영향을 받음 => 자손 요소에 display : none인 요소가 있으면 글자를 읽어오지 않음
+
+    요소.textContent
+    - 요소 안에 있는 글자를 가져오거나 변경
+    - 스타일에 영향을 받지 않음
+    */
+
+// 텍스트 가져오기 예제
+    const btn1 = document.getElementById("btn1");
+    // const box1 = document.getElementsByClassName("box1")[0];
+    const box1 = document.querySelector(".box1"); //위와 결과는 같으나 1개만 선택가능한 querySelector로 사용해봄
+    btn1.addEventListener("click",()=>{
+      //클래스가 box1인 요소의 글자를 가져와서 alert으로 띄움
+      let text = box1.innerText;
+      alert(text);      
+    })
+
+// 텍스트 변경하기 예제
+    const btn2 = document.getElementById("btn2");
+    const box1Text = box1.textContent;
+    
+    let flag = false;
+    
+    btn2.addEventListener("click", ()=>{
+      let text = "안녕히가세요.";
+      if(!flag){
+        box1.textContent = text;
+      }else{
+        box1.textContent = box1Text;
+      }
+      //조건 선택 연산자를 이용하여 if else문 대체
+      // box1.textContent = !flag ?text : box1Text;
+      flag = !flag;
+    })
+
+    /* 
+    요소.innerHTML 
+    - 요소 안에 있는 HTML 코드를 가져오거나 변경
+    */
+    const btn3 = document.getElementById("btn3");
+    const btn4 = document.getElementById("btn4");
+    const btn5 = document.getElementById("btn5");
+
+    const box2 = document.querySelector(".box2");
+
+    btn3.addEventListener("click",()=>{
+      let html = box2.innerHTML;
+      alert(html);
+    });
+    btn4.addEventListener("click",()=>{
+      box2.innerHTML = '<a gref = "#"> 링크</a>';
+    });
+    btn5.addEventListener("click",()=>{
+      box2.innerHTML = box2.innerHTML + '<a gref = "#"> 링크1</a>';
+      // box2.innerHTML += '<a gref = "#"> 링크1</a>'; //위코드 대체 가능하나 일단 헷갈리니 주석(JAVA에서 다시 다룰 예정)
+    });
+  </script>
+</body>
+</html>
