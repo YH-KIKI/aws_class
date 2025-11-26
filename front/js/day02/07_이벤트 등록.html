@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>이벤트 등록 예제</title>
+</head>
+<body>
+  <h1>이벤트 등록 예제</h1>
+  <!-- 방법1 -->
+  <button type="button" onclick="alert('클릭')">클릭1-1</button> 
+  <button type="button" onclick="click2()">클릭1-2</button>
+  <hr>
+  <!-- 방법2 -->
+  <button type="button" class="btn">클릭2-1</button> 
+  <button type="button" class="btn">클릭2-2</button>
+  <hr>
+  <button type="button" class="btn3">클릭3-1</button> 
+  <button type="button" class="btn3">클릭3-2</button>
+  <script>
+    /* 
+    이벤트 등록 방법
+    1. 요소에 속성으로 이벤트를 등록
+    - 보통은 만들어진 함수를 호출
+    - <태그명 속성1 = "값" on이벤트명="실행할 코드"></태그명> 
+    - 이벤트명은 소문자
+
+    2. 요소.on이벤트명을 이용하여 등록(스크립트)
+    요소.on이벤트명 = function(){
+      //구현;
+    }
+
+    3. 요소.addEventListener를 이용하여 등록(스크립트)
+    - 권장 
+    요소.addEvent
+  */
+  // 1번 방법
+    function click2(){
+      alert("클릭 : click2()");
+    }
+
+  // 2번 방법
+    let btns2 = document.getElementsByClassName("btn");
+    for(i = 0; i < btns2.length; i++){
+      btns2[i].onclick = function(){
+        alert("클릭2");
+      }
+    }
+
+   // 3번 방법
+    let btns3 = document.querySelectorAll(".btn3");
+    btns3.forEach((btn, index) =>{
+      btn.addEventListener("click", function(){
+        alert("클릭3-" + (index + 1));
+      });
+    });
+
+    /* 
+    마우스 이벤트
+      - click : 클릭
+      - dblclick : 더블 클릭
+      - mouseup : 마우스를 뗐을 때
+      - mousedown : 마우스를 눌렀을 때 
+      - mousemove : 마우스를 이동시킬 때
+      - mouseenter : 요소를 hover 했을 때
+      - mouseleave : 요소에서 벗어났을 때
+      - contextmenu : 마우스 우클릭
+    키보드 이벤트
+      - keydown : 키를 눌렀을 때, 모든 키 인식
+      - keypress : 키를 눌렀을 때, 한글을 인식 못함, 특수키에서 발생하지 않음. 표준에서 권장X
+      - keyup: 키에서 뗐을 때
+    form 이벤트
+      - submit : form태그에 적용. 서버에 전송하기 바로 전. return false이면 서버에 전송X
+      - input : 입력 했을 때. 입력 태그에 적용. 복붙도 이벤트가 발생
+      - change : 변경 됐을 때. 입력 태그에 적용. 포커스가 해제되거나, 엔터를 쳤을 때 발생.
+      - focus : 요소가 활성화 될 때
+      - blur : 활성화 됐던 요소가 비활성화 될 때
+    window 이벤트 
+    - window 객체는 최상위 객체
+      - load : 리소스가 모두 로드 됐을 때
+      - scroll : 스크롤이 발생됐을 때
+      - unload : 페이지가 닫히기 전 발생
+      - resize : 브라우저 창 크기가 변경됐을 때 
+
+    DOMContentLoaded 이벤트
+    - HTML문서의 DOM 구조가 모두 로드되면 실행
+    - 가장 많이 사용되는 문서 로딩 이벤트 
+
+    DOMContentLoaded vs load
+    - DOMContentLoaded : DOM 트리만 완성. 속도가 빠름
+    - load : DOM + 이미지 + CSS 등 모든 리소스가 로딩. 속도가 느림 
+    */
+  </script>
+</body>
+</html>
