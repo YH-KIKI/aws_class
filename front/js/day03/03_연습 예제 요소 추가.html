@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>요소 추가 연습 예제</title>
+</head>
+<body>
+	<form action="" id="form">
+		<input type="text" id="text" placeholder="좋아하는 과일을 입력하세요.">
+		<button id="btn" type="submit">등록</button>
+	</form>
+	<ul id="list">
+		
+	</ul>
+	<script>
+		/* 
+		텍스트 입력 후 버튼을 클릭하면 입력된 문구가 리스트에 추가 되도록 작성하세요.
+		*/
+		//input태그 요소 선택
+		const input = document.querySelector("#text");
+		//버튼태그 요소 선택
+		const btn = document.querySelector("#btn");
+		//ul태그 요소 선택
+		const list = document.querySelector("#list");
+		//form 태그 요소 선택
+		const form = document.querySelector("#form");
+
+		//입력 후 엔터를 쳐도 이벤트가 발생하게 하기 위해 추가된 작업
+		form.addEventListener("submit", function(e){
+			//각 태그에 있는 기본 효과를 막아줌
+			e.preventDefault();
+			//input태그에 입력된 텍스트를 가져옴
+			let text = input.value;
+
+			//입력된 값의 문장 앞 뒤 공백을 제거 "   123    " => "123"
+			//trim() : 시작 글자 앞 공백과 마지막 글자 뒤 공백을 제거
+			text = text.trim();
+			
+			//입력된 값이 공백으로 되어 있으면 알림창을 띄움
+			if(text == ""){
+				alert("과일을 입력하세요.");
+				return ;
+			}
+
+			//ul태그에 기존 HTML코드 뒤에 li태그를 추가(입력된 텍스트를 이용)
+			//list.innerHTML = list.innerHTML + `<li>${text}</li>`;
+			//A = A 연산자 B => A 연산자= B;
+			list.innerHTML += `<li>${text}</li>`;
+
+			//추가 후 입력된 텍스트를 제거
+			input.value = "";
+		});
+
+
+// 다른 버전
+		//버튼 태그에 이벤트를 등록(클릭)
+		/*
+		btn.addEventListener("click", function(){
+			//input태그에 입력된 텍스트를 가져옴
+			let text = input.value;
+
+			//입력된 값의 문장 앞 뒤 공백을 제거 "   123    " => "123"
+			//trim() : 시작 글자 앞 공백과 마지막 글자 뒤 공백을 제거
+			text = text.trim();
+			
+			//입력된 값이 공백으로 되어 있으면 알림창을 띄움
+			if(text == ""){
+				alert("과일을 입력하세요.");
+				return ;
+			}
+
+			//ul태그에 기존 HTML코드 뒤에 li태그를 추가(입력된 텍스트를 이용)
+			//list.innerHTML = list.innerHTML + `<li>${text}</li>`;
+			//A = A 연산자 B => A 연산자= B;
+			list.innerHTML += `<li>${text}</li>`;
+
+			//추가 후 입력된 텍스트를 제거
+			input.value = "";
+		});
+		*/
+	</script>
+</body>
+</html>

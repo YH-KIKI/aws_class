@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>이벤트 객체와 버블링</title>
+  <style>
+    .container,
+    .container *{
+      padding:30px; border: 3px solid black;
+      position: relative;
+    }
+    .container::before,
+    .inner-container::before,
+    .box::before{
+      content: 'container';
+      position: absolute; left :0; top: 0; color: red;
+    }
+    .inner-container::before{ content: 'inner-container';}
+    .box::before{ content: 'box';}
+  </style>
+</head>
+<body>
+  <h1>버블링 예제</h1>
+  <div class="container">
+    <div class="inner-container">
+      <div class="box">안녕하세요</div>
+    </div>
+  </div>
+  <div class="box-result"></div>
+  <script>
+    /* 
+    버블링
+    - 요소에 이벤트가 발생하면, 요소에 발생한 이벤트가 조상 요소로 퍼져나가는 것 
+    캡처링
+    - 요소에 이벤트가 발생하면, 요소에 발생한 이벤트가 자손 요소로 퍼져나가는 것
+    */
+
+    const container = document.querySelector(".container");
+    const innerContainer = document.querySelector(".inner-container");
+    const box = document.querySelector(".box");
+    const boxResult = document.querySelector(".box-result")
+
+    container.onclick = (e)=> eventCheck(e);
+    innerContainer.onclick = (e)=> eventCheck(e);
+    box.onclick = (e)=> eventCheck(e);
+
+    function eventCheck(e){
+      e.stopPropagation();
+      let result = `
+        이벤트 타입 : ${e.type} <br>
+        이벤트 target : ${e.target} <br>
+        이벤트 발생 시간 : ${e.timestamp} <br>
+        이벤트 발생 위치 x,y좌표(브라우저) : ${e.clientX}, ${e.clienY} <br>
+        이벤트 발생 위치 x,y좌표(문서) : ${e.pageX}, ${e.pageY} <br>
+        이벤트 발생 위치 x,y좌표(화면) : ${e.screenX}, ${e.screenY} <br>
+        `;
+      console.log(e.target)
+      console.log(e.currentTarget);
+      boxResult.innerHTML = result;
+    }
+
+    /* 
+    이벤트 객체
+    - 이벤트가 발생했을 때 이벤트의 정보를 담고 있는 개체
+    - 이벤트 등록 시 사용하는 함수의 첫번째 매개변수로 이벤트 객체를 넘겨줄 수 있음 
+    - 속성
+      - type : 이벤트 유형(click, keydown 등)
+      - target : 이벤트가 처음 발생한 요소
+      - currentTarget : 이벤트가 발생한 요소
+      - bubbles : 이벤트가 버블링인지 캡처링인지 알려줌
+      - timestamp : 이벤트 생성 시간.
+      - defaultPrevented : 기본 동작이 취소 되었는지 알려줌. true = 취소 / false = 취소 안됨
+        - a태그 : 페이지 이동, form태그는 서버 전송
+      - key : 눌린 키를 문자열로. 영어 대소문자 구별
+      - code : 눌린 키의 키보드상 물리적 위치. 영어 대소문자 구별 못함
+    - 위치
+      - clientX/clientY : 이벤트가 발생한 시점의 뷰포트내 좌표. 브라우저상 위치
+      - pageX/pageY : 이벤트가 발생한 시점 외 문서내 좌표.
+      - screenX/screenY : 이벤트가 발생한 시점의 화면내 좌표
+
+    - 함수
+      - preventDefault() : 기본 동작을 하지 않도록 막음.
+      - stopPropagetion() : 버블링/캡처링을 중지. 다른 이벤트의 버블링/캡처링을 진행 시킴
+      - stopImmediatePropagation() : 버블링/캡처링을 중지. 다른 이벤트의 버블링/캡처링을 막음
+      - 
+
+
+    */
+  </script>
+</body>
+</html>

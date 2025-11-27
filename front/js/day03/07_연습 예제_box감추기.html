@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>박스 감추기 예제</title>
+  <style>
+    .box{
+      height: 300px; border: 3px solid black;
+    }
+    .fold{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <button id="btn1">더보기/접기</button>
+  <div class="box"></div>
+  <script>
+    //요소확인 
+    const box = document.querySelector(".box");
+    const btn1 = document.querySelector("#btn1");
+    
+    //버튼 클릭 이벤트 등록 
+    btn1.addEventListener("click", function(){
+      //박스에 fold 클래스가 없으면 버튼 텍스트를 더보기로
+      if(!box.classList.contains("fold")){
+        btn1.textContent = "더보기";
+      }
+      
+      // 있으면 텍스트를 접기로 변경
+      else{
+        btn1.textContent = "접기";
+      }
+      //박스에 fold 클래스를 토글
+      box.classList.toggle("fold")
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>속성 가져오기</title>
+</head>
+<body>
+  <h1>표준 속성 사용 예제</h1>
+  <div class="container">
+    <button id="btn1">이미지 변경</button>
+    <button id="btn2">입력값 가져오기</button>
+    <button id="btn3">입력값 리셋</button>
+    <button id="btn4">박스 value 가져오기</button>
+    <hr>
+    <div id="box1" value="안녕하세요.">안녕하세요.</div>
+    <input type="text" id="text1"> <br>
+    <img src="../../../static/img/오둥.png" alt="이미지" width="200">
+  </div>
+  <h2>표준 속성이 아닌 속성 사용 예제</h2>
+  <div class="container">
+    <button id = btn5>박스 value 가져오기</button>
+    <button id = btn6>박스 value 수정하기</button>
+    <hr>
+    <div id="box2" value="123">안녕하세요.</div>
+  </div>
+  <h1>dataset 사용 예제</h1>
+  <div class="container">
+    <button id = btn7>dataset 가져오기</button>
+    <button id = btn8>dataset 수정하기</button>
+    <hr>
+    <div id="box3" data-age="20" data-name="홍길동" data-addr="서울시">안녕하세요.</div>
+  </div>
+  
+  <script>
+    /* 
+    요소 : <태그명 속성1= "값" 속성2="값2"> 
+    표준 속성
+    - 각 태그마다 사용할 수 있는 속성
+    - 태그마다 종류가 다름
+    - 예 : input태그의 value 속성, img태그의 src 속성, a태그의 href속성
+
+    표준 속성의 값 가져오기
+    - 요소.표준속성명
+
+    input요소.value => 입력된 값을 가져옴
+    */
+   const btn1 = document.querySelector("#btn1");
+   const btn2 = document.querySelector("#btn2");
+   const btn3 = document.querySelector("#btn3");
+
+   const img = document.querySelector("img");
+   const input1 = document.querySelector("#text1")
+   
+   btn1.addEventListener("click", function(){
+    img.src = "../../../static/img/마커.png"
+   })
+
+   btn2.addEventListener("click", function(){
+    alert(input1.value)
+   })
+
+   btn3.addEventListener("click", function(){
+    input1.value = "";
+   })
+
+   btn4.addEventListener("click", function(){
+    alert(box1.value)
+   })
+
+   /* 
+   getAttribute(속성명) 
+   - 요소의 속성값을 가져옴.
+   - 표준 속성이 아닌 속성을 가져올 때 사용
+
+   setAttribute(속성명, 값)
+   - 요소의 속성값을 변경함
+   - 표준 속성이 아닌 속성을 변경할 때 사용
+
+   data-*
+   - HTML 코드 안에 데이터를 넣을 수 있는 공식 표준 방식
+
+   data-target 가져오기
+   - 요소.dataset.target(빼기 뒤에있는 단어)
+     ex) data-user-id => 요소.dataset.userId (-는 1번만 그뒤에 단어는 카멜표기법)
+
+   dat-target 변경하기
+   - 요소.dataset.target = 값;
+   */
+
+  </script>
+  <script>
+    const btn5 = document.querySelector("#btn5");
+    const btn6 = document.querySelector("#btn6");
+
+    const box2 = document.querySelector("#box2");
+
+    btn5.addEventListener("click", function(){
+      alert(box2.getAttribute("value"));
+      /* 만약 value를 더 활용한다면? 
+      let value = box2.(box2.getAttribute("value");
+      alert(value);
+      */
+    });
+     
+    btn6.addEventListener("click", function(){
+      box2.setAttribute("value", "456");
+    })
+  </script>
+  <script>
+    const btn7 = document.querySelector("#btn7");
+    const btn8 = document.querySelector("#btn7");
+
+    const box3 = document.querySelector("#box3");
+
+    btn7.addEventListener("click", function(){
+      let age = box3.dataset.age ;
+      let name = box3.dataset.name ; 
+      let addr = box3.dataset.addr ;
+
+      alert(`이름 : ${name}, 나이 : ${age}, 주소 : ${addr}`);
+
+    })
+    btn8.addEventListener("click", function(){
+      box3.dataset.age = 23;
+      box3.dataset.name = "임꺽정"; 
+      box3.dataset.addr = "부산시";
+    })
+
+  </script>
+</body>
+</html>

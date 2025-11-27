@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>요소 추가 예제</title>
+</head>
+<body>
+  <h1>요소 추가 예제</h1>
+  <button id="btn1">리스트 안, 앞에 추가</button>
+  <button id="btn2">리스트 안, 끝에 추가</button>
+  <button id="btn3">리스트 앞에 추가</button>
+  <button id="btn4">리스트 뒤에 추가</button>
+  <hr>
+  <ul id="list">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+  </ul>
+  <script>
+    /* 
+    요소 생성
+    document.createElement("태그") 
+    - 태그로 된 요소를 생성
+    document.createTextNode("텍스트")
+    - 텍스트 노드를 생성
+
+    요소를 배치
+    부모요소.append(요소1, 요소2, ...)
+    - 부모 요소 안에 마지막 자식 요소 뒤에 요소들을 추가
+    부모요소.appendChild(요소)
+    - 부모 요소 안에 마지막 자식 요소 뒤에 요소를 추가
+    부모요소.prepend(요소1, 요소2, ...)
+    - 부모 요소 안에 첫번째 자식 요소 앞에 요소들을 추가
+    
+    요소.before(요소1)
+    - 요소1을 요소 앞에 추가
+    요사.after(요소1)
+    - 요소1을 요소 뒤에 추가
+    */
+
+    const btn1 = document.querySelector("#btn1")
+    const btn2 = document.querySelector("#btn2")
+    const btn3 = document.querySelector("#btn3")
+    const btn4 = document.querySelector("#btn4")
+
+    const list = document.querySelector("#list")
+
+ // 자식 앞에 추가
+    btn1.addEventListener("click", function(){
+      // 간단한 방법
+                  // let li = document.createElement("li");
+                  // // li 요소에 들어갈 텍스트 노드 생성
+                  // let textNode = document.createTextNode("추가된 노드");
+                  // // li 요소에 텍스트 추가
+                  // li.append(textNode);
+
+      //맨뒤에 함수 이용해서 하는 방법 
+      let li = createElement("li", "노드 추가")
+
+      //리스트 제일 앞에 추가
+      list.prepend(li);
+    });
+// 자식 뒤에 추가
+    btn2.addEventListener("click", function(){
+      let li = createElement("li", "뒤에 추가")
+
+      //리스트 제일 뒤에 추가
+      list.append(li);
+    
+    });
+// 내 앞에 추가 (리스트 앞)
+    btn3.addEventListener("click", function(){
+      let a = createElement("a", "네이버로");
+      //href를 naver.com으로
+      a.setAttribute("href","//naver.com");
+
+      list.before(a);
+    
+    });
+
+// 내 뒤에 추가 (리스트 뒤)
+    btn4.addEventListener("click", function(){
+      let input = createElement("input");
+
+      list.after(input)
+    });
+
+    //태그와 태그 안에 들어갈 텍스트가 주어지면 요소를 생성해서 반환
+    function createElement(tagName, text){
+      // li요소 생성
+      let el = document.createElement(tagName);
+      if(text){
+        // li 요소에 들어갈 텍스트 노드 생성
+        let textNode = document.createTextNode(text);
+        // li 요소에 텍스트 추가
+        el.append(textNode);
+      }
+      return el;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<htm lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>요소 삭제</title>
+</head>
+<body>
+  <button id="btn1">첫번째 li 삭제</button>
+  <button id="btn2">ul 전체 삭제</button>
+
+  <ul class="list">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+  </ul>
+  <script>
+    /* 
+    부모요소.removeChild(자식요소)
+    - 자식 요소를 삭제
+    요소.remove()
+    - 요소를 삭제
+    */
+   const btn1 = document.querySelector("#btn1");
+   const btn2 = document.querySelector("#btn2");
+   const list = document.querySelector(".list");
+
+   btn1.addEventListener("click", function(){
+    const firstLi = list.querySelector("li");
+    list.removeChild(firstLi);
+   });
+   btn2.addEventListener("click", function(){
+    list.remove();
+   });
+ 
+
+  </script>
+</body>
+</htm>

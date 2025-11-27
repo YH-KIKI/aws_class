@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class 예제</title>
+  <style>
+    .box{
+      border : 3px solid black; height: 300px;
+      background-color: yellow;
+    }
+    .active{
+      background-color: skyblue;
+    }
+    .border-0{
+      border:0;
+    }
+  </style>
+</head>
+<body>
+  <button id="btn1" onclick="click1()">클래스 확인</button>
+  <button id="btn2" onclick="click2()">active 클래스 추가</button>
+  <button id="btn3" onclick="click3()">active 클래스 제거</button>
+  <button id="btn4" onclick="click4()">active 클래스 토글</button>
+  <button id="btn5" onclick="click5()">active 클래스 확인</button>
+  <button id="btn6" onclick="click6()">active => border 0</button>
+  <button id="btn7" onclick="click7()">첫번째 클래스이름 확인(0번지)</button>
+
+  <div class="box box1"></div>
+  <script>
+    /* 
+    1. 요소.classList
+    - 요소의 클래스를 가져옴
+    2. 요소.classList.add(클래스명) 
+    - 요소의 클래스를 추가
+    3. 요소.classList.remove(클래스명)
+    - 요소의 클래스를 제거
+    4. 요소.classList.toggle(클래스명)
+    - 요소에 클래스가 있으면 제거, 없으면 추가
+    5. 요소.classList.contains(클래스명)
+    - 요소에 클래스가 있는지 없는지를 알려줌
+    6. 요소.classList.replace(클래스1, 클래스2)
+    - 요소에 클래스1을 클래스2로 수정
+    7. 요소.classList.item(번지)
+    - 요소에 번지에 있는 클래스를 가져옴
+    */
+    const box1 = document.querySelector(".box1");
+    function click1(){
+      alert(box1.classList);
+    }
+
+    //클래스 추가
+    function click2(){
+      box1.classList.add("active");
+    }
+    //클래스 제거
+    function click3(){
+      box1.classList.remove("active");
+    }
+    //클래스 토글
+    function click4(){
+      box1.classList.toggle("active");
+    }
+    //클래스 있는지 확인
+    function click5(){
+      alert(`active 클래스가 있습니까? ${box1.classList.contains("active")}`);
+    }
+    //클래스 교체
+    function click6(){
+      box1.classList.replace("active", "border-0");
+    }
+    //클래스 토글
+    function click7(){
+     alert(box1.classList.item(0));
+    }
+    
+  </script>
+</body>
+</html>
