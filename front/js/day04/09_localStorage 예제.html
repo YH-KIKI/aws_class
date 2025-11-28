@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>localStorage 예제</title>
+</head>
+<body>
+	<h1>localStorage 예제</h1>
+	<input type="text" placeholder="학생이름을 입력하세요." id="input">
+	<ul class="list">
+	</ul>
+
+	<script>
+		/* 
+		localStorage에 저장된 list를 가져와서 화면에 출력
+		*/
+		const list = document.querySelector(".list");
+		const input = document.querySelector("#input")
+		
+		
+		//DOM 트리가 로딩 되면 로컬저장소에 있는 학생 정보를 가져와서 화면에 배치
+		document.addEventListener("DOMContentLoaded", function(){
+			
+			let objs = localStorage.getItem("list");
+			
+			if(objs){
+				//문자열을 객체로 변환
+				objs = JSON.parse(objs);
+			}else{
+				objs = [];
+			}
+			
+			objs.forEach((obj, index)=>{
+				list.innerHTML += createItem(obj.name, obj.age, index);
+			});
+			if(objs.length == 0){
+				list.innerHTML = '<h1>등록된 학생이 없습니다.</h1>'
+			}
+		});
+
+		//브라우저가 닫히기 전 학생 정보를 가져와서 로컬 저장소에 저장
+		window.addEventListener("beforeunload", function(){
+			saveLS();
+		});
+
+
+		function createItem(name, age, index){
+			return `
+				<li>
+					<span class="title" data-age="${age}" data-name="${name}">${name}</span>
+					<button class="btn-mod">수정</button>
+					<button class="btn-del">X</button>
+				</li>
+			`
+		}
+
+		input.addEventListener("change", function(){
+			let name = input.value;
+			let age = parseInt(Math.random() * 100 + 1); //1~100사이의 랜덤한 정수. 나이를 랜덤으로
+			let obj = {
+				name : name,
+				age : age
+			}
+
+			//화면 끝에 추가
+			if(list.querySelectorAll("li").length >= 1){
+				list.innerHTML += createItem(name, age);
+			}
+			else{
+				//등록된 학생이 없습니다를 덮어쓰기로 지움
+				list.innerHTML = createItem(name, age);
+			}
+
+			//리스트에 추가된 정보를 포함하여 저장
+			saveLS();
+		})
+
+		//삭제 기능 구현
+		list.addEventListener("click", function(e){
+			let el = e.target;//이벤트가 발생한 요소를 el에 저장
+
+			
+			//이벤트가 발생한 요소에 btn-del클래스가 있으면 => X버튼을 누르면
+			if(el.classList.contains("btn-del")){
+				
+				el.parentElement.remove();
+
+				if(list.querySelectorAll("li").length == 0){
+					list.innerHTML = '<h1>등록된 학생이 없습니다.</h1>'
+				}
+				saveLS()
+			}
+		});
+
+		function saveLS(){
+			//ul 리스트 밑에 있는 모든 li
+			let items = list.querySelectorAll("li");
+
+			let itemList = [];
+			//남아 있는 모든 li태그에서 name과 age를 가져와서 객체로 만들어서 배열에 저장
+			items.forEach(item=>{
+				let itemTitle = item.querySelector(".title");
+
+				let age = itemTitle.dataset.age;
+				let name = itemTitle.dataset.name;
+				//객체로 만들어서 배열에 저장
+				itemList.push({
+					name : name,
+					age : age
+				});
+			})
+			
+			localStorage.setItem("list", JSON.stringify(itemList));
+		}
+
+	</script>
+</body>
+</html>

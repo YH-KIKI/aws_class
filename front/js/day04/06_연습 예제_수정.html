@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>수정 예제 연습</title>
+</head>
+<body>
+  <h1>리스트 클릭해서 수정하기</h1>
+  <ul id="list">
+    <li class="item">포도</li>
+    <li class="item">바나나</li>
+    <li class="item">오렌지</li>
+  </ul>
+  <script>
+    /* 
+    li태그를 클릭하면 prompt를 띄우고, 내용을 입력하고 확인을 누르면 해당 li태그의 내용이 변경되도록 작성 
+    */
+    const list = document.querySelector("#list")
+
+    list.addEventListener("click", function(e){
+      let el = e.target;
+
+      if(el.classList.contains("item")){
+        let text = prompt("내용을 입력하세요.", el.textContent);
+
+        //li태그의 텍스트를 입력받은 문구로 수정
+        //prompt에서 확인을 누르면 문구를 수정
+        if(text){   // 취소를 누르면 안바뀌도록 if안에
+          el.textContent = text;
+        }
+      }})
+
+  </script>
+</body>
+</html>

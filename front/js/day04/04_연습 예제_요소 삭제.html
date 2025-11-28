@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>요소 삭제 예제</title>
+</head>
+<body>
+  <ul>
+    <li>
+      <span>사과</span>
+      <button class="del-btn">X</button>
+    </li>
+    <li>
+      <span>바나나</span>
+      <button class="del-btn">X</button>
+    </li>
+    <li>
+      <span>딸기</span>
+      <button class="del-btn">X</button>
+    </li>
+  </ul>
+  <script>
+    /* X버튼을 클릭하면 X버튼이 있는 행을 삭제 */
+
+    // button 요소 선택
+    const delBtn = document.querySelectorAll(".del-btn")
+
+    // 이벤트 선택
+    delBtn.forEach(btn=>{
+      btn.addEventListener("click", function(){
+        // 버튼을 감싸는 부모 요소를 삭제 
+        btn.parentElement.remove()
+      })
+    });
+
+    /* 
+    // forEach 동작원리 
+    for(i = 0; i<delBtns.lenth; i++){
+    let btn = delBtns[i]} 
+    */
+  </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM 요소 탐색</title>
+  <style>
+    body div{
+      border: 3px solid black; padding: 30px;
+    }
+    .inner-container{
+      display: flex;
+    }
+    .left-box,.right-box{
+      width: 100%; margin: 0 5px;
+    }
+    .box+.box{
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="inner-container">
+      <div class="left-box">
+        <div class="box1"></div>
+        <div class="box2"></div>
+        <div class="box3"></div>
+      </div>
+      <div class="right-box">
+        <div class="box1"></div>
+        <div class="box2"></div>
+        <div class="box3"></div>
+    </div>
+  </div>
+  <script>
+    /* 
+    조상 탐색 
+    1. 부모 요소 탐색
+    요소.parentElement
+
+    2. 조상 탐색
+    요소.closest("선택자")
+    - 요소의 조상들 중, 선택자와 일치하는 가장 가까운 조상 요소를 선택
+    - 없으면 null을 반환
+
+    자손 탐색
+    1. 자식 탐색
+    요소.firstElementChild
+    -첫번째 자식 요소를 선택
+    요소.lastElementChild
+    - 마지막 자식 요소를 선택
+    요소.children
+    - 모든 자식 요소를 선택
+    - forEach를 사용하지 못함. 사용하려면 array로 변환 후 사용.
+
+    2. 자손 탐색
+    요소.querySelector(선택자)
+    - 요소의 자손들 중 선택자와 일치하는 첫번째 요소를 선택
+    요소.qeurySelectorAll(선택자)
+    - 요소의 자손들 중 선택자와 일치하는 모든 자손 요소를 선택
+    
+    형제 탐색
+    요소.nextElementSibling
+    - 요소의 다음요소를 선택
+    요소.previousElementSibling
+
+    모든 형제 탐색
+    [...요소.parentElement.children].filter((child)=> child !== 요소);
+    - 요소.parentElement.children : 나를 포함한 형제들
+    - child !== 요소 : 나를 제외한 요소를 선택
+    */
+
+    const leftBox = document.querySelector(".left-box");
+    
+    //leftBox의 조상들 중 container에게 테두리를 빨간색으로
+    leftBox.closest(".container").style.borderColor = "red";
+
+    //leftBox의 부모 요소의 테두리 종류를 double로
+    leftBox.parentElement.style.borderStyle = "dotted";
+
+
+    const leftCenterBox = document.querySelector(".left-box > .box2")
+    leftCenterBox.style.backgroundColor = "yellow";
+
+    //box2의 앞 형제 배경을 red로
+    leftCenterBox.previousElementSibling.style.backgroundColor = "red";
+
+    //box2의 뒤 형제 배경을 red로
+    leftCenterBox.nextElementSibling.style.backgroundColor = "blue";
+
+    const rightBox = document.querySelector(".right-box")
+    
+    //첫번째 자식 요소의 배경을 skyblue로
+    rightBox.firstElementChild.style.backgroundColor = "skyblue";
+
+    //마지막 자식 요소의 배경을 tomato로
+    rightBox.lastElementChild.style.backgroundColor = "tomato"
+
+    //모든 자식 요소의 테두리 
+    const children = rightBox.children;
+    for(i=0; children.length; i++){
+      children[i].style.borderWidth = "10px";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>연습 예제 요소 추가 삭제 수정</title>
+</head>
+<body>
+  <h1>존경하는 위인 추가하기</h1>
+  <form action="" id="form">
+    <input type="text" id="input">
+    <button type="submit">등록</button>
+  </form>
+  <ul class="list">
+    <li>
+      <span class="title">이순신</span>
+      <button class="btn-mod">수정</button>
+      <button class="btn-del">X</button>
+    </li>
+  </ul>
+  <script>
+
+    const btn = document.querySelector("button");
+    const input = document.querySelector("#input")
+    const form = document.querySelector("#form")
+    const list = document.querySelector(".list")
+
+
+    form.onsubmit = (e) => e.preventDefault();
+    form.addEventListener("submit", (e) => e.preventDefault());  
+  
+    btn.addEventListener("click", addItem);
+
+    function addItem(e){
+      //입력된 위인명을 가져옴 => input 요소의 value값을 가져옴(표준 속성)
+      let text = input.value.trim();
+
+      if(text == ""){
+        alert("위인명을 입력하세요");
+        input.value = ""   //공백을 입력했을때 다시 공백이 삭제되도록
+        return
+      }
+      
+      // li태그로 된 요소를 생성. 요소.createElement(태그명)
+      let li = document.createElement("li")
+
+      //span태그를 생성
+      let span = document.createElement("span")
+
+      // 위에서 가져온 위인명을 이용하여 textNode를 생성
+      let textNode = document.createTextNode(text);
+
+      span.append(textNode);
+      li.append(span);
+
+
+      let modBtn = document.createElement("button");
+      let modBtnTextNode = document.createTextNode("수정")
+
+      let button = document.createElement("button");
+      let btnTextNode = document.createTextNode("X");
+
+      modBtn.append(modBtnTextNode);
+      button.append(btnTextNode);
+    
+
+      //텍스트 노드를 li태그에 추가
+      li.classList.add("btn-mod")
+      li.append(modBtn);            
+      li.append(button);
+      
+
+      li.classList.add("btn-mod")
+      
+      //list에 위에서 만든 문자열을 이어 붙임
+      list.append(li);
+      input.value = ""
+
+    }
+
+    // X버튼을 클릭하면 버블링에 의해 ul태그에 클릭 이벤트가 발생됨
+    list.addEventListener("click", function(e){
+      let el = e.target; //이벤트가 발생한 요소를 el에 저장
+      // 이벤트가 발생한 요소에 btn-del클래스가 있으면 => X버튼을 누르면
+      if(el.classList.contains("btn-mod")){
+        let target = el.parentElement.firstElementChild;
+     // let target = el.parentElement.querySelector(".title"); // 어떤게 부모인지 잘 가늠안되면 바로 클래스로 잡아서 작성하는 방법
+        let text = prompt("내용을 입력하세요.", el.textContent);
+
+        //li태그의 텍스트를 입력받은 문구로 수정
+        //prompt에서 확인을 누리면 문구를 수정
+        if(text){   // 취소를 누르면 안바뀌도록 if안에
+          target.textContent= text;      }
+    }});
+  </script>
+</body>
+</html>

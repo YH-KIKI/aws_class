@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<!-- 부트스트랩 -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+	<!-- 폰트어썸 -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+	<style>
+		.list{
+			list-style: none; padding: 0;
+		}
+		.list li{
+			display: flex;
+			margin-bottom: 10px;
+			justify-content: space-between;
+		}
+		.btns{
+			display: flex;
+		}
+		.btns>i{
+			padding: 0 10px;
+			font-size: 20px;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1 class="text-center">존경하는 위인 추가하기</h1>
+	</header>
+	<main class="container">
+		<form action="" id="form" class="row mb-3">
+			<div class="col-10">
+				<input type="text" id="input" class="form-control">
+			</div>
+			<button type="submit" class="btn btn-primary col-2">등록</button>
+		</form>
+		<ul class="list">
+		</ul>
+	</main>
+	<script>
+		/* 위인을 등록하고, x버튼을 누르면 삭제되는 코드를 구현 */
+		const btn = document.querySelector("button");
+		const input = document.querySelector("#input");
+		const form = document.querySelector("#form");
+		const list = document.querySelector(".list");
+		const TITLE = "list1";
+
+		form.onsubmit = (e) => e.preventDefault();
+		form.addEventListener("submit", (e) =>e.preventDefault());
+
+		btn.addEventListener("click", addItem);
+
+		document.addEventListener("DOMContentLoaded", ()=> {
+			loadLS();
+			drawEmpty()
+		})
+
+		function drawEmpty(){
+			if(list.querySelectorAll("li").length == 0){
+				list.innerHTML =`<li><h3 class="text-center col-12">등록된 내용이 없습니다.<h3></li>`;
+			}
+		}
+		//추가
+		function addItem(e){
+			//입력된 위인명을 가져옴 => input요소의 value값을 가져옴(표준 속성)
+			let text = input.value.trim();
+
+			//입력값이 공백이면 알림 후 입력칸을 비우고 종료
+			if(text == ""){
+				alert("위인을 입력하세요.");
+				input.value = "";
+				return;
+			}
+			
+			if(list.querySelectorAll("li .title").length == 0){
+				list.innerHTML = '';
+			}
+
+			let li = createItem(text);
+			list.append(li);
+
+			setLiDataSet(li, text);
+			input.value = "";
+			saveLS();
+		}
+	
+		//삭제
+		list.addEventListener("click", function(e){
+			let el = e.target;
+			if(el.classList.contains("btn-del")){
+				el.closest("li").remove();
+			}
+			saveLS();
+			drawEmpty()
+		});
+
+		//수정
+		list.addEventListener("click", function(e){
+			let el = e.target;
+
+			//li태그를 클릭하면
+			if(el.classList.contains("btn-mod")){
+				let target = el.closest("li").querySelector(".title");
+				let text = prompt("수정할 내용을 입력하세요.", target.textContent);
+				
+				if(text){
+					target.textContent = text;
+					setLiDataSet(el.closest("li"), text);
+				}
+			}
+			saveLS();
+		});
+
+		function createItem(text){
+			//li 태그로 된 요소를 생성. 요소.createElement(태그명)
+			let li = document.createElement("li");
+
+
+			//span태그를 생성
+			let span = document.createElement("span");
+			span.textContent = text;
+			span.classList.add("title")
+			li.append(span);
+	
+			let btns = document.createElement("div");
+
+			let modBtn = document.createElement("i");
+			modBtn.classList.add("fa-solid", "fa-pen", "btn-mod")
+			
+			let delBtn = document.createElement("i");
+			delBtn.classList.add("fa-regular", "fa-trash-can", "btn-del")
+			
+			btns.append(modBtn, delBtn);
+			btns.classList.add("btns");
+
+			li.append(btns);
+			return li;
+		}
+
+		function loadLS(){
+			let objs = JSON.parse(localStorage.getItem(TITLE));
+			if(!objs){
+				return;
+			}
+			objs.forEach(obj =>{
+				let li = createItem(obj.name);
+				list.append(li);
+			})
+		}
+
+		function saveLS(){
+			//ul 리스트 밑에 있는 모든 li
+			let items = list.querySelectorAll("li");
+
+			let itemList = [];
+			//남아 있는 모든 li태그에서 name과 age를 가져와서 객체로 만들어서 배열에 저장
+			items.forEach(item=>{
+				
+				//객체로 만들어서 배열에 저장
+				let obj = getLiDataSet(item);
+				if(obj){
+					itemList.push(obj);
+				}
+			})
+			
+			localStorage.setItem(TITLE, JSON.stringify(itemList));
+		}
+
+		function setLiDataSet(li, name){
+			let target = li.querySelector(".title");
+			target.dataset.name = name;
+		}
+		function getLiDataSet(li){
+			let target = li.querySelector(".title");
+			console.log(target)
+			if(!target){
+				return;
+			}
+			return {
+				name : target.dataset.name
+			}
+		}
+
+	</script>
+</body>
+</html>

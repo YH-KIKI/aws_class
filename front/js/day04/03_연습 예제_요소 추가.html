@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>요소 추가 연습 예제</title>
+</head>
+<body>
+  <h1>존경하는 위인 추가하기</h1>
+  <form action="" id="form">
+    <input type="text" id="input">
+    <button type="submit">등록</button>
+  </form>
+  <ul class="list"></ul>
+  <script>
+    /* 
+     위인을 입력하고 엔터 또는 등록을 클릭했을 때 입력한 위인이 list에 추가 되도록 작성
+     - 조건 
+     1. 위인명 앞 뒤로 들어간 공백은 제거
+     2. 공백으로만 된 경우 입력하세요라고 출력 후 입력창을 비움
+    */
+
+    // const form = document.querySelector("form")
+    // const input = document.querySelector("#input")
+    // const list = document.querySelector("#list")
+    
+    // form.addEventListener("submit", function(){
+    //   let text = input.value.trim()
+
+    //   if(text == ""){
+    //     alert("위인명을 입력하세요");
+    //     return
+    //   }
+
+    //   let li = createElement("li", text)
+
+    //   list.append(li);
+    // })
+
+
+    const btn = document.querySelector("button");
+    const input = document.querySelector("#input")
+    const form = document.querySelector("#form")
+    const list = document.querySelector(".list")
+
+    form.addEventListener("submit", (e) => e.preventDefault());  
+  
+    btn.addEventListener("click", handler2);
+
+    function handler(e){
+      //입력된 위인명을 가져옴 => input 요소의 value값을 가져옴(표준 속성)
+      let text = input.value.trim();
+
+      if(text == ""){
+        alert("위인명을 입력하세요");
+        input.value = ""   //공백을 입력했을때 다시 공백이 삭제되도록
+        return
+      }
+
+      // li태그와 위에서 가져온 문자열을 이용하여 태그로 구성된 문자열을 만듬
+      let li = `<li>${text}</li>`;
+
+      //list에 위에서 만든 문자열을 list와 html코드에 이어 붙임
+      list.innerHTML = list.innerHTML + li
+      input.value = ""
+    }
+
+    function handler2(e){
+      //입력된 위인명을 가져옴 => input 요소의 value값을 가져옴(표준 속성)
+      let text = input.value.trim();
+
+      if(text == ""){
+        alert("위인명을 입력하세요");
+        input.value = ""   //공백을 입력했을때 다시 공백이 삭제되도록
+        return
+      }
+
+      // li태그로 된 요소를 생성. 요소.createElement(태그명)
+      let li = document.createElement("li")
+
+      // 위에서 가져온 위인명을 이용하여 textNode를 생성
+      let textNode = document.createTextNode(text);
+
+      //텍스트 노드를 li태그에 추가
+      li.append(textNode)
+      
+      //list에 위에서 만든 문자열을 이어 붙임
+      list.append(li)
+      input.value = ""
+
+    }
+  </script>
+</body>
+</html>
