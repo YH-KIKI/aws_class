@@ -40,7 +40,7 @@ public class EX09_Scanner {
 		System.out.println("입력된 문자열 : " + str2);
 		
 		System.out.print("문자 입력 : ");
-		char ch = scan.next().charAt(0); //문자열에서 0번지에(첫번째) 글자를 가져옴
+		char ch = scan.next().charAt(0); //문자열에서 0번지에(첫번째) 글자를 가져옴 / 즉 문자열 => 문자
 		System.out.println("입력된 문자 : " + ch);
 		
 	}
