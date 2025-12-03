@@ -1,8 +1,8 @@
-package day02;
+package Homework;
 
 import java.util.Scanner;
 
-public class HW01_LCM {
+public class HW02_LCM {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

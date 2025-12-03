@@ -1,8 +1,8 @@
-package day01;
+package Homework;
 
 import java.util.Scanner;
 
-public class EX15_HomeWork {
+public class HW01_Score {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

@@ -1,6 +1,6 @@
-package day02;
+package Homework;
 
-public class HW02_Star {
+public class HW03_Star {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -29,7 +29,16 @@ public class HW02_Star {
 		 * ***		i=3, *=3
 		 * ****		i=4, *=4
 		 * *****	i=5, *=5
-		 */
+		 * 				* = i개 
+		 */				
+		
+		for(int i = 1; i <= row; i++) {
+			for(int j = 1; j <= i; j++) {	//* = i라 위에 col을 i로
+				System.out.print("*");
+			}
+			System.out.println("");
+		}
+		
 		
 		
 		/*     *	i=1, 공백=4, *=1
@@ -37,7 +46,20 @@ public class HW02_Star {
 		 *   ***	i=3, 공백=2, *=3
 		 *  ****	i=4, 공백=1, *=4
 		 * *****	i=5, 공백=0, *=5
+		 * 			공백의 개수 + *의 개수 = 5
+		 * 			공백 = 5-i, * = i
 		 */
+		 
+		for(int i = 1; i <= row-i; i++) {
+			for(int j = 1; j <= col; j++) {
+				System.out.print(" ");
+			}
+			System.out.println("*");
+		}
+		
+		 
+		 
+		 
 		
 		/*     *
 		 *    ***
