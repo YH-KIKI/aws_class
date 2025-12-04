@@ -1,6 +1,6 @@
 package day02;
 
-public class Ex01_For {
+public class Ex01_결_For {
 
 	public static void main(String[] args) {
 		/* 반복문 종류

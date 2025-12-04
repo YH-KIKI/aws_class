@@ -1,6 +1,6 @@
 package Homework;
 
-public class EX04_UpDownGame {
+public class HW04_UpDownGame {
 
 	public static void main(String[] args) {
 		

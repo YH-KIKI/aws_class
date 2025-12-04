@@ -21,12 +21,16 @@ public class EX11_ClassMethod {
 		
 		car.turnOff();
 				
-		for(int i = 1; i<=)
+		for(int i = 1; i <= 15; i++) {
+			car.speedDown();
+		}
+		System.out.println("현재 속력은" + car.speed + "km/h 입니다.");
+		car.turnOff();
 	}
-
 }
 
 class MyCar{
+	
 	String company, name, color;
 	int speed;
 	char gear;
@@ -35,11 +39,12 @@ class MyCar{
 	// 시동을 켜는 기능
 	void turnOn() {
 		power = true;
+		System.out.println("부르릉~");
 	}
 		
 	// 시동을 끄는 기능
 	void turnOff() {
-		//주행 중에는 시동이 꺼짖 ㅣ않게
+		//주행 중에는 시동이 꺼지지 않게(실제는 어떨지 모름)
 		if(speed == 0) {
 			power = false;
 			System.out.println("조용~");
@@ -76,7 +81,9 @@ class MyCar{
 	}
 	// 속력 DOWN(브레이크 밟음) : 속력이 1씩 감소
 	void speedDown() {
-		speed--;
+		if(speed > 0) {
+			speed--;
+		}		
 	}
 	
 }

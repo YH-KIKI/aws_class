@@ -1,6 +1,6 @@
 package day02;
 
-public class Ex05_DoWhile {
+public class Ex05_결_DoWhile {
 
 	public static void main(String[] args) {
 		/* do while문

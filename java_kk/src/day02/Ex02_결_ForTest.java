@@ -1,6 +1,6 @@
 package day02;
 
-public class Ex02_ForTest {
+public class Ex02_결_ForTest {
 
 	public static void main(String[] args) {
 

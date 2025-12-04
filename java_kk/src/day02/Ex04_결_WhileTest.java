@@ -1,6 +1,6 @@
 package day02;
 
-public class Ex04_WhileTest {
+public class Ex04_결_WhileTest {
 
 	public static void main(String[] args) {
 		

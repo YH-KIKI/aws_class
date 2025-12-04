@@ -1,6 +1,6 @@
 package day02;
 
-public class Ex03_While {
+public class Ex03_결_While {
 
 	public static void main(String[] args) {
 		/* while문 문법
