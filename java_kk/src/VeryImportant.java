@@ -30,6 +30,7 @@ public class VeryImportant {
 		 *   - String : ***
 		 *   - enum : *
 		 * 
+		 * 제네릭 : ★★
 		 * 컬렉션 프레임워크 : ****
 		 *   - List : *****
 		 *   - Set : **
