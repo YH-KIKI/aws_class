@@ -1,6 +1,11 @@
 package Homework;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Random;
 import java.util.Scanner;
+
+import lombok.AllArgsConstructor;
 
 public class HW09_BaseballGame2 {
 
@@ -31,8 +36,17 @@ public class HW09_BaseballGame2 {
 		 *  3. 종료
 		 *  메뉴 선택 : 3
 		 * */
-		
-
+		int num = HW08_BaseballGame.play();
+		System.out.println(num);
 	}
 
 }
+
+@Data
+@AllArgsConstructor
+
+class GameRecord{
+	String name;
+	int count;
+}
+		
