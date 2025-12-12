@@ -139,6 +139,7 @@ class GameRecord implements Comparable<GameRecord>{
 		return name + " : " + score + "점";  			
 	}
 
+	//이름만 같으면 같은 객체로 보는 코드
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
