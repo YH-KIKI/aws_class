@@ -1,6 +1,6 @@
 package day03;
 
-public class EX04_ARRAYCopy {
+public class EX04_ArrayCopy {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
