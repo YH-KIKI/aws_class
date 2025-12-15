@@ -82,10 +82,23 @@ insert into subject(grade, semester, title) values(2, 1, "국어"), (2, 1, "수�
 # 성적 추가
 select * from student;
 # 1학년 1반 1번 학생의 1학년 1학기 성적 - 국어 : 90, 수학 : 80
-insert into score(st_code, sj_code, score) values(4, 1, 90), (4, 2, 80);
+insert into score(st_code, sj_code, score) 
+values(4, 1, 90), (4, 2, 80);
 # 1학년 1반 2번 학생의 1학년 1학기 성적 - 국어 : 100, 수학 : 100
-insert into score(st_code, sj_code, score) values(5, 1, 100), (5, 2, 100);
+insert into score(st_code, sj_code, score) 
+values(5, 1, 100), (5, 2, 100);
 # 1학년 2반 1번 학생의 1학년 1학기 성적 - 국어 : 50, 수학 : 100
-insert into score(st_code, sj_code, score) values(6, 1, 50), (6, 2, 100);
+insert into score(st_code, sj_code, score) 
+values(6, 1, 50), (6, 2, 100);
 # 2학년 1반 1번 학생의 2학년 1학기 성적 - 국어 : 100, 수학 : 50
-insert into score(st_code, sj_code, score) values(7, 1, 100), (7, 2, 50);
+insert into score(st_code, sj_code, score) 
+values(7, 5, 100), (7, 6, 50);
+
+
+# 1학년 1번에 새로운 학생이 전학을 왔다. 이때 필요한 쿼리를 작성
+# 이름은 가나다. 번호는 3번
+
+insert into student(grade, class, num , name)
+values(1, 1, 3, "가나다");
+
+
