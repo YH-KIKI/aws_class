@@ -23,12 +23,14 @@ insert into sample.student(grade, class, num , name) values(1, 1, 3, "고길동"
 # insert select문 -> 내가 추가하려는 값 일부를 검색해서 사용해야 하는 경우
 
 # 데이터 수정 : update
+
 # update 테이블
 #	set
 #		컬럼1 = 값1,
 #		컬럼2 = 값2
 # 	where
 #		조건
+
 # SQL에서 =은 대입연산자가 아니라 비교 연산자 == 의미
 # =이 대입연산자 역할으 하려면 앞에 set이 나와야 함
 # 같다 : =, 같지 않다 : != 또는 <>
@@ -55,6 +57,7 @@ update student
 update student
 	set
 		grade =2;
+        
 # 삭제 : delete
 # delete from 테이블명 where 조건
 delete from student
@@ -62,6 +65,7 @@ delete from student
 		grade = 2 and class =1 and num =1;
 # 전체 학생 삭제 (조건이 없으면 전체삭제)
 delete from student;
+
 
 # 샘플 데이터 추가
 insert into student(grade, class, num , name) values(1, 1, 1, "홍길동");
