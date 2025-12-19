@@ -1,0 +1,136 @@
+# 학과별 등록된 교수 수를 조회
+SELECT MAJOR.*, COUNT(PR_NUM) 교수수 FROM MAJOR 
+	LEFT JOIN PROFESSOR ON MJ_CODE = PR_MJ_CODE
+    GROUP BY MJ_CODE;
+    
+# 2025년도에 컴퓨터공학(160)에 임용한 교수 수를 조회
+SELECT COUNT(*) FROM PROFESSOR 
+WHERE PR_NUM LIKE CONCAT('_', 2025, 160,'%');
+
+# 컴퓨터공학과 학생들을 조회 
+# 컴퓨터공학과의 학과 코드인 160을 이용하여 조회 
+
+# 방법1 : 학번에 학과코드 위치에 있는 값을 가져와서 160인지 확인  
+SELECT * FROM STUDENT WHERE SUBSTRING(ST_NUM, 5, 3) = 160;
+
+# 방법2 : 학생전공을 JOIN하여 학생 전공이 160공인 학생을 조회
+SELECT * FROM STUDENT 
+	JOIN STUDENT_MAJOR ON ST_NUM = SM_ST_NUM
+    WHERE SM_MJ_CODE = 160;
+
+# 방법3 : 학생전공 테이블을 서브쿼리로 이용하여 조회 
+SELECT * FROM STUDENT 
+WHERE
+	# 일치하는 학생들을 조회 
+	ST_NUM IN(
+		# 학생 전공 테이블에서 컴퓨터공학과인 학생들의 학번들을 가져와서
+		SELECT SM_ST_NUM 
+        FROM STUDENT_MAJOR 
+        WHERE SM_MJ_CODE = 160) ;
+	# ST_NUM IN ('2025160001','2025160002','2025160003','2025160004')
+    
+# 학과별 등록된 학생수를 조회(학과 정보 + 학생수)
+SELECT MAJOR.*, COUNT(SM_ST_NUM) 학생수 
+FROM MAJOR
+	LEFT JOIN STUDENT_MAJOR 
+    ON MAJOR.MJ_CODE/*기본키*/ = STUDENT_MAJOR.SM_MJ_CODE/*외래키*/
+    GROUP BY MJ_CODE;
+    
+# 홍길동(2025160001) 학생이 수강한(수강신청, 수강중, 수가완료) 모든 강의를 조회
+# 강의제목 포함 
+SELECT SUBJECT.*  FROM COURSE 
+	JOIN LECTURE ON CO_LT_NUM = LT_NUM
+    JOIN SUBJECT ON SJ_CODE = LT_SJ_CODE
+WHERE CO_ST_NUM = '2025160001'; 
+
+SELECT SUBJECT.* FROM SUBJECT
+	JOIN LECTURE ON LT_SJ_CODE = SJ_CODE
+    WHERE LT_NUM IN (
+		# 홍길동 학생이 수강한 강의 번호들 
+		SELECT CO_LT_NUM FROM COURSE WHERE CO_ST_NUM = '2025160001');
+
+# 홍길동 학생이 이수한 학점을 조회 
+SELECT ST_NAME 이름, IFNULL(SUM(SJ_POINT),0) 이수학점  
+FROM 
+	(SELECT * FROM COURSE 
+		WHERE CO_SCORE IS NOT NULL
+			AND CO_SCORE NOT IN("F", "FAIL")
+    ) C
+	JOIN LECTURE ON CO_LT_NUM = LT_NUM
+    JOIN SUBJECT ON SJ_CODE = LT_SJ_CODE
+    RIGHT JOIN STUDENT ON CO_ST_NUM = ST_NUM
+    WHERE ST_NUM = '2025160001'
+    GROUP BY ST_NAME;
+
+# 컴퓨터 개론(COM001) 수강 신청을 한 학생 명단을 조회 
+SELECT ST_NAME FROM COURSE 
+	JOIN LECTURE ON LT_NUM = CO_LT_NUM
+    JOIN STUDENT ON CO_ST_NUM = ST_NUM
+    WHERE LT_SJ_CODE='COM001';
+
+# 홍교수님(P2025160001)이 강의하는 강의 목록을 조회
+SELECT SJ_NAME
+FROM
+    LECTURE
+        JOIN
+    SUBJECT ON LT_SJ_CODE = SJ_CODE
+WHERE 
+	LT_PR_NUM = 'P2025160001';
+
+# 강의별 수강생 수를 조회 강의번호, 수강생수 
+SELECT LT_NUM 강의번호, LT_CURRENT 수강생수 FROM LECTURE;
+
+# 강의별 수강생 수가 가장 많은 강의를 조회(무조건 1개 조회) 
+SELECT LT_NUM 강의번호, LT_CURRENT 수강생수 
+FROM LECTURE
+ORDER BY LT_CURRENT DESC
+LIMIT 1;
+
+SELECT * FROM (
+	SELECT 
+		DENSE_RANK() OVER(ORDER BY LT_CURRENT DESC) 순위,
+		LT_NUM 강의번호, LT_CURRENT 수강생수
+	FROM LECTURE
+) L
+WHERE 순위 = 1;
+
+# 김교수님(P2025160002)이 지도하는 지도학생 목록을 조회 
+SELECT * FROM STUDENT WHERE ST_PR_NUM = 'P2025160002';
+
+# 교수별 지도학생 수를 조회
+SELECT PROFESSOR.*, 
+    COUNT(ST_NUM) 지도학생수  FROM STUDENT 
+	RIGHT JOIN PROFESSOR ON PR_NUM = ST_PR_NUM
+	GROUP BY PR_NUM; 
+
+# 홍길동(2025160001) 학생이 이수한 총 학점을 조회
+# 이수는 성적이 PASS이거나 F가 아니거나 NULL이 아니면 계산
+SELECT SUM(SJ_POINT) 이수총학점 FROM COURSE
+JOIN LECTURE ON CO_LT_NUM = LT_NUM
+JOIN SUBJECT ON SJ_CODE = LT_SJ_CODE
+WHERE CO_ST_NUM = '2025160001' # 홍길동 학생
+#!(CO_SCORE = 'F' OR CO_SCORE = 'FAIL'); / AND (CO_SCORE != 'F' OR CO_SCORE != 'PASS') 도 가능
+AND CO_SCORE NOT IN('F', 'FAIL')	# 성적이 나왔지만 이수 못함
+AND CO_SCORE IS NOT NULL;			# 학기 진행 중
+
+# 학생별 총 이수학점 조회
+# 이수는 성적이 PASS이거나 F가 아니거나 NULL이 아니면 계산
+
+SELECT ST_NUM 학번, ST_NAME 이름, IFNULL(SUM(SJ_POINT), 0) 이수총학점
+FROM 
+	# 아래 서브쿼리에서 검색 결과는 홍길동 학생의 이수한 수강정보만 조회
+    # 다른 학생은 성적을 입력 안해서 
+	(SELECT * FROM COURSE
+		WHERE 
+			CO_SCORE NOT IN('F', 'FAIL')
+				AND CO_SCORE IS NOT NULL) C
+		JOIN 
+	LECTURE ON CO_LT_NUM = LT_NUM
+		JOIN
+	SUBJECT ON SJ_CODE = LT_SJ_CODE
+		RIGHT JOIN
+	STUDENT ON ST_NUM = CO_ST_NUM
+    GROUP BY ST_NUM;
+
+
+

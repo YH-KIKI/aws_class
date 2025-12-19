@@ -1,0 +1,102 @@
+# 이벤트 스케쥴러 
+# - 특정 작업이 정기적으로 실행되도록 예약하는 기능
+# - 특정 작업이 일정 시간 후 한번만 실행되도록 예약하는 기능 
+# - 예 
+#   - 카카오 페이지에서 24:00가 되면 기간이 지난 무료 캐시를 제거 => 이벤트 스케쥴러 
+
+# 이벤트 스케쥴러 상태 확인
+# VALUE가 ON이면 스케쥴러를 사용, OFF이면 스케쥴러 사용 안함 
+SHOW VARIABLES LIKE 'EVENT%';
+
+# 이벤트 스케쥴러 상태를 변경 
+# 값 : ON | OFF 
+# SET GLOBAL EVENT_SCHEDULER = 값;
+
+# 이벤트 스케쥴러 확인 
+SELECT * FROM INFORMATION_SCHEMA.EVENTS;
+
+# 이벤트 스케쥴러 등록(정의) 
+/*
+DELIMITER 기호 
+CREATE EVENT 이벤트명 
+ON SCHEDULE EVERY 숫자 단위 
+[START 시간]
+[ON COMPLETION PRESERVE | ON COMPLETION NOT PRESERVE]
+[COMMENT '설명']
+DO
+BEGIN 
+	실행할 쿼리; 
+END 기호
+DELIMITER ;
+
+- 단위 
+  - YEAR, QUARTER, MONTH, DAY, HOUR, MINUTE, WEEK, SECOND 
+  - YEAR_MONTH, MONTH_HOUR, DAY_MINUTE, DAY_SECOND, HOUR_MINUTE, 
+    HOUR_SECOND, MINUTE_SECOND 
+- STARTS 시간 
+  - 스케쥴러가 실행될 기준 시간. 생략되면 등록 시간이 기준 시간 
+- ON COMPLETION PRESERVE
+  - 이벤트 스케쥴러 작업이 완료된 후 이벤트를 보존(유지)
+- ON COMPLETION NOT PRESERVE
+  - 이벤트 스케쥴러 작업이 완료된 후 이벤트를 보존하지 않고 삭제(한번만)
+  - 기본값 
+*/
+
+# 스케쥴러 삭제 
+# DROP EVENT IF EXISTS 이벤트명; 
+DROP EVENT IF EXISTS EVENT_BUY; 
+
+DELIMITER $$
+CREATE EVENT EVENT_BUY 
+ON SCHEDULE
+AT ADDTIME(NOW(), "00:02:00")
+ON COMPLETION NOT PRESERVE
+DO
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION 
+    BEGIN 
+		ROLLBACK;
+	END;
+    
+    START TRANSACTION;
+    
+	INSERT INTO BUY(ADDRESS, AMOUNT, CODE, PRICE, ID)
+	VALUES("부천", 1, "ACC005", 150000, "abc123");
+    
+    COMMIT;
+END $$
+DELIMITER ;
+
+# ACC001 제품의 수량을 1분마다 1씩 증가시키는 스케쥴러 등록 
+DROP EVENT IF EXISTS AMOUNT_PLUS;
+
+DELIMITER $$
+CREATE EVENT AMOUNT_PLUS
+ON SCHEDULE EVERY 1 MINUTE
+ON COMPLETION PRESERVE
+DO
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION 
+    BEGIN 
+		ROLLBACK;
+	END;
+    
+    START TRANSACTION;
+    
+    UPDATE PRODUCT SET AMOUNT = AMOUNT + 1 WHERE CODE = "ACC001";
+    
+    COMMIT;
+END $$
+DELIMITER ;
+
+SELECT * FROM INFORMATION_SCHEMA.EVENTS;
+
+
+
+
+
+
+
+
+
+
