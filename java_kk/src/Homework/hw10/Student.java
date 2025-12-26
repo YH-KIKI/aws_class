@@ -1,14 +1,18 @@
 package Homework.hw10;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Student {
+public class Student implements Serializable {
+	
+	private static final long serialVersionUID = 123L;
 	
 	//다음 필드를 추가하세요.
 	//학생의 학년, 반, 번호, 이름, 과목, 성적들
@@ -27,6 +31,7 @@ public class Student {
 	}
 	
 	//결과만 출력하면 되니 void
+	//학생의 성적을 출력하는 메서드
 	public void printScore() {
 		/*
 		 ===================
@@ -44,6 +49,7 @@ public class Student {
 		if(list.size() == 0) {
 			System.out.println("등록된 성적이 없습니다.");
 			System.out.println("===================");
+			return;
 		}
 		
 		
@@ -72,6 +78,67 @@ public class Student {
 		//과목 성적을 지정할 빈 리스트 생성 - 위에 list 변수선언 한 곳 아래 선언해도 상관없음
 		list = new ArrayList<SubjectScore>();
 	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(classNum, grade, num);
+	}
+
+	//학생의 학년,반,번호가 같으면 같다고 판별하는 equals를 오버라이딩하세요.
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Student other = (Student) obj;
+		return classNum == other.classNum 
+				&& grade == other.grade 
+				&& num == other.num;
+	}
+
+	public boolean addSubjectScore(SubjectScore subjectScore) {
+		//등록된 성적인지 확인하기 위해 성적 목록에서 몇번지에 있는지 확인
+		int index = list.indexOf(subjectScore);
+		
+		//없으면(- 1번지이면) 성적을 추가 -> true를 반환 (추가했으니까)
+		if(index < 0) {
+			list.add(subjectScore);
+			return true;
+			//return list.add(subjectScore); 이렇게 한줄로 써도 OK
+		}
+		
+		//있으면 기존 성적에 새 점수로 수정 -> false를 반환(추가가 아닌 수정을 했으니까)
+		
+		//기존 성적 정보
+		SubjectScore selectedScore = list.get(index);
+		//기존 성적을 새 성적으로 수정
+		selectedScore.setScore(subjectScore.getScore());
+		// list.set(index, selectedScore); 위 2줄과 같음 
+		return false;
+	}
+
+	public boolean removeSubjectScore(Subject subject) {
+		
+		// 과목 정보를 이용하여 삭제할 성적 정보를 생성
+		// 0학년 0학기 (과목명 없음) 0점인 성적 정보를 생성
+		SubjectScore subjectScore = new SubjectScore(0, 0, "", 0);
+		// ?학년 ?학기 ?? 0점인 성적으로 변경 
+		subjectScore.setSubject(subject);
+				
+		// 삭제할 성적 정보를 이용하여 성적 목록에서 제거하고 성공하면 true를 반환
+		// 실패하면 false를 반환
+		return list.remove(subjectScore);
+		
+		// 아래 코드로 하면 원하는 결과가 안나옴
+		//remove Objects.equals를 호출 -> 두 객체의 클래스가 다르면 무조건 false
+		// return list.remove(subject);	
+		
+	}
+	
+	
 
 
 }
