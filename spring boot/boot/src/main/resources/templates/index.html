@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>스프링 부트</title>
+
+
+
+</head>
+<body>
+	<main layout:fragment="content">
+	
+	<div class="container">
+		<h1>메인페이지입니다.</h1>
+		<a th:href="@{/abc}">abc 페이지로 이동</a> <br>
+		<div>
+			서버에서 보낸 데이터 :
+			<th:block th:text="${data}">기본값</th:block>
+		</div>
+		<hr>
+		<h1>a태그로 서버에 데이터 전송</h1>
+		<a th:href="@{/abc?name=홍길동&age=21}">홍길동 21살</a>
+		<hr>
+		<h1>form태그로 서버에 데이터 전송</h1>
+		<form th:action="@{/abc}" method="post">
+			<input name="name" placeholder="이름"> <br> <input
+				type="number" name="age" placeholder="나이"> <br>
+			<button>전송</button>
+		</form>
+		<hr>
+		<h1>th:if, unless, switch, case</h1>
+		<h2 th:if="${role == 'GUEST'}">게스트 입니다.</h2>
+		<h2 th:if="${role == 'USER'}">사용자 입니다.</h2>
+		<h2 th:if="${role == 'ADMIN'}">관리자 입니다.</h2>
+		<h2 th:unless="${role == 'ADMIN'}">관리자가 아닙니다.</h2>
+		<th:block th:switch="${role}">
+			<h2 th:case="'GUEST'">게스트 입니다.</h2>
+			<h2 th:case="'USER'">사용자 입니다.</h2>
+			<h2 th:case="'ADMIN'">관리자 입니다.</h2>
+		</th:block>
+		<hr>
+		<h1>th:each</h1>
+		<ul>
+			<!-- 서버에서 보낸 list에 있는 값을 꺼내 human에 담아서 사용   -->
+			<li th:each="human, stat : ${list}">
+				<span th:text="${stat.count}">번호</span>
+				<span th:text="${human.name}">이름</span> - 
+				<span th:text="${human.age}">나이</span>
+			</li>
+		</ul>
+		<!--/* 
+		렌더링 시 이 주석은 html에서 제거 => 개발자 도구(F12)에서 확인 불가능
+		*/-->
+		<!-- 
+		일반 주석 : 렌더링 시 주석이 보임 => 개발자도구(F12)에서 확인 가능
+		 -->
+		<div th:text="${date}"></div>
+		<div th:text="${#dates.format(date, 'yyyy-MM-dd')}"></div>
+	</div>
+	</main>
+</body>
+</html>
