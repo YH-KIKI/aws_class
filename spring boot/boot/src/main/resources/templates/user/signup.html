@@ -10,6 +10,29 @@
 <body>
 	<main layout:fragment="content" class="container">
 		<h1>회원가입</h1>
+		<form action="/signup" method="post">
+			<div class="mb-3 mt-3">
+				<label for="id" class="form-label">아이디:</label> 
+				<input type="text" class="form-control" id="id"
+					placeholder="아이디를 입력하세요" name="id">
+			</div>
+			<div class="mb-3">
+				<label for="pw" class="form-label">비밀번호:</label> 
+				<input type="password" class="form-control" id="pw"
+					placeholder="비밀번호를 입력하세요" name="pw">
+			</div>
+			<div class="mb-3">
+				<label for="pw2" class="form-label">비밀번호 확인:</label> 
+				<input type="password" class="form-control" id="pw2"
+					placeholder="비밀번호를 입력하세요" name="pw2"> <!-- 비번확인은 전송이 필요없어서 name필요없긴함 -->
+			</div>
+			<div class="mb-3 mt-3">
+				<label for="email" class="form-label">이메일:</label> 
+				<input type="text" class="form-control" id="email"
+					placeholder="이메일을 입력하세요" name="email">
+			</div>
+			<button type="submit" class="btn btn-primary col-12">회원가입</button>
+		</form>
 	</main>
 </body>
 </html>

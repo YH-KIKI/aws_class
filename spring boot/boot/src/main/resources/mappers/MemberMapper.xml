@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.hi.boot.dao.MemberDAO">
+	<!-- 
+	id는 dao의 메서드명 
+	resultType은 리턴 타입
+	 - resultType에 패키지명도 써야 하지만 TypeAlias를 이용하면 패키지는 생략할 수 있음
+	 dao에서 넘겨준 매개변수를 활용할 때 #, $을 이용
+	 # -> 값을 문자열 처리해서 넘김
+	 $ -> 값을 그대로 넘김
+	-->
+	<select id="getMember" resultType="Member"> <!-- 원래는 kr.hi.boot.model.vo.Member -->
+		select * from member where me_id = #{id}
+	</select>
+	<insert id="insertMember">
+		insert into member(me_id, me_pw, me_email)
+		values(#{dto.id}, #{dto.pw}, #{dto.email})
+    </insert>
+</mapper>

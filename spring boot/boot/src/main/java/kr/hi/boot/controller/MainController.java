@@ -3,6 +3,7 @@ package kr.hi.boot.controller;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.hi.boot.model.dto.Human;
+import kr.hi.boot.model.dto.SignupDTO;
+import kr.hi.boot.service.MemberService;
 import lombok.extern.log4j.Log4j2;
 
 /* URL 확인할 때 컨트롤러 안에 있는 URL들을 확인
@@ -19,6 +22,10 @@ import lombok.extern.log4j.Log4j2;
 @Controller
 @Log4j2
 public class MainController {
+	
+	@Autowired
+	MemberService memberService;
+	
 	
 	/*주어진 URL이 get 방식일 때 처리*/
 	@GetMapping("/")
@@ -71,6 +78,21 @@ public class MainController {
 	@GetMapping("/signup")
 	public String signup() {
 		return "user/signup";
+	}
+	
+	@PostMapping("/signup")
+	public String signupPost(
+			/* SignupDTO의 기본 생성자를호출해서 객체를 생성 후,
+			 * 화면에서 보낸 name과 이름이 같은 필드들의 setter를 호출해서 값을 변경
+			 */
+			SignupDTO signupDto) {
+		boolean res = memberService.signup(signupDto);
+		return "user/signup";
+	}
+	
+	@GetMapping("/login")
+	public String login() {
+		return "user/login";
 	}
 	
 
