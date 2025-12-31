@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>detail</title>
+</head>
+<body>
+	<main layout:fragment="content" class="container">
+		<h1>게시글 상세</h1>
+		<div class="form-control" th:text=${post.po_title}></div>
+		<div class="input-group">
+			<div class="form-control" th:text="${post.po_me_id}"></div>
+			<div class="form-control" th:text="${post.po_view}"></div>
+			<div class="form-control" th:text="${post.po_date}"></div>
+		</div>
+		<div 
+			class="form-control mt-3" 
+			th:text="${post.po_content}"
+			style="min-height: 400px"></div>
+			
+		<a 
+		th:href="@{/post/list}"
+		class="btn btn-outline-success mt-3 w-100">목록이동</a>
+	</main>
+</body>
+</html>

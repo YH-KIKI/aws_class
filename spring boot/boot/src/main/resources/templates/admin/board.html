@@ -9,7 +9,7 @@
 </head>
 <body>
 	<main layout:fragment="content" class="container">
-		<h1>관리자 메뉴라오</h1>
+		<h1>게시판 관리</h1>
 		<!-- 
 		게시판(board) 전체를 화면에 출력
 		1. 게시판 전체가 필요 -> 서버에게 화면 선택할 때 게시판 전체를 보내줘
@@ -17,14 +17,20 @@
 		2. 서버가 게시판 전체를 보내주면 게시판 전체를 이용해서 화면에 출력
 		  - board.html
 		-->
-		<form th:action="@{/admin/board/update}" method="post" class="input-group" th:each="board : ${list}">
-			<input type="text" class="col-8 form-control" th:value="${board.bo_name}">
-			<button class="btn btn-outline-warning">수정</button>
-			<button class="btn btn-outline-danger">삭제</button>
-		</form>
+		<div th:each="board : ${list}" class="mb-3 d-flex">
+			<form th:action="@{/admin/board/update/{num}(num=${board.bo_num})}" method="post" class="col-10">
+				<input type="text" class="col-8 form-control"
+					th:value="${board.bo_name}" name="name">
+				<button class="btn btn-outline-warning">수정</button>
+			</form>
+			<form th:action="@{/admin/board/delete/{num}(num=${board.bo_num})}" method="post" class="col-2">
+				<button class="btn btn-outline-danger input-group-text">삭제</button>
+			</form>
+		</div>
 		<hr>
-		<form th:action="@{/admin/board/insert}" method="post" class="input-group">
-			<input type="text" class="col-8 form-control">
+		<form th:action="@{/admin/board/insert}" method="post" 
+			class="input-group">
+			<input type="text" class="col-8 form-control" name="name">
 			<button class="btn btn-outline-success">등록</button>
 		</form>
 	</main>

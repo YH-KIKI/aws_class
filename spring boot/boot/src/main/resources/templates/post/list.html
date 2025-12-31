@@ -2,14 +2,47 @@
 <html 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	layout:decorate="~{layout/layout.html}">
 <head>
 <meta charset="UTF-8">
-<title>list</title>
+<title></title>
 </head>
 <body>
-	<main layout:fragment="content">
+	<main layout:fragment="content" class="container">
 		<h1>게시글 목록</h1>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>작성일</th>
+					<th>추천/비추</th>
+					<th>조회수</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="post : ${list}">
+					<td th:text="${post.po_num}"></td>
+					<td>
+						<a 
+							th:href="@{/post/detail/{num}(num=${post.po_num})}"
+							th:text="${post.po_title}"
+						></a>
+					</td>
+					<td th:text="${post.po_me_id}"></td>
+					<td th:text="${post.po_date}"></td>
+					<td th:text="${post.po_up} + '/' + ${post.po_down}"></td>
+					<td th:text="${post.po_view}"></td>
+				</tr>
+				
+			</tbody>
+		</table>
+		<a
+			sec:authorize="isAuthenticated()" 
+			th:href="@{/post/insert}"
+			class="btn btn-outline-success mt-3 w-100">게시글등록</a>
 	</main>
 </body>
 </html>
