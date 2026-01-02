@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html 
+xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+<!-- 유효성 검사 플러그인 가져오기(순수 자바 스크립트로 구현됨) 나중에 리액트 배우면 리액트로 구현할 것이기 때문에 참고만 할 것 -->
+<script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
+</head>
+<body >
+	<main layout:fragment="content" class="container">
+		<h1>회원가입</h1>
+		<form action="/signup" method="post" id="signupForm"> <!-- id에 signupForm 등록해야 동작함 -->
+			<div class="mb-3 mt-3">
+				<label for="id" class="from-label">아이디:</label> <input 
+					type="text" class="form-control" id="id" 
+					placeholder="아이디를 입력하세요" name="id">
+			</div>
+			<div class="mb-3">
+				<label for="pw" class="from-label">비밀번호:</label> <input 
+					type="password" class="form-control" id="pw" 
+					placeholder="비밀번호를 입력하세요" name="pw">
+			</div>
+			<div class="mb-3">
+				<label for="pw2" class="from-label">비밀번호 확인:</label> <input 
+					type="password" class="form-control" id="pw2" 
+					placeholder="비밀번호 확인을 입력하세요" name="pw2">
+			</div>
+			<div class="mb-3 mt-3">
+				<label for="email" class="from-label">이메일:</label> 
+				<input 
+					type="text" class="form-control" id="email" 
+					placeholder="이메일을 입력하세요" name="email">
+			</div>
+			<button type="submit" class="btn btn-primary col-12">회원가입</button>
+		</form>
+		
+		<!-- 유효성 검사 플러그인 가져오기(순수 자바 스크립트로 구현됨) 나중에 리액트 배우면 리액트로 구현할 것이기 때문에 참고만 할 것 -->
+		<script type="text/javascript">
+			//https://just-validate.dev/
+			//form태그에 id를 지정하여 적용
+			const validator = new JustValidate('#signupForm');
+
+			//addField('선택자', [{규칙들}])
+			//id가 id인 요소에 규칙 적용
+			validator.addField('#id', [ {
+				//규칙 : 필수항목
+				rule : 'required',
+				errorMessage : '필수항목입니다.'
+			}, {
+				//규칙 : 정규표현식
+				rule : 'customRegexp',
+				value : /^[a-zA-Z0-9!@#$]{6,13}$/,
+				errorMessage : '아이디는 영문,숫자, 특수문자(!@#$)만 가능하며 6~13자입니다.'
+			}]).addField('#pw', [ {
+				rule : 'required',
+				errorMessage : '필수항목입니다.'
+			}, {
+				rule : 'customRegexp',
+				value : /^[a-zA-Z0-9!@#$]{8,13}$/,
+				errorMessage : '아이디는 영문,숫자, 특수문자(!@#$)만 가능하며 8~13자입니다.'
+			}]).addField('#email', [ {
+				rule : 'required',
+				errorMessage : '필수항목입니다.'
+			}, {
+				rule : 'email',
+				errorMessage : '이메일 형식이 아닙니다.'
+			} ]).addField('#pw2', [ {
+				rule : 'required',
+				errorMessage : '필수항목입니다.'
+			}, {
+				//비밀번호 확인 입력시 동작
+				//value는 비밀번호에 입력한 문자열
+				//fields는 form태그에 있는 입력 요소들
+				//fields[선택자].elem : 선택자와 일치하는 요소
+				validator: (value, fields) => {
+			        // password 필드의 값과 현재(password_confirm) 값이 일치하는지 비교
+			        // 비밀번호값이 입력되어 있으면
+			        if (fields['#pw'] && fields['#pw'].elem) {
+			        	//비밀번호 값을 가져옴
+			          	const repeatPasswordValue = fields['#pw'].elem.value;
+			        	//비밀번호 확인(value)와 비밀번호를 비교하여 같으면 true
+			          	return value === repeatPasswordValue;
+			        }
+			        return true;
+			      },
+			      errorMessage: '비밀번호가 일치하지 않습니다.',
+			}]);
+		</script>
+	</main>
+</body>
+</html>

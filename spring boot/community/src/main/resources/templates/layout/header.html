@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html 
+xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title th:replace="this :: title">Default Title</title>
@@ -21,12 +23,18 @@
 						<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
 						<li class="nav-item dropdown"><a
 							class="nav-link dropdown-toggle" href="#" role="button"
-							data-bs-toggle="dropdown">Dropdown</a>
+							data-bs-toggle="dropdown">마이 페이지</a>
 							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="#">Link</a></li>
-								<li><a class="dropdown-item" href="#">Another link</a></li>
-								<li><a class="dropdown-item" href="#">A third link</a></li>
-							</ul></li>
+							<th:block sec:authorize="isAnonymous()">
+								<li><a class="dropdown-item" href="/signup">회원가입</a></li>
+								<li><a class="dropdown-item" href="/login">로그인</a></li>
+							</th:block>
+							<li sec:authorize="isAuthenticated()">
+								<form action="/logout" method="post">
+									<button class="btn dropdown-item">로그아웃</button> 
+								</form>
+							</li>
+						</ul></li>
 					</ul>
 				</div>
 			</div>

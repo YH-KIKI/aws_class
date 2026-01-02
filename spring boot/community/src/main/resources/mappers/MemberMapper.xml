@@ -2,8 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.hi.community.dao.MemberDAO"> <!-- 패키지명.인터페이스파일명 -->
 
-    <select id="selectMember" resultType="String">
-    	select me_role from member where me_id = #{id} <!-- 하나만 받을땐 * 하면 안될 수 있음 -->
+    <select id="selectMember" resultType="MemberVO">
+    	select * from member where me_id = #{id} <!-- 하나만 받을땐 * 하면 안될 수 있음 -->
     </select>
+    
+    <insert id="insertMember">
+    	insert into member(me_id, me_pw, me_email)
+    	<!-- 
+    	obj.id는 멤버변수 id를 호출하는 것이 아니라 id의 getter를 호출
+    	즉, obj.id -> obj.getId()가 호출 -->
+    	values(#{obj.id}, #{obj.pw}, #{obj.email}) <!-- #{DAO에서설정한이름.(obj안에있는id)} -->
+    </insert>
     
 </mapper>
