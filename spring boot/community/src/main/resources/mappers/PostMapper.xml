@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.hi.community.dao.PostDAO"> <!-- 패키지명.인터페이스파일명 -->
+
+	<!-- id에는 dao의 메서드명을 입력. 오타 발생시 예외 발생
+	~~~(not found) 예외 발생 -->
+	<select id="selectPostList" resultType="PostVO">
+		select post.*, bo_name po_bo_name from post <!-- bo_name을 po_bo_name으로 하겠다 -->
+		join board on po_bo_num = bo_num
+		<!--  삭제 안된 게시글을 조회 -->
+		where po_del = 'N'
+		<!-- 최신 게시글이 위에 가도록 정렬 -->
+		order by po_num desc
+	</select>
+	
+	<update id="updateView">
+		update post
+		set
+			<!-- 조회수 증가 -->
+			po_view = po_view + 1
+		where
+			po_num = #{num}
+			<!-- 삭제가 안된 게시글 -->
+			and po_del = 'N'
+	</update>
+	
+	<select id="selectPost" resultType="PostVO"> <!-- id: DAO 메서드명 / resultType : vo의 파일 명  -->
+		select * from post 
+		where po_num = #{num}	<!-- dao에서 num으로 쓰기로 했기 때문에 num -->
+		<!-- 삭제가 안된 게시글을 가져옴 -->
+		and po_del = 'N' 
+
+	</select>
+	
+	<select id="selectBoardList" resultType="BoardVO">
+		select * from board 
+	</select>	
+
+	<insert id="insertPost">
+		insert into post(po_title, po_content, po_me_id, po_bo_num)
+   		values(#{post.title}, #{post.content}, #{post.writer}, #{post.board}) <!-- 왜 post? DAO에서 post로 이름 지정했으니까 -->
+	</insert>
+	
+	<insert id="insertBoard">
+		insert into board(bo_name) values(#{name})
+		
+	</insert>
+	
+	<delete id="deleteBoard">
+		delete from board where bo_num = #{num}
+	</delete>
+	
+	<update id="updateBoard">
+		update board
+   		set
+   			bo_name = #{name}
+   		where
+   			bo_num = #{num}
+	</update>
+</mapper>

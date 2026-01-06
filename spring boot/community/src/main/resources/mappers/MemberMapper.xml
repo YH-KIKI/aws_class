@@ -14,4 +14,6 @@
     	values(#{obj.id}, #{obj.pw}, #{obj.email}) <!-- #{DAO에서설정한이름.(obj안에있는id)} -->
     </insert>
     
+
+
 </mapper>

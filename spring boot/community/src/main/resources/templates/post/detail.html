@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>게시글 상세 보기</title>
+</head>
+<body>
+	<main layout:fragment="content" class="container">
+		<h1>게시글 상세</h1>
+		<div th:if="${post != null}">
+		<!-- 
+		나중에 화면 구성 후 잘 나오면 삭제 처리 
+		<div th:text="${post}"></div>
+		-->
+		
+			<div class="mb-3">
+				<label>제목 : </label>
+				<div th:text="${post.po_title}" class="form-control"></div>
+			</div>
+			<div class="input-group mb-3">
+				<div class="form-control" th:text="'작성자 : ' + ${post.po_me_id}"></div>
+				<div class="form-control" th:text="'조회수 : ' + ${post.po_view}"></div>
+				<div class="form-control" th:text="'추/비추 : ' + ${post.po_up} + '/' + ${post.po_down}"></div>
+			</div>
+			<div class="mb-3">
+				<div class="form-control" style="min-height: 400px;" 
+					th:text="${post.po_content}"></div>
+			</div>
+		</div>
+		<div th:if="${post} == null">
+			<h1>삭제 되거나 등록되지 않은 게시글입니다.</h1>
+		</div>
+	</main>
+</body>
+</html>

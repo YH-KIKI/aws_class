@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>게시판 목록</title>
+</head>
+<body>
+	<main layout:fragment="content" class="container">
+		<h1>게시판 목록</h1>
+		<div th:each="board : ${list}" class="mb-3 d-flex">
+		<form th:action="@{/admin/board/update/{num}(num=${board.bo_num})}" method="post" class="input-group">
+			<input type="text" class="form-control" th:value="${board.bo_name}" name="name">
+			<button class="btn btn-outline-warning" type="submit">수정</button>
+		</form>
+		<!-- 원하는 num을 삭제 해야하기 때문에 th:문법으로  -->
+		<form th:action="@{/admin/board/delete/{num}(num=${board.bo_num})}" method="post">
+			<button class="btn btn-outline-danger" type="submit">삭제</button>
+		</form>
+		</div>
+		<form action="/admin/board/insert" class="input-group" method="post">
+			<input type="text" class="form-control" name="board">
+			<button class="btn btn-outline-success">등록</button>
+		</form>
+	</main>
+</body>
+</html>
