@@ -54,7 +54,12 @@ layout:decorate="~{layout/layout.html}">
 						th:text="${post.po_title}"
 					></a>
 				</td>
-				<td th:text="${post.po_me_id}"></td>
+				<td>
+					<a th:href="@{/post/list/{num}(num=${boardNum},
+					   type=${2}, search=${post.po_me_id})}"
+					   th:text="${post.po_me_id}">
+					</a>
+				</td>
 				<td th:text="${post.po_date}"></td>
 				<td th:text="${post.po_view}"></td>
 				<td th:text="${post.po_up} + '/' + ${post.po_down}"></td>
