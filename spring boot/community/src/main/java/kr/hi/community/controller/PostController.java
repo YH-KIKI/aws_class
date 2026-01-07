@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.hi.community.model.dto.PostDTO;
+import kr.hi.community.model.util.Criteria;
 import kr.hi.community.model.util.CustomUser;
 import kr.hi.community.model.vo.BoardVO;
 import kr.hi.community.model.vo.PostVO;
@@ -23,14 +24,27 @@ public class PostController {
 	@Autowired
 	PostService postService;
 	
-	@GetMapping("/post/list")
-	public String postList(Model model) {
-		//서비스에게 게시글 목록을 가져오라고 요청 
+	@GetMapping("/post/list/{num}")
+	public String postList(Model model,
+		@PathVariable("num") int boardNum,
+		//기본생성자를 이용하여 객체를 생성한 후 ?뒤에 변수값이 필드와 일치하면 값을 수정
+		Criteria cri) {
+		//Criteria에 게시판 번호를 넣어줌
+		cri.setBoardNum(boardNum);
+		
+		
+		//서비스에게 게시판 번호에 맞는 게시글 목록을 가져오라고 요청 
 		//가져온 게시글 목록을 'list'에 저장
-		ArrayList<PostVO> list = postService.getPostList(); 
+		ArrayList<PostVO> list = postService.getPostList(cri); 
+		
+		//서비스에게 게시판 목록을 가져오라고 요청 
+		ArrayList<BoardVO> boardList = postService.getBoardList();
 		
 		//게시글 목록을 화면에 전송
 		model.addAttribute("list", list);
+		model.addAttribute("boardNum", boardNum);
+		//게시판 목록을 화면에 전송 
+		model.addAttribute("boardList", boardList);
 		return "/post/list"; //post폴더에 list.html을 화면으로 보내줌
 		
 	}

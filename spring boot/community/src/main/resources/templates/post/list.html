@@ -9,7 +9,16 @@ layout:decorate="~{layout/layout.html}">
 </head>
 <body>
 	<main layout:fragment="content" class="container">
-		<h1>게시글 상세</h1>
+		<h1>게시글 목록</h1>
+		<div class="clearfix">
+			<a href="/post/list/0" class="btn float-start me-2" 
+			th:classappend="${boardNum == 0} ? 'btn-success' : 'btn-outline-success'">전체</a>
+			<a th:each="board : ${boardList}" 
+			th:href="@{/post/list/{num}(num=${board.bo_num})}" 
+			th:text="${board.bo_name}"
+			class="btn float-start me-2" 
+			th:classappend="${boardNum == board.bo_num} ? 'btn-success' : 'btn-outline-success'">전체</a>
+		</div>
 		<table class="table table-hover">
 		<thead>
 			<tr>
@@ -36,6 +45,9 @@ layout:decorate="~{layout/layout.html}">
 				<td th:text="${post.po_date}"></td>
 				<td th:text="${post.po_view}"></td>
 				<td th:text="${post.po_up} + '/' + ${post.po_down}"></td>
+			</tr>
+			<tr th:if="${list.isEmpty()}">
+			<th colspan="7" class="text-center">등록된 게시글이 없습니다.</th>
 			</tr>
 		</tbody>
 		</table>

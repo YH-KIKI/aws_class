@@ -9,6 +9,10 @@
 		join board on po_bo_num = bo_num
 		<!--  삭제 안된 게시글을 조회 -->
 		where po_del = 'N'
+		<!-- 전체 게시판이 아닌 경우 -->
+		<if test="cri.boardNum != 0"> <!-- cri.boardNum이 0(전체게시판)이 아니면 아래 번호 -->
+			and po_bo_num = ${cri.boardNum}
+		</if>
 		<!-- 최신 게시글이 위에 가도록 정렬 -->
 		order by po_num desc
 	</select>
