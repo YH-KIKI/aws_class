@@ -19,6 +19,19 @@ layout:decorate="~{layout/layout.html}">
 			class="btn float-start me-2" 
 			th:classappend="${boardNum == board.bo_num} ? 'btn-success' : 'btn-outline-success'">전체</a>
 		</div>
+		<hr>
+		<form 
+		th:action="@{/post/list/{num}(num=${boardNum})}" method="get"
+		class="input-group">
+			<select class="form-control" name="type">
+				<option value="0" th:selected="${pm.cri.type == 0}">전체</option>
+				<option value="1" th:selected="${pm.cri.type == 1}">제목 + 내용</option>
+				<option value="2" th:selected="${pm.cri.type == 2}">작성자</option>
+			</select>
+			<input class="form-control" name="search" th:value="${pm.cri.search}">
+			<button class="btn btn-outline-success">검색</button>
+		</form>
+		<hr>
 		<table class="table table-hover">
 		<thead>
 			<tr>
@@ -51,6 +64,24 @@ layout:decorate="~{layout/layout.html}">
 			</tr>
 		</tbody>
 		</table>
+		<ul class="pagination justify-content-center">
+		    <li class="page-item" th:if="${pm.prev}">
+		    	<a class="page-link" 
+		    	   th:href="@{/post/list/{num}(num=${boardNum},page=${pm.startPage-1},type=${pm.cri.type},search=${pm.cri.search})}">이전</a>
+		    </li>
+		    <li class="page-item" th:each="num : ${#numbers.sequence(pm.startPage, pm.endPage)}">
+		    	<a class="page-link" 
+		    	   th:href="@{/post/list/{num}(num=${boardNum},page=${num},type=${pm.cri.type},search=${pm.cri.search})}" 
+		    	   th:text="${num}" 
+		    	   th:classappend="${num == pm.cri.page}?'active':''" 
+		    	   ></a> 
+		    	   <!-- th:classappend=" 현재 보고있는 페이지 색깔 나타나도록 -->
+		    </li>
+		    <li class="page-item" th:if="${pm.next}">
+		    	<a class="page-link" 
+		    	   th:href="@{/post/list/{num}(num=${boardNum},page=${pm.endPage+1},type=${pm.cri.type},search=${pm.cri.search})}">다음</a>
+		    </li>
+  		</ul>
 		<a th:href="@{/post/insert}" 
 		class="btn btn-outline-success">게시글 등록</a>
 	</main>

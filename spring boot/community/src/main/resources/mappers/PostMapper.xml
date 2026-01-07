@@ -13,8 +13,34 @@
 		<if test="cri.boardNum != 0"> <!-- cri.boardNum이 0(전체게시판)이 아니면 아래 번호 -->
 			and po_bo_num = ${cri.boardNum}
 		</if>
+		<!-- 제목 또는 내용이 포함되는 경우 -->
+		<if test="cri.type != 2">
+			and (
+			<!-- '%검색어%'로 만들기 위해 concat을 활용 -->
+			po_title like concat('%', #{cri.search}, '%')
+			or po_content like concat('%', #{cri.search}, '%')
+			
+			)
+		</if>
+		<!-- 작성자로 검색하는 경우 -->
+		<if test="cri.type == 2">
+			and po_me_id = #{cri.search}
+		</if>
+		<!-- 제목 또는 내용 또는 작성자로 검색하는 경우 -->
+		<if test="cri.type == 0">
+			and (
+			<!-- '%검색어%'로 만들기 위해 concat을 활용 -->
+			po_title like concat('%', #{cri.search}, '%')
+			or po_content like concat('%', #{cri.search}, '%')
+			or po_me_id = #{cri.search}
+			)
+		</if>
+		
 		<!-- 최신 게시글이 위에 가도록 정렬 -->
 		order by po_num desc
+		<!-- 페이지에 맞게 잘라서 가져옴 -->
+		<!-- cri.pageStart를 하면 실제는 cri.getPageStart()를 호출 -->
+		limit #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	
 	<update id="updateView">
@@ -61,4 +87,36 @@
    		where
    			bo_num = #{num}
 	</update>
+	
+	<select id="selectTotalCount" resultType="int">
+	select count(*) from post <!-- selectPostList 부분 가져와서 앞에 2줄 수정(join 삭제 등) / 하단 정렬 및 limit도 삭제 -->
+		<!--  삭제 안된 게시글을 조회 -->
+		where po_del = 'N'
+		<!-- 전체 게시판이 아닌 경우 -->
+		<if test="cri.boardNum != 0"> <!-- cri.boardNum이 0(전체게시판)이 아니면 아래 번호 -->
+			and po_bo_num = ${cri.boardNum}
+		</if>
+		<!-- 제목 또는 내용이 포함되는 경우 -->
+		<if test="cri.type != 2">
+			and (
+			<!-- '%검색어%'로 만들기 위해 concat을 활용 -->
+			po_title like concat('%', #{cri.search}, '%')
+			or po_content like concat('%', #{cri.search}, '%')
+			
+			)
+		</if>
+		<!-- 작성자로 검색하는 경우 -->
+		<if test="cri.type == 2">
+			and po_me_id = #{cri.search}
+		</if>
+		<!-- 제목 또는 내용 또는 작성자로 검색하는 경우 -->
+		<if test="cri.type == 0">
+			and (
+			<!-- '%검색어%'로 만들기 위해 concat을 활용 -->
+			po_title like concat('%', #{cri.search}, '%')
+			or po_content like concat('%', #{cri.search}, '%')
+			or po_me_id = #{cri.search}
+			)
+		</if>
+	</select>
 </mapper>

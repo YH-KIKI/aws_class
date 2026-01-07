@@ -123,5 +123,11 @@ public class PostService {
 	
 	}
 
+	public int getTotalCount(Criteria cri) {
+		if(cri == null) {
+		return 0;
+		}
+		return postDAO.selectTotalCount(cri); //페이지 정보 줄테니까 일치하는 페이지 개수 가져와
+	}
 	
 }

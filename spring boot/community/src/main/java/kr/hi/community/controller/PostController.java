@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import kr.hi.community.model.dto.PostDTO;
 import kr.hi.community.model.util.Criteria;
 import kr.hi.community.model.util.CustomUser;
+import kr.hi.community.model.util.PageMaker;
 import kr.hi.community.model.vo.BoardVO;
 import kr.hi.community.model.vo.PostVO;
 import kr.hi.community.service.PostService;
@@ -31,8 +32,7 @@ public class PostController {
 		Criteria cri) {
 		//Criteria에 게시판 번호를 넣어줌
 		cri.setBoardNum(boardNum);
-		
-		
+
 		//서비스에게 게시판 번호에 맞는 게시글 목록을 가져오라고 요청 
 		//가져온 게시글 목록을 'list'에 저장
 		ArrayList<PostVO> list = postService.getPostList(cri); 
@@ -40,11 +40,18 @@ public class PostController {
 		//서비스에게 게시판 목록을 가져오라고 요청 
 		ArrayList<BoardVO> boardList = postService.getBoardList();
 		
+		//서비스에게 페이지 정보(검색어, 게시판, 타입)을 주면서 일치하는 게시글 수를 가져오라고 요청 
+		int totalCount = postService.getTotalCount(cri);
+		//페이지메이커를 생성
+		PageMaker pm = new PageMaker (3, cri, totalCount);
+		
 		//게시글 목록을 화면에 전송
 		model.addAttribute("list", list);
 		model.addAttribute("boardNum", boardNum);
 		//게시판 목록을 화면에 전송 
 		model.addAttribute("boardList", boardList);
+		
+		model.addAttribute("pm", pm);
 		return "/post/list"; //post폴더에 list.html을 화면으로 보내줌
 		
 	}
@@ -88,7 +95,7 @@ public class PostController {
 		boolean result = postService.insertPost(post, customUser); //일 시킨결과값을 알려줘 불리언 변수(result)에 저장해서 활용하게!
 		//등록에 성공하면 /post/list로 이동, 실패하면 /post/insert로 이동
 		if(result) {
-			return "redirect:/post/list";
+			return "redirect:/post/list/" + post.getBoard();
 		} 
 		return "redirect:/post/insert"; 
 	}
