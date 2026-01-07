@@ -129,5 +129,21 @@ public class PostService {
 		}
 		return postDAO.selectTotalCount(cri); //페이지 정보 줄테니까 일치하는 페이지 개수 가져와
 	}
+
+	
+	public void deletePost(int postNum, CustomUser cUser) {
+		//로그인이 안된 경우 종료
+		if(cUser == null || cUser.getUsername() == null) {
+			return;
+		}
+		//작성자 정보를 가져오기 위해 게시글 정보를 가져옴 
+		PostVO post = postDAO.selectPost(postNum);
+		
+		//작성자가 다르면
+		if(post == null || !post.getPo_me_id().equals(cUser.getUsername())) {
+			return;
+		}
+		postDAO.deletePost(postNum);
+	}
 	
 }

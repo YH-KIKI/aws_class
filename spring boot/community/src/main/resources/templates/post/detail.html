@@ -15,7 +15,6 @@
 		나중에 화면 구성 후 잘 나오면 삭제 처리 
 		<div th:text="${post}"></div>
 		-->
-		
 			<div class="mb-3">
 				<label>제목 : </label>
 				<div th:text="${post.po_title}" class="form-control"></div>
@@ -29,6 +28,17 @@
 				<div class="form-control" style="min-height: 400px;" 
 					th:text="${post.po_content}"></div>
 			</div>
+			<!-- 삭제버튼 추가 -->
+			<form
+			    th:if="${#authentication.name == post.po_me_id}"
+			    th:action="@{/post/delete/{num}(num=${post.po_num})}"
+			    method="post"
+			    style="display:inline-block;"
+			>
+   			 <button class="btn btn-outline-danger">삭제</button>
+			<a th:href="@{/post/update/{num}(num=${post.po_num})}" 
+				class="btn btn-outline-warning">수정</a>
+			</form>
 		</div>
 		<div th:if="${post} == null">
 			<h1>삭제 되거나 등록되지 않은 게시글입니다.</h1>

@@ -119,4 +119,10 @@
 			)
 		</if>
 	</select>
+	<update id="deletePost">
+		update post 
+			<!-- po_del을 Y로 하면서 화면에서는 삭제된것 처럼 보이나 실제로는 숨김처리 한것 뿐 워크벤치 가면 남아있는거 확인됨 -->
+			set po_del = 'Y'
+			where po_num = #{num}
+	</update>
 </mapper>

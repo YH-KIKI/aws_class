@@ -5,12 +5,12 @@
 	layout:decorate="~{layout/layout.html}">
 <head>
 <meta charset="UTF-8">
-<title>게시글 등록</title>
+<title>게시글 수정</title>
 </head>
 <body>
 	<main layout:fragment="content" class="container">
-		<h1>게시글 등록</h1>
-		<form action="/post/insert" method ="post">
+		<h1>게시글 수정</h1>
+		<form action="/post/update" method ="post">
 			<div class="mb-3 mt-3">
 				<label for="title" class="from-label">제목:</label> 
 				<input 
@@ -18,21 +18,12 @@
 					placeholder="제목을 입력하세요" name="title">
 			</div>
 			<div class="mb-3 mt-3">
-				<label for="board" class="from-label">게시판:</label> 
-				<select 
-					class="form-control" id="board" name="board">
-					<option th:each="board : ${list}"
-						th:value="${board.bo_num}"
-						th:text="${board.bo_name}"></option>
-				</select> 
-			</div>
-			<div class="mb-3 mt-3">
 				<label for="content" class="from-label">내용:</label> 
 				<textarea class="form-control" id="content" 
 					placeholder="내용을 입력하세요" name="content"
 					rows="15"></textarea> 
 			</div>
-			<button class="btn btn-outline-success col-12">게시글 등록</button>
+			<button class="btn btn-outline-success col-12">게시글 수정</button>
 		</form>
 		<a 
 		href="/post/list/0"

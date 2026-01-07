@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import kr.hi.community.model.dto.PostDTO;
 import kr.hi.community.model.util.Criteria;
+import kr.hi.community.model.util.CustomUser;
 import kr.hi.community.model.vo.BoardVO;
 import kr.hi.community.model.vo.PostVO;
 
@@ -31,6 +32,8 @@ public interface PostDAO {
 	void updateBoard(@Param("num") int num, @Param("name") String name);
 
 	int selectTotalCount(@Param("cri") Criteria cri);
+
+	void deletePost(@Param("num") int postNum);
 
 
 }

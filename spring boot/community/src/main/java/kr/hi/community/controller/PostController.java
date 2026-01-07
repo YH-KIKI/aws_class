@@ -99,4 +99,25 @@ public class PostController {
 		} 
 		return "redirect:/post/insert"; 
 	}
+	
+	@PostMapping("/post/delete/{num}")
+	public String postDelete(
+		//게시글 번호 가져와줘
+		@PathVariable("num") int postNum,
+		//로그인한 회원 정보를 가져옴
+		@AuthenticationPrincipal CustomUser customUser){
+		// 서비스에게 게시글 번호를 주면서 게시글 정보를 가져오라고 요청
+		PostVO post = postService.getPost(postNum);
+		// 서비스에게 게시글 번호와 사용자 정보를 주면서 게시글을 삭제하라고 요청
+		postService.deletePost(postNum, customUser);
+		return"redirect:/post/list/" + post.getPo_bo_num(); //삭제한 게시판으로 가기 위해 po_bo_num()
+	}
+	
+	@GetMapping("/post/update/{num}")
+	public String postUpdate(
+		@PathVariable("num") int postNum,
+		//로그인한 회원 정보를 가져옴
+		@AuthenticationPrincipal CustomUser customUser) {
+		return "/post/update";
+	}
 }
