@@ -1,15 +1,20 @@
 package kr.hi.community.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.hi.community.dao.PostDAO;
 import kr.hi.community.model.dto.PostDTO;
 import kr.hi.community.model.util.Criteria;
 import kr.hi.community.model.util.CustomUser;
+import kr.hi.community.model.util.UploadFileUtils;
 import kr.hi.community.model.vo.BoardVO;
+import kr.hi.community.model.vo.FileVO;
 import kr.hi.community.model.vo.PostVO;
 
 @Service
@@ -17,6 +22,9 @@ public class PostService {
 	
 	@Autowired
 	PostDAO postDAO;
+	
+	@Value("${file.upload-dir}")
+	String uploadPath;
 
 	
 	public ArrayList<PostVO> getPostList(Criteria cri){ //리스트 가져와서 리스트 반환
@@ -57,7 +65,7 @@ public class PostService {
 		return false;
 	}
 
-	public boolean insertPost(PostDTO post, CustomUser customUser) {
+	public boolean insertPost(PostDTO post, CustomUser customUser, List<MultipartFile> files) {
 		//게시글 정보 확인 -> 입력 안된 값 있는지 확인해서 잘못된게 있으면 false를 반환
 		if(checkEmpty(post.getTitle()) || 
 		   checkEmpty(post.getContent()) || 
@@ -75,12 +83,39 @@ public class PostService {
 		//다오에게 게시글 정보를 주면서 등록하라고 시킴
 		try {
 			postDAO.insertPost(post);
-			return true;
+			
 		}catch(Exception e) {
 			//잘못된 게시판 번호를 입력한 경우 게시글 등록에 실패
 			e.printStackTrace();
 			return false;
 		}
+		
+		// 게시글 등록 후 첨부파일 추가
+		// 첨부파일 목록이 없는 경우
+		if(files == null || files.isEmpty()) {
+			return true;
+		}
+		for(MultipartFile file : files) {
+			//DB에 추가하고 서버에 첨부파일 업로드해
+			insertFile(post.getPostNum(), file);
+			
+	}	
+	return true;
+}
+
+	private void insertFile(int postNum, MultipartFile file) {
+		try {
+			String fileName = UploadFileUtils.uploadFile(uploadPath, file);
+			String oriFileName = file.getOriginalFilename();
+			
+			FileVO fileVo = new FileVO(postNum, oriFileName, fileName); // "업로드전파일명", "업로드후파일명"
+			//DB에 업로드한 파일 정보를 추가
+			postDAO.insertFile(fileVo);
+					
+		}catch(Exception e) {
+			System.err.println(e.getMessage()); // 업로드 파일 없다고 1줄로 
+		} 	
+		
 	}
 
 	public void insertBoard(String name) {
@@ -94,8 +129,6 @@ public class PostService {
 			//잘못된 게시판 번호를 입력한 경우 게시글 등록에 실패
 			e.printStackTrace();
 		}
-		
-		
 	}
 
 	public void deleteBoard(int num) {	
@@ -133,17 +166,70 @@ public class PostService {
 	
 	public void deletePost(int postNum, CustomUser cUser) {
 		//로그인이 안된 경우 종료
-		if(cUser == null || cUser.getUsername() == null) {
+		if (cUser == null || cUser.getUsername() == null) {
 			return;
 		}
 		//작성자 정보를 가져오기 위해 게시글 정보를 가져옴 
 		PostVO post = postDAO.selectPost(postNum);
 		
 		//작성자가 다르면
-		if(post == null || !post.getPo_me_id().equals(cUser.getUsername())) {
+		if (post == null || !post.getPo_me_id().equals(cUser.getUsername())) {
 			return;
 		}
+		
+		//게시글 번호를 이용하여 첨부파일 목록을 가져옴
+		List<FileVO> files = postDAO.selectFileList(postNum);
+		
+		for (FileVO file : files) {
+			deleteFile(file);
+		}
+		//게시글 삭제(실제 삭제하는거 아니고 po_del을 Y로 처리)
 		postDAO.deletePost(postNum);
+		
+	}
+		
+		
+	private void deleteFile(FileVO file) {
+		if(file == null) {
+			return;
+		}
+			
+		// 첨부파일 삭제 
+		// 1. 실제 첩부파일을 삭제
+		UploadFileUtils.deleteFile(uploadPath, file.getFi_name());
+		// 2. DB에 있는 첨부파일 정보를 삭제
+		// 다오에게 첨부파일 번호를 주면서 첨부파일을 삭제하라고 요청
+		// 다오.첨부파일 삭제해줘 (첨부파일번호를 주면서)
+		postDAO.deleteFile(file.getFi_num());	
+	}
+	
+
+	public void updatePost(PostDTO post, CustomUser customUser) {
+		//- 사용자가 로그인 안햇으면 종료
+		if(customUser == null || customUser.getUsername().isEmpty()) {
+			return;
+		}
+		//- 게시글 정보가 없거나, 게시글 제목 또는 내용이 비어있으면 종료
+		if(post == null || 
+			checkEmpty(post.getTitle()) ||
+			checkEmpty(post.getContent())) {
+			return;
+		}
+		
+		//- 사용자와 작성자가 같은지 확인해서 다르면 종료
+		//   - 다오에게 게시글 번호를 주면서 게시글을 가져오라고 요청
+		PostVO dbPost = postDAO.selectPost(post.getPostNum());
+		//   - 게시글 없거나 게시글 작성자가 사용자와 다르면 종료 
+		if(dbPost == null || 
+			!dbPost.getPo_me_id().equals(customUser.getUsername())) {
+			return;
+		}
+		//- 다오에게 게시글 정보를 주면서 수정하라고 요청
+		postDAO.updatePost(post);
+	}
+
+	public List<FileVO> getFilelist(int po_num) {
+		return postDAO.selectFileList(po_num);
 	}
 	
 }

@@ -28,7 +28,16 @@
 				<div class="form-control" style="min-height: 400px;" 
 					th:text="${post.po_content}"></div>
 			</div>
-			<!-- 삭제버튼 추가 -->
+			<div class="mb-3" th:if="${!files.isEmpty()}">
+			<label>첨부파일 [[${files.size()}]]</label> <!-- 첨부파일 몇개있는지 보여줌 -->
+			<a th:each="file : ${files}"
+				th:href="@{|/download/${file.fi_name}|}"
+				th:text="${file.fi_ori_name}"
+				class="form-control mb-3"
+				th:download="${file.fi_ori_name}" /* 내가 지정한 파일명으로 다운되게 함 */
+				></a>
+			</div>
+			<!-- 삭제버튼 추가 : 게시글 작성자만 삭제버튼이 보임 -->
 			<form
 			    th:if="${#authentication.name == post.po_me_id}"
 			    th:action="@{/post/delete/{num}(num=${post.po_num})}"

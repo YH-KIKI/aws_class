@@ -65,15 +65,19 @@
 	<select id="selectBoardList" resultType="BoardVO">
 		select * from board 
 	</select>	
-
-	<insert id="insertPost">
+	<!-- 
+	데이터 추가 후 추가한 데이의 기본키 값을 가져올 때 
+	useGeneratedKeys와 keyProperty를 이용
+	-->
+	<insert id="insertPost"
+		useGeneratedKeys="true"
+		keyProperty="post.postNum">
 		insert into post(po_title, po_content, po_me_id, po_bo_num)
    		values(#{post.title}, #{post.content}, #{post.writer}, #{post.board}) <!-- 왜 post? DAO에서 post로 이름 지정했으니까 -->
 	</insert>
 	
 	<insert id="insertBoard">
 		insert into board(bo_name) values(#{name})
-		
 	</insert>
 	
 	<delete id="deleteBoard">
@@ -125,4 +129,19 @@
 			set po_del = 'Y'
 			where po_num = #{num}
 	</update>
+	<update id="updatePost">
+    	update post
+    	set po_title = #{post.title}, po_content=#{post.content}
+    	where po_num = #{post.postNum}
+	</update>
+	<insert id="insertFile">
+		insert into file(fi_po_num, fi_name, fi_ori_name)
+		values(#{file.fi_po_num}, #{file.fi_name}, #{file.fi_ori_name})
+	</insert>
+	<select id="selectFileList" resultType="FileVO">
+		select * from file where fi_po_num = ${num}
+	</select>
+	<delete id="deleteFile">
+		delete from file where fi_num = #{fiNum}
+	</delete>
 </mapper>

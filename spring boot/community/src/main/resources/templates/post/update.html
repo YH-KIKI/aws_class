@@ -7,24 +7,78 @@
 <meta charset="UTF-8">
 <title>게시글 수정</title>
 </head>
-<body>
+<body >
 	<main layout:fragment="content" class="container">
 		<h1>게시글 수정</h1>
-		<form action="/post/update" method ="post">
+		<form th:action="@{/post/update/{num}(num=${post.po_num})}" method="post">
 			<div class="mb-3 mt-3">
-				<label for="title" class="from-label">제목:</label> 
-				<input 
-					type="text" class="form-control" id="title" 
-					placeholder="제목을 입력하세요" name="title">
+				<label for="title" class="form-label">제목:</label> 
+				<input
+					type="text" class="form-control" id="title"
+					placeholder="제목을 입력하세요." name="title"
+					th:value="${post.po_title}">
 			</div>
 			<div class="mb-3 mt-3">
-				<label for="content" class="from-label">내용:</label> 
-				<textarea class="form-control" id="content" 
-					placeholder="내용을 입력하세요" name="content"
-					rows="15"></textarea> 
+				<label for="content" class="form-label">내용:</label> 
+				<textarea
+					class="form-control" id="content"
+					placeholder="내용을 입력하세요." name="content"
+					rows="15"
+					th:text="${post.po_content}"></textarea>
+			</div>
+			<div class="mb-3">
+				<label>첨부파일</label>
+				<a href="javascript:void(0);"
+					th:each="file : ${files}"
+					class="form-control mb-1 file-item d-flex justify-content-between">
+					<span th:text="${file.fi_ori_name}"></span>
+					<span th:data-target="${file.fi_num}" class="badge bg-secondary" 
+					onclick="removeFile(this)">&times;</span>
+					</a>
+				<th:block th:if="${files.size() != 3}">
+					<!-- 
+					첨부파일 개수를 제외한 나머지 input 태그를 추가  
+					첨부파일 개수 + input태그 = 3이 되도록
+					-->
+					<input 
+						type="file" name="files" class="form-control mb-1"
+						th:each="num : ${#numbers.sequence(files.size() +1, 3)}">  
+				</th:block>
 			</div>
 			<button class="btn btn-outline-success col-12">게시글 수정</button>
 		</form>
+		<script type="text/javascript">
+		function removeFile(element){
+			const aTag = element.closest('.file-item');
+			const parent = aTag.parentNode;
+			
+			//추가할 input:file을 생성
+			const newFileInput = document.createElement('input');
+			
+			//서버에 전송할 첨부파일 번호
+			//왜? 실제 서버에서 삭제하고 db에서 삭제해야 되기 때문에
+			const delFileInput = document.createElement('input');
+			
+			const fileNum = element.dataset.target;
+					
+			//표준속성값 바꾸기 -> 요소.표준속성명 = 값
+			newFileInput.type = 'file';
+			newFileInput.name = 'files'
+			newFileInput.className = 'form-control mb-3';
+			
+			delFileInput.type = 'hidden';
+			delFileInput.name = 'delFileNums';
+			delFileInput.value = fileNum;
+			
+			
+			//<input type="file" name="files" class="form-control mb-3">
+			//console.log(newFileInput);
+			parent.appendChild(newFileInput);
+			parent.appendChild(delFileInput);
+			
+			aTag.remove();	
+		}
+		</script>
 		<a 
 		href="/post/list/0"
 		class="btn btn-outline-success mt-3 col-12">목록이동</a>
