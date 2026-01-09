@@ -9,12 +9,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.hi.community.dao.PostDAO;
+import kr.hi.community.model.dto.LikeDTO;
 import kr.hi.community.model.dto.PostDTO;
 import kr.hi.community.model.util.Criteria;
 import kr.hi.community.model.util.CustomUser;
 import kr.hi.community.model.util.UploadFileUtils;
 import kr.hi.community.model.vo.BoardVO;
 import kr.hi.community.model.vo.FileVO;
+import kr.hi.community.model.vo.LikeVO;
 import kr.hi.community.model.vo.PostVO;
 
 @Service
@@ -204,7 +206,7 @@ public class PostService {
 	}
 	
 
-	public void updatePost(PostDTO post, CustomUser customUser) {
+	public void updatePost(PostDTO post, CustomUser customUser, List<MultipartFile> files, List<Integer> delFileNums) {
 		//- 사용자가 로그인 안햇으면 종료
 		if(customUser == null || customUser.getUsername().isEmpty()) {
 			return;
@@ -226,10 +228,93 @@ public class PostService {
 		}
 		//- 다오에게 게시글 정보를 주면서 수정하라고 요청
 		postDAO.updatePost(post);
+		
+		//새 첨부파일을 추가
+		if(files != null) {
+			for(MultipartFile file : files) {
+				insertFile(post.getPostNum(), file);
+			}
+		}
+		if(delFileNums != null) {
+			for(int num : delFileNums) {
+				FileVO fileVo = postDAO.selectFile(num);
+				deleteFile(fileVo);
+			}
+		}
 	}
 
 	public List<FileVO> getFilelist(int po_num) {
 		return postDAO.selectFileList(po_num);
+	}
+
+	public String updateLike(LikeDTO like, CustomUser customUser) {
+		if(like == null) {
+			throw new RuntimeException("추천 정보가 없습니다.");
+		}
+		if(customUser == null || customUser.getUsername() == null) {
+			throw new RuntimeException("로그인이 필요한 서비스입니다.");
+		}
+		//화면에서 보낸 추천 정보에 로그인한 사용자 아이디를 추가
+		like.setId(customUser.getUsername());
+		// 게시글번호와 사용자 아이디를 이용하여 추천 정보를 가져옴
+		LikeVO likeVo = postDAO.selectLike(like);
+		
+		System.out.println(likeVo);
+		
+		//추천 정보가 없으면
+		if(likeVo == null) {
+			//다오에게 (추천정보(게시글번호, 아이디, 상태))주면서 추천/비추천을 추가하라고 요청 
+			postDAO.insertLike(like);
+			// 추천/비추천 했습니다를 반환
+			// 추천 상태가 1이면 추천, 아니면 비추천 
+			if(like.getState() == 1) {
+				return "추천했습니다.";
+			}	
+			return "비추천했습니다.";  //이미 return값 있어서 else 안써도 ok
+		}
+		// - 있으면
+		//  - 기존 상태와 현재 상태가 다른 경우면 (추->비추 또는 비추-> 추)
+		if(likeVo.getLi_state() != like.getState()){
+		//  - 다오에게 (추천정보(게시글번호, 아이디, 상태))를 주면서 추천/비추천을 수정하라고 요청
+			postDAO.updateLike(like);
+			// 추천/비추천 했습니다를 반환
+			// 추천 상태가 1이면 추천, 아니면 비추천 
+			if(like.getState() == 1) {
+				return "추천했습니다.";
+			}	
+			return "비추천했습니다.";  //이미 return값 있어서 else 안써도 ok
+		}
+		// - 같으면(추천/비추천을 취소)
+		// - 다오에게 게시글번호, 아이디를 주면서 추천/비추천을 삭제하라고 요청
+			postDAO.deleteLike(like);
+			if(like.getState() == 1) {
+				return "추천을 취소했습니다.";
+			}	
+			return "비추천을 취소했습니다.";  //이미 return값 있어서 else 안써도 ok
+		}
+
+	public int getLikeCount(int postNum, int state) {
+		return postDAO.selectLikeCount(postNum, state);
+	}
+
+	public int getLikeState(int postNum, CustomUser customUser) {
+		//사용자가 로그인 안했으면 0을 반환
+		if(customUser == null || customUser.getUsername()==null) {
+			return 0;
+		}
+		LikeDTO likeDto = new LikeDTO(postNum, customUser.getUsername());
+		LikeVO like = postDAO.selectLike(likeDto);
+		// 추천/비추천을 한적이 없으면
+		if(like == null) {
+			return 0;
+		}
+		return like.getLi_state();
+	}
+
+	public void updateBoardLike(int postNum) {
+		//게시글의 추천/비추천 수를 계산해서 변경
+		postDAO.updateBoardLike(postNum);
+		
 	}
 	
 }

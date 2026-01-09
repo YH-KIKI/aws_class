@@ -11,7 +11,7 @@
 		where po_del = 'N'
 		<!-- 전체 게시판이 아닌 경우 -->
 		<if test="cri.boardNum != 0"> <!-- cri.boardNum이 0(전체게시판)이 아니면 아래 번호 -->
-			and po_bo_num = ${cri.boardNum}
+			and po_bo_num = #{cri.boardNum}
 		</if>
 		<!-- 제목 또는 내용이 포함되는 경우 -->
 		<if test="cri.type != 2">
@@ -98,7 +98,7 @@
 		where po_del = 'N'
 		<!-- 전체 게시판이 아닌 경우 -->
 		<if test="cri.boardNum != 0"> <!-- cri.boardNum이 0(전체게시판)이 아니면 아래 번호 -->
-			and po_bo_num = ${cri.boardNum}
+			and po_bo_num = #{cri.boardNum}
 		</if>
 		<!-- 제목 또는 내용이 포함되는 경우 -->
 		<if test="cri.type != 2">
@@ -139,9 +139,49 @@
 		values(#{file.fi_po_num}, #{file.fi_name}, #{file.fi_ori_name})
 	</insert>
 	<select id="selectFileList" resultType="FileVO">
-		select * from file where fi_po_num = ${num}
+		select * from file where fi_po_num = #{num}
 	</select>
 	<delete id="deleteFile">
 		delete from file where fi_num = #{fiNum}
 	</delete>
+	<select id="selectFile" resultType="FileVO">
+    	select * from file where fi_num = #{fiNum}
+    </select>
+    <select id="selectLike">
+    <!-- like는 사용중이라 꼭 ``붙일 것 -->
+    	select * from `like` 
+    		where li_po_num = #{like.postNum} and 
+    			li_me_id = #{like.id}
+    </select>
+    <insert id="insertLike">
+    	insert into `like` (li_me_id, li_po_num, li_state)
+    	values(#{like.id}, #{like.postNum}, #{like.state})
+    </insert>
+    <update id="updateLike">
+    	update `like`
+    		set li_state = #{like.state}
+    		where 
+    			li_po_num = #{like.postNum} and
+    			li_me_id = #{like.id}
+    </update>
+    <delete id="deleteLike">
+    	delete from `like` 
+    		where 
+    			li_po_num = #{like.postNum} and 
+    			li_me_id = #{like.id}
+    </delete>
+    <select id="selectLikeCount" resultType="int">
+    	select count(*) from `like`
+    	where li_po_num = #{postNum} and li_state = #{state}
+    </select>
+    <update id="updateBoardLike">
+    	update post
+    	set
+    		po_up = (select count(*) from `like`
+    			where li_po_num = ${postNum} and li_state = 1),
+    		po_down = (select count(*) from `like`
+    			where li_po_num = ${postNum} and li_state = -1)
+    	where
+    		po_num = #{postNum}
+    </update>
 </mapper>

@@ -10,7 +10,8 @@
 <body >
 	<main layout:fragment="content" class="container">
 		<h1>게시글 수정</h1>
-		<form th:action="@{/post/update/{num}(num=${post.po_num})}" method="post">
+		<form th:action="@{/post/update/{num}(num=${post.po_num})}" method="post"
+				enctype = "multipart/form-data">
 			<div class="mb-3 mt-3">
 				<label for="title" class="form-label">제목:</label> 
 				<input
