@@ -1,5 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.hi.community.dao.CommentDAO"> <!-- 패키지명.인터페이스파일명 -->
-
+	<insert id="insertComment">
+		insert into comment(co_num, co_ori_num, co_po_num, co_me_id, co_content)
+		<if test="coDto.coOriNum == 0">
+		select 
+			ifnull(max(co_num), 0) + 1, 
+		    ifnull(max(co_num), 0) + 1,
+		    #{coDto.postNum}, <!-- 게시글번호 --> 
+		    #{coDto.id}, 	  <!-- 사용자id -->
+		    #{coDto.content}  <!-- 댓글내용 -->
+		from comment
+		</if>
+		<!-- 
+		댓글 : co_num == co_ori_num
+		댓글이 0개 등록되어 있고, 댓글을 등록하려고 하면
+		co_num은 1, co_ori_num은 1이 되어야 함.
+		문제는 auto_increament는 기본키에만 붙일 수 있어서 co_ori_num은 못 붙임
+		
+		대댓 : co_num != co_ori_num
+		댓글이 1개 등록(1번댓글) 되어 있고, 1번 댓글에 대댓을 등록하려고 하면
+		co_num은 2, co_ori_num은 1이 되어야 함 -->
+	</insert>
+	<select id="selectCommentList" resultType="CommentVO">
+		select * from comment
+			where co_po_num = #{cri.postNum}
+			<!-- 
+			댓글은 최신순으로 정렬하되, 대댓들은 댓글 밑으로 배치하기 위해 
+			원래 댓글 번호 순으로 정렬하면 댓글과 대댓글이 묶여서 배치가 되고, 
+			대댓은 먼저 등록순으로 배치하기 위해 오름차순으로 정렬
+			즉 !  댓글 단위로 묶되,
+			댓글 - 최신을 위로 (내림차순)
+			대댓글 - 먼저 작성된 대댓글이 위로 가게 (오름차순)
+			-->
+			order by co_ori_num desc, co_num asc
+			limit #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="selectCommentCount" resultType="int">
+		select count(*) from comment
+			where co_po_num = #{cri.postNum}
+	</select>
 </mapper>

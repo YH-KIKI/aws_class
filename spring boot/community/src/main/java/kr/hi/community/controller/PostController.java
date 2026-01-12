@@ -70,7 +70,8 @@ public class PostController {
 	
 	@GetMapping("/post/detail/{num}")
 	public String postDetail(Model model,
-		@PathVariable("num") int po_num) {
+		@PathVariable("num") int po_num,
+		@AuthenticationPrincipal CustomUser customUser) {
 		// System.out.println(po_num); 
 		// num이 잘 넘어오는지 확인 써놓고 url에 http://localhost:8080/post/detail/숫자 아무거나 쓰고 콘솔에 숫자 넘어오는지 확인
 		// 게시글 번호를 이용해서 조회수 증가
@@ -88,6 +89,7 @@ public class PostController {
 		model.addAttribute("post", post);
 		// 가져온 첨부파일 목록을 화면에 전달
 		model.addAttribute("files", files);
+		model.addAttribute("user", customUser == null? "" : customUser.getUsername());
 	    return "/post/detail";
 	}
 	

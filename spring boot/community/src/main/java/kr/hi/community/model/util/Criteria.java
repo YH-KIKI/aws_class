@@ -15,7 +15,7 @@ public class Criteria {
 	
 	//페이지 관련 필드
 	int page = 1;
-	int perPageNum = 2;	//한 페이지에 컨텐츠를 최대 몇개 보여줄지
+	int perPageNum = 5;	//한 페이지에 컨텐츠를 최대 몇개 보여줄지
 	
 	//결과에서 limit을 이용하여 잘라올 때 시작 번지를 계산해서 알려주는 메서드
 	public int getPageStart() {
