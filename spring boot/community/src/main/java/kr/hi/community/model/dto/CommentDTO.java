@@ -10,6 +10,7 @@ public class CommentDTO {
 	int postNum;
 	int coOriNum; //댓글이면 기본키와 같은 값. 대댓이면 기본키와 다른 값
 	String id;
+	int coNum; //댓글 기본키
 
 		
 }

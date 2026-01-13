@@ -3,15 +3,20 @@
 <mapper namespace="kr.hi.community.dao.CommentDAO"> <!-- 패키지명.인터페이스파일명 -->
 	<insert id="insertComment">
 		insert into comment(co_num, co_ori_num, co_po_num, co_me_id, co_content)
-		<if test="coDto.coOriNum == 0">
 		select 
 			ifnull(max(co_num), 0) + 1, 
+		<!-- 댓글 등록 -->
+		<if test="coDto.coOriNum == 0">
 		    ifnull(max(co_num), 0) + 1,
+		</if>
+		<!-- 대댓 등록 -->
+		<if test="coDto.coOriNum != 0">
+			#{coDto.coOriNum},
+		</if>
 		    #{coDto.postNum}, <!-- 게시글번호 --> 
 		    #{coDto.id}, 	  <!-- 사용자id -->
 		    #{coDto.content}  <!-- 댓글내용 -->
 		from comment
-		</if>
 		<!-- 
 		댓글 : co_num == co_ori_num
 		댓글이 0개 등록되어 있고, 댓글을 등록하려고 하면
@@ -40,4 +45,18 @@
 		select count(*) from comment
 			where co_po_num = #{cri.postNum}
 	</select>
+	<select id="selectComment" resultType="CommentVO">
+    	select * from comment 
+    	where co_num = #{coNum} and co_del = 'N'
+    </select>
+    <update id="deleteComment">
+    	update comment
+    	set co_del = 'Y'
+    	where co_num = #{coNum} and co_del = 'N'
+    </update>
+    <update id="updateComment">
+    	update comment
+    	set co_content = #{dto.content}
+    	where co_num = #{dto.coNum} and co_del = 'N'
+    </update>
 </mapper>

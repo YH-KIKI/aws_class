@@ -18,5 +18,6 @@ public class PostVO {
 	
 	//게시판명을 가져오기 위한 변수 추가 
 	String po_bo_name;
+	int po_comment_count;
 
 }

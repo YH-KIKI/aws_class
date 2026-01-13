@@ -49,9 +49,7 @@
 			<form
 			    th:if="${#authentication.name == post.po_me_id}"
 			    th:action="@{/post/delete/{num}(num=${post.po_num})}"
-			    method="post"
-			    style="display:inline-block;"
-			>
+			    method="post">
    			 <button class="btn btn-outline-danger">삭제</button>
 			<a th:href="@{/post/update/{num}(num=${post.po_num})}" 
 				class="btn btn-outline-warning">수정</a>
@@ -69,10 +67,6 @@
 						</div>
 						<hr>
 						<div class="mt-3">댓글 내용</div>
-						<div class="mt-3">
-							<button class="btn-mod btn btn-outline-warning">수정</button>
-							<button class="btn-mod btn btn-outline-danger">삭제</button>
-						</div>
 					</div>
 					<div class="comment-item mb-3  form-control">
 						<div class="d-flex justify-content-between">
@@ -81,8 +75,12 @@
 						</div>
 						<hr>
 						<div class="mt-3">댓글 내용</div>
+						<div class="mt-3">
+							<button class="btn-mod btn btn-outline-warning">수정</button>
+							<button class="btn-mod btn btn-outline-danger">삭제</button>
 					</div>
 				</div>	
+			</div>
 				<!-- 댓글 페이지네이션 영역 -->
 				<div class="comment-pagination">
 					 <ul class="pagination justify-content-center">
@@ -94,13 +92,13 @@
 				</div>
 				<!-- 댓글 입력 영역 -->
 				<div class="comment-input">
-					<form class="input-group" onsubmit="insertComment(event)">
+					<form class="input-group" onsubmit="insertComment(event, this)">
 						<textarea class="form-control" onfocus="checkLogin(this)"></textarea>
 						<button class="btn btn-outline-success">등록</button>
 					</form>
-					</div>
 				</div>
 			</div>
+		</div>
 		<div th:if="${post} == null">
 			<h1>삭제 되거나 등록되지 않은 게시글입니다.</h1>
 		</div>
@@ -173,7 +171,7 @@
 			  } catch (error) {
 			      // 3. 네트워크 단절이나 문법 에러 등 아주 예외적인 상황
 			      console.error("통신 중 오류 발생:", error);
-			      console.log("통신에 실패했습니다.");
+			      alert("통신에 실패했습니다.");
 			  }
 		}
 		//추천/비추천 수를 불러와서 버튼에 적용하는 함수
@@ -197,6 +195,7 @@
 					//비추천버튼 텍스트 수정
 					downBtn.innerText = `비추천(${down})`;
 					checkLike();
+					
 				}else{
 					console.log("추천/비추천 수 가져오기 실패");
 				}
@@ -208,11 +207,14 @@
 
 		//로그인한 사용자의 게시글 추천/비추천여부에 다라 추천/비추천 버튼 색상 변경
 		async function checkLike(){
+			const postNum = [[${post.po_num}]];
 
 			try{
 				const response = await fetch('/post/like/check/' +postNum);
+				
 				if(response.ok){
 					const result = await response.text();
+					
 					//로그인하지 않았거나 추천/비추천을 안했으면
 					if(result == 0){
 						return;
@@ -237,6 +239,7 @@
 		}
 		
 		</script>
+		
 		<!-- 댓글 js -->
 		<script type="text/javascript">
 			//로그인 되었는지 확인
@@ -254,26 +257,31 @@
 				}
 			}
 			
-			function insertComment(event){
+			function insertComment(event, el, coNum){
 				event.preventDefault(); // 등록누르면 새로고침 안되도록 막음
+				//댓글 등록일 때 coNum을 안넣어줌
+				//대댓글 등록일 때 coNum을 넣어줌
+				//즉 댓글이면 coNum = 0 / 대댓이면 coNum을 넘겨줌
+				if(!coNum){
+					coNum = 0;
+				}
 				
 				//댓글 내용을 가져옴
 				//댓글 입력창 요소를 선택
 				const commentInsertInputEl = 
-					document.querySelector(".comment-input textarea");
+					el.querySelector("textarea");
 				const content = commentInsertInputEl.value;
 				
+				//댓글이 비어 있으면 알림 처리
 				if(!content.trim()){
 					alert("댓글 내용을 입력하세요.");
 					return;
 				}
-				
 				let comment = {
 					content, //댓글 내용. CommentDTO에서 내용을 content로 설정함
 					postNum, //게시글 번호
-						
+					coOriNum : coNum			
 				}
-				
 				//비동기 통신으로 댓글 내용을 전송
 				sendInsertComment(comment);
 				//추가한 댓글 내용 삭제
@@ -281,15 +289,16 @@
 				
 			}
 			async function sendInsertComment(comment){				
-				//await는 비동기인 fetch가 다 끝날때까지 기다리게 하는 역할
-				//그래야 밑에서 response를 이요할 때 문제가 안생김
+				
 				try{
+					//await는 비동기인 fetch가 다 끝날때까지 기다리게 하는 역할
+					//그래야 밑에서 response를 이요할 때 문제가 안생김
 					const response = await fetch('/comment/insert', { //fetch는 원래 비동기.
 						method : 'post',	 //get 또는 post. get은 생략
 						headers : {
 							'Content-Type' : 'application/json' // 보내는 데이터 형태
-					},
-					body : JSON.stringify(comment) //보낼 데이터
+						},
+						body : JSON.stringify(comment) //보낼 데이터
 					});
 					//서버에서 댓글 추가 결과를 문자열로 보낼 예정 (그래서 text로)
 					const result = await response.text();
@@ -333,7 +342,7 @@
 					console.log(error);
 				}
 			}
-			
+			//댓글을 화면에 배치하는 함수
 			function drawCommentList(list){
 				//댓글 목록이 없으면
 				if(list.length == 0){
@@ -347,22 +356,43 @@
 				//for in은 key값을 가져와서 활용
 				let items = '';
 				for(comment of list){
+					//댓글이 삭제된 경우
+					if(comment.co_del == 'Y'){
+						items += `
+							<div class="comment-item mb-3 form-control">
+								작성자에 의해 삭제된 댓글입니다.
+							</div>
+						`;
+						continue;//16:1 Uncaught ReferenceError: changeBox is not defined
+					}
+					//대댓글 버튼
+					let replyBtn = `
+						<button class="btn-reply btn btn-outline-dark" 
+							onclick="changeReplyBox(${comment.co_num}, this)">답글</button>
+					`
+					//수정/삭제 버튼
 					let btns = `
-						<div class="mt-3">
-						<button class="btn-mod btn btn-outline-warning">수정</button>
-						<button class="btn-mod btn btn-outline-danger" onclick="deleteComment (${comment.co_num})">삭제</button>
-					</div>
+						<button class="btn-mod btn btn-outline-warning" 
+							onclick="changeBox(${comment.co_num}, this)">수정</button>
+						<button class="btn-del btn btn-outline-danger" 
+							onclick="deleteComment(${comment.co_num})">삭제</button>
 					`;
+					//댓글 전체
 					items += `
-					<div class="comment-item mb-3  form-control">
-					<div class="d-flex justify-content-between">
-						<div>${comment.co_me_id}</div>
-						<div>${comment.co_date}</div>
+					<div class="${comment.co_num != comment.co_ori_num ? 'ps-5' : ''}">
+						<div class="comment-item mb-3 form-control">
+							<div class="d-flex justify-content-between">
+								<div>${comment.co_me_id}</div>
+								<div>${comment.co_date}</div>
+							</div>
+							<hr>
+							<pre class="mt-3">${comment.co_content}</pre>
+							<div class="mt-3">
+								${comment.co_me_id == '[[${user}]]' ? btns : ''}
+								${comment.co_num == comment.co_ori_num ? replyBtn : ''}
+							</div>
+						</div>
 					</div>
-					<hr>
-					<div class="mt-3">${comment.co_content}</div>
-					${comment.co_me_id == '[[${user}]]' ? btns : ''}
-				</div>
 					`;
 				}
 				listContainer.innerHTML = items;
@@ -400,10 +430,141 @@
 				cri.page = page;
 				getCommentList(cri);
 			}
-			function deleteComment(coNum){
-				console.log(coNum);
+			async function deleteComment(coNum){
+				
+				try{
+					//서버로 댓글 번호를 전송
+					const response = await fetch(
+						`/comment/delete/${coNum}`, {
+						//보내는 방식
+						method : 'post',
+						headers : {
+							//보낼 데이터의 종류
+							//'Content-Type' : ''
+						},
+						//보낼 데이터
+						//body : ''
+					});
+					
+					//서버에서 보낸 문자열을 alert로 출력
+					if(response.ok){
+						const result = await response.text();
+						alert(result);
+						getCommentList(cri);
+					}
+					
+				}catch(error){
+					console.error("예외 발생");
+					console.error(error);
+				}
 			}
-	
+			/**
+			num : 댓글 번호, el : 수정버튼
+			el은 수정창을 배치할 때 사용할 예정
+			*/
+			function changeBox(num, el){
+				initBox(el);
+				
+				const item = el.closest(".comment-item");
+				const pre = item.querySelector('pre');
+				const content = pre.textContent;
+				
+				let inputBox = `
+					<div class="comment-update-box">
+						<form class="input-group" 
+							onsubmit="updateComment(event, this, ${num})">
+							<textarea class="form-control" 
+								onfocus="checkLogin(this)">${content}</textarea>
+							<button class="btn btn-outline-success">수정</button>
+						</form>
+					</div>	
+					`;
+					//수정/삭제 버튼 박스
+					const parent = el.parentElement;
+					
+					//댓글 내용있는 박스
+					const contentBox = parent.previousElementSibling;
+					
+					//수정, 삭제버튼 안보이게
+					parent.classList.add('d-none');
+					
+					//기존 댓글 내용 안보이게
+					contentBox.classList.add('d-none');
+					
+					//댓글 내용 입력 창 박스 추가 
+					parent.insertAdjacentHTML('beforeBegin',inputBox);
+				}
+				function updateComment(event, el, num){
+					//form태그의 submit을 막음(서버로 전송하는걸 막음)
+					event.preventDefault();
+					//댓글 입력 요소
+					const textareaEl = el.querySelector("textarea");
+					//입력한 댓글내용
+					const content = textareaEl.value;
+					
+					//댓글번호(num)와 댓글내용(content)을 가진 객체를 생성
+					const comment = {
+						coNum : num,
+						content // content : content
+						
+					};		
+					//댓글 수정
+					sendUpdateComment(comment);
+				}
+				async function sendUpdateComment(comment){
+					try{
+						//서버로 수정할 정보를 전송
+						const response = await fetch('/comment/update', {
+							method : 'post',
+							headers : {
+								'content-Type' : 'application/json'
+							},
+							body : JSON.stringify(comment)
+						});
+						if(response.ok){
+							//서버에서 보낸 값을 문자열로 받아옴
+							const result = await response.text();
+							//받아온 문자열을 alert으로 출력
+							alert(result);
+							//댓글 목록 새로고침
+							getCommentList(cri);
+						}
+				}catch(error){
+					console.error(error);
+				}
+			}
+			function changeReplyBox(coNum, el){
+				//기존에 수정클릭 또는 대댓글 클릭한 상태를 초기화 시키는 함
+				initBox(el);
+				const parent = el.parentElement;
+				
+				let container = `
+				<div class="comment-reply-input mt-3">
+					<form class="input-group" onsubmit="insertComment(event, this, ${coNum})">
+						<textarea class="form-control" onfocus="checkLogin(this)"></textarea>
+						<button class="btn btn-outline-success">등록</button>
+					</form>
+				</div>
+				`
+				parent.insertAdjacentHTML('afterend',container);
+			}
+			function initBox(el){
+				//댓글 하나 전체를 감싸는 박스
+				const item = el.closest(".comment-item");
+				
+				//댓글 수정 버튼 클릭 시 추가되는 form태그가 있는 박스
+				const updateBox = item.querySelector('.comment-update-box');
+				
+				if(updateBox){
+					updateBox.remove()
+				}
+				
+				//열려있는 대댓 추가창이 있으면 닫음
+				const replyBox = item.querySelector('.comment-reply-input');
+				if(replyBox){
+					replyBox.remove();
+				}
+			}
 		</script>
 		<!--화면이 처음 로딩될 때 호출되는 함수 정리 -->
 		<script type="text/javascript">
@@ -412,7 +573,6 @@
 			//추천/비추천 버튼 불러오기
 			loadLikeBtns();		
 		</script>
-		
 	</main>
 </body>
 </html>

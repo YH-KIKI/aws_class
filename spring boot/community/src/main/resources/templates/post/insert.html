@@ -6,10 +6,20 @@
 <head>
 <meta charset="UTF-8">
 <title>게시글 등록</title>
+	<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/47.3.0/ckeditor5.css" />
+	<script src="https://cdn.ckeditor.com/ckeditor5/47.3.0/ckeditor5.umd.js"></script>
+	<!-- Add if you use premium features. -->
+	<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5-premium-features/47.3.0/ckeditor5-premium-features.css" />
+	<script src="https://cdn.ckeditor.com/ckeditor5-premium-features/47.3.0/ckeditor5-premium-features.umd.js"></script>
 </head>
 <body>
 	<main layout:fragment="content" class="container">
 		<h1>게시글 등록</h1>
+			<div class="main-container">
+				<div id="editor">
+					<p>Hello from CKEditor 5!</p>
+				</div>
+			</div>
 		<form action="/post/insert" method ="post" enctype="multipart/form-data">
 			<div class="mb-3 mt-3">
 				<label for="title" class="from-label">제목:</label> 
@@ -40,6 +50,32 @@
 			</div>
 			<button class="btn btn-outline-success col-12">게시글 등록</button>
 		</form>
+		<script>
+		    const {
+		        ClassicEditor,
+		        Essentials,
+		        Bold,
+		        Italic,
+		        Font,
+		        Paragraph
+		    } = CKEDITOR;
+		    const { FormatPainter } = CKEDITOR_PREMIUM_FEATURES;
+		
+		    ClassicEditor
+		        .create( document.querySelector( '#editor' ), {
+		            licenseKey: '<YOUR_LICENSE_KEY>',
+		            plugins: [ Essentials, Bold, Italic, Font, Paragraph, FormatPainter ],
+		            toolbar: [
+		                'undo', 'redo', '|', 'bold', 'italic', '|',
+		                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|',
+		                'formatPainter'
+		            ]
+		        })
+		        .then(  editor => {
+					window.editor = editor;
+				})
+		        .catch( /* ... */ );
+		</script>
 		<a 
 		href="/post/list/0"
 		class="btn btn-outline-success mt-3 col-12">목록이동</a>

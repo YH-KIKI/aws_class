@@ -50,9 +50,9 @@ layout:decorate="~{layout/layout.html}">
 				<td th:text="${post.po_bo_name}"></td>
 				<td> 
 					<a 
-						th:href="@{/post/detail/{num}(num=${post.po_num})}"
-						th:text="${post.po_title}"
-					></a>
+						th:href="@{/post/detail/{num}(num=${post.po_num})}" 
+						th:text="|${post.po_title} [${post.po_comment_count}]|"
+					>링크</a>
 				</td>
 				<td>
 					<a th:href="@{/post/list/{num}(num=${boardNum},

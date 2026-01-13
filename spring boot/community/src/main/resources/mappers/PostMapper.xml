@@ -5,8 +5,21 @@
 	<!-- id에는 dao의 메서드명을 입력. 오타 발생시 예외 발생
 	~~~(not found) 예외 발생 -->
 	<select id="selectPostList" resultType="PostVO">
-		select post.*, bo_name po_bo_name from post <!-- bo_name을 po_bo_name으로 하겠다 -->
-		join board on po_bo_num = bo_num
+		select 
+			post.*, bo_name po_bo_name, <!-- bo_name을 po_bo_name으로 하겠다 -->
+			ifnull(po_comment_count, 0) po_comment_count
+		from
+			post
+		join
+			board
+		on po_bo_num = bo_num
+		<!-- 댓글이 없을 수 있으니 outer join -->
+		left join (select
+			co_po_num, COUNT(*) po_comment_count
+			from
+				comment
+			group by co_po_num) co	
+		on co_po_num = po_num
 		<!--  삭제 안된 게시글을 조회 -->
 		where po_del = 'N'
 		<!-- 전체 게시판이 아닌 경우 -->
