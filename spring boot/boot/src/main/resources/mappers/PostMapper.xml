@@ -26,7 +26,14 @@
    			bo_num = #{num}
    	</update>
    	<select id="getPostList" resultType="Post">
-   		select * from post
+   		select * from post 
+   		where 
+   			po_del = 'N'
+   			<if test="cri.boNum != 0">
+   			and po_bo_num = #{cri.boNum}
+   			</if>
+   		order by po_num desc
+   		limit #{cri.pageStart}, #{cri.perPageNum}
    	</select>
    	<select id="getPost" resultType="Post">
    		select * from post where po_num = #{num} <!-- where 게시글 번호가 = 내가 넘겨준 번호랑 같을때 가져온다 -->
@@ -42,4 +49,12 @@
    		update post set po_view = po_view + 1
    		where po_num = #{num}
    	</update>
+   	<select id="selectPostListCount" resultType="int">
+   		select count(*) from post
+   		where 	
+   			po_del = 'N'
+   			<if test="cri.boNum != 0">
+   			and po_bo_num = #{cri.boNum}
+   			</if>
+   	</select>
 </mapper>
