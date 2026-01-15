@@ -114,6 +114,67 @@ public class PostService {
 		return pm;
 	}
 
+	public void postDelete(int poNum, CustomUser user) {
+		// 사용자 정보가 로그인이 안되어 있으면 종료
+		if (user == null || user.getUsername() == null) {
+			return;
+		}
+		// 게시글 번호를 이용하여 게시글을 가져옴 (구현되어있음?)
+		Post post = postDAO.getPost(poNum);
+		
+		// 게시글이 없으면 종료
+		if(post == null) {
+			return;
+		}
+		// 게시글 작성자와 사용자 아이디를 비교하여 다르면 종료
+		//게시글 작성자 아이디
+		String writer = post.getPo_me_id();
+		
+		//사용자 아이디
+		String id = user.getUsername();
+		
+		//(!게시글작성자아이디.equals(사용자아이디))
+		//if(!post.getPo_me_id.equals(user.getUsername)을 따로 정리해서 아래코드처럼 표현 
+		if(!writer.equals(id)) {
+			return;
+		}
+		
+		//다오에게 게시글 번호를 주면서 삭제하라고 요청
+		postDAO.postDelete(poNum);
+		
+		
+	}
+
+	public void postUpdatepost(PostDTO dto, int poNum, CustomUser user) {
+		//제목, 내용이 비었는지 확인해서 비었으면 종료
+		if(dto == null || 
+		   dto.getTitle().isBlank() ||
+		   dto.getContent().isBlank()) {
+			return;
+		}
+		//사용자가 로그인 안되어 있으면 종료
+		if(user == null || user.getUsername() == null) {
+			return;
+		}
+		//다오에게 게시글 번호 주면서 게시글 가져오라고 요청
+		Post post = postDAO.getPost(poNum);
+		
+		// 게시글이 없으면 종료
+		if(post == null) {
+			return;
+		}
+		//게시글의 작성자와 사용자 아이디가 다르면 종료 (= if(!writer.equals(id)))
+		if(!post.getPo_me_id().equals(user.getUsername())) {
+			return;
+		}
+		
+		// 다오에게 게시글 번호, 제목, 내용을 주면서 수정하라고 요청
+		postDAO.postUpdatepost(poNum, dto);
+		
+		
+		
+	}
+
 
 
 }

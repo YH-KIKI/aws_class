@@ -16,14 +16,50 @@
 			<div class="form-control" th:text="${post.po_view}"></div>
 			<div class="form-control" th:text="${post.po_date}"></div>
 		</div>
-		<div 
+		<!-- 게시글 내용 -->
+		<pre
 			class="form-control mt-3" 
 			th:text="${post.po_content}"
-			style="min-height: 400px"></div>
-			
+			style="min-height: 400px"></pre>
+		<!-- 게시글 삭제 버튼 -->
+		<form  class="mt-1" 
+				th:action="@{/post/delete/{num}(num=${post.po_num})}"
+				method = "post" onsubmit ="return confirm('게시글을 삭제하겠습니까?');"
+				th:if="${#authentication.name == post.po_me_id}">	<!-- 본인글에만 삭제가 보이도록 처리 -->
+			<button class="btn btn-outline-danger">삭제</button>
+			<a 
+				class="btn btn-outline-warning me-1" 
+				th:href="@{/post/update/{num}(num=${post.po_num})}"
+				>수정</a>
+		</form>
 		<a 
 		th:href="@{/post/list}"
-		class="btn btn-outline-success mt-3 w-100">목록이동</a>
+		class="btn btn-outline-success mt-1 w-100">목록이동</a>
+
+		
+		<script type="text/javascript">
+			const postNum = [[${post.po_num}]];
+			
+		/*댓글 목록 가져오기*/
+		async function getComments() {
+			
+			try{
+				const response = await fetch(`/api/v1/posts/${postNum}/comments`);
+				
+				if(response.ok){
+					const comments = await response.json();
+					console.log(comments);
+				}
+			}catch(error){
+			console.error(error)
+			}
+		}
+		
+		/*댓글 목록 호출*/
+		getComments();
+
+		
+	</script>
 	</main>
 </body>
 </html>

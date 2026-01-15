@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.hi.boot.dao.CommentDAO">
+
+	<!-- 
+	comment 테이블의 컬럼들과 Comment 클래스의 필드들의 이름이 서로 달라서
+	자동으로 맵핑이 되지 않아 resultMap을 이용하여 불러옴
+	resultMap
+	- type : 맵핑할 클래스 명
+	- id : 매퍼에서 사용할 이름
+	
+	id/result : id는 기본키컬럼, result는 일반컬럼
+	- property : 클래스의 필드명
+	- column : 테이블의 컬럼명
+	-->
+	
+	<resultMap type="Comment" id="CommentMap">
+		<id property = "num" 			column="co_num"/>
+		<result property = "content" 	column="co_content"/>
+		<result property = "date" 		column="co_date"/>
+		<result property = "id" 		column="co_me_id"/>
+		<result property = "oriNum" 	column="co_ori_num"/>
+		<result property = "del" 		column="co_del"/>
+		<result property = "postNum" 	column="co_po_num"/>
+	</resultMap>
+	
+	<select id="selectComments" resultMap="CommentMap"> <!-- ID를 가져오는거임 -->
+		select * from comment
+		where
+			co_po_num = #{poNum} and co_del = 'N'
+		order by co_ori_num desc, co_num asc
+	</select>
+
+</mapper>

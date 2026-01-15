@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import kr.hi.boot.model.dto.PostDTO;
 import kr.hi.boot.model.util.Criteria;
+import kr.hi.boot.model.util.CustomUser;
 import kr.hi.boot.model.vo.Board;
 import kr.hi.boot.model.vo.Post;
 
@@ -30,6 +31,10 @@ public interface PostDAO {
 	void updatePostView(@Param("num") int num);
 
 	int selectPostListCount(@Param("cri") Criteria cri);
+
+	void postDelete(@Param("poNum") int poNum);
+
+	void postUpdatepost(@Param("poNum") int poNum, @Param("dto") PostDTO dto);
 		
 
 }

@@ -23,6 +23,23 @@
 				th:classappend="${pm.cri.boNum == board.bo_num ? 'btn-dark' : 'btn-outline-dark'}"
 				th:href="@{/post/list(boNum=${board.bo_num})}">[[${board.bo_name}]]</a>
 		</div>
+		<hr>
+		
+		<!-- 검색창 -->
+		<form action="" class="input-group">
+			<!-- 검색타입 -->
+			<select class="form-control" name="type">
+				<option value="A" th:selected = '${pm.cri.type == "A"}'>전체</option>
+				<option value="TC" th:selected = '${pm.cri.type == "TC"}'>제목+내용</option>
+				<option value="W" th:selected = '${pm.cri.type == "W"}'>작성자</option>
+			</select>
+			<!-- 검색어 -->
+			<input type = "text" class="form-control" name="search"
+				th:value = "${pm.cri.search}">
+			<!-- 검색버튼 -->
+			<button type = "submit" class="btn btn-success">검색</button>
+		</form>
+		
 		<table class="table table-hover">
 			<thead>
 				<tr>
@@ -55,12 +72,12 @@
 		</table>
 		 <ul class="pagination justify-content-center">
 		    <li class="page-item" th:if="${pm.prev}">
-		    	<a class="page-link" th:href="@{/post/list(page=${pm.startPage - 1})}, boNum=${pm.cri.boNum}">이전</a></li>
+		    	<a class="page-link" th:href="@{/post/list(page=${pm.startPage - 1}, boNum=${pm.cri.boNum}, type=${pm.cri.type}, search=${pm.cri.search})}">이전</a></li>
 		    <li class="page-item" th:each="page : ${#numbers.sequence(pm.startPage, pm.endPage)}"
 		    	th:classappend="${page == pm.cri.page ? 'active':''}">
-		    	<a class="page-link" th:href="@{/post/list(page=${page}, boNum=${pm.cri.boNum})}">[[${page}]]</a></li>
+		    	<a class="page-link" th:href="@{/post/list(page=${page}, boNum=${pm.cri.boNum}, type=${pm.cri.type}, search=${pm.cri.search})}">[[${page}]]</a></li>
 		    <li class="page-item" th:if="${pm.next}">
-		    	<a class="page-link" th:href="@{/post/list(page=${pm.endPage + 1}, boNum=${pm.cri.boNum})}">다음</a></li>
+		    	<a class="page-link" th:href="@{/post/list(page=${pm.endPage + 1}, boNum=${pm.cri.boNum}, type=${pm.cri.type}, search=${pm.cri.search})}">다음</a></li>
 		  </ul>
 		<a
 			sec:authorize="isAuthenticated()" 

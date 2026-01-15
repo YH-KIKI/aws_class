@@ -81,5 +81,43 @@ public class PostController {
 		return "redirect:/post/list";
 	}
 	
+	@PostMapping("/post/delete/{num}")
+	public String postDelete(
+		// URL로 넘겨준 게시글 번호 가져오기
+		@PathVariable("num") int poNum, //("??") ??는 URL로 넘겨준 게시글 번호 받는거니까 URL이랑 맞추는거임!
+		// 로그인한 사용자 정보 가져오기
+		@AuthenticationPrincipal CustomUser user){
+		// 서비스에게 게시글 번호와 사용자 정보를 주면서 삭제하라고 요청
+		postService.postDelete(poNum, user);
+		return "redirect:/post/list";
+	}
+	
+	@GetMapping("/post/update/{num}")
+	public String postUpdate(Model model,
+		@PathVariable("num") int poNum) {
+		
+		//서비스에게 게시글 번호를 주면서 게시글을 가져오라고 요청
+		Post post = postService.getPost(poNum);
+		model.addAttribute("post", post); //("화면에서쓸이름", 게시글);
+		return "post/update";
+	}
+	
+	@PostMapping("/post/update/{num}")
+	public String postUpdatePost(
+		//화면에서 보낸 제목과 내용을 가져옴 	
+		PostDTO dto, //@RequestParam("title") String title, 이렇게 하나씩 가져와도됨
+		//URL에 있는 게시글 번호를 가져옴
+		@PathVariable("num") int poNum,
+		//로그인한 사용자 정보 가져옴
+		@AuthenticationPrincipal CustomUser user){
+		
+		
+		//서비스에게 게시글 번호, 제목, 내용, 작성자 정보를 주면서 수정하라고 요청
+		postService.postUpdatepost(dto, poNum, user);
+		
+		
+		return "redirect:/post/detail/{num}";
+	}
+	
 		
 }
