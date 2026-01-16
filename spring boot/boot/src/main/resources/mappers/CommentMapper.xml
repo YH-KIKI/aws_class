@@ -25,10 +25,43 @@
 	</resultMap>
 	
 	<select id="selectComments" resultMap="CommentMap"> <!-- ID를 가져오는거임 -->
-		select * from comment
+		select * 
+		from comment
 		where
-			co_po_num = #{poNum} and co_del = 'N'
+			co_po_num = #{poNum}
 		order by co_ori_num desc, co_num asc
+		limit #{cri.pageStart}, #{cri.perPageNum}
 	</select>
-
+	
+	<select id="selectCommentsCount" resultType="int">
+		<!-- 게시글 번호에 댓글 수를 가져오는 쿼리 -->
+		select count(*) 
+		from comment
+		where
+			co_po_num = #{poNum}
+	</select>
+	
+	<insert id="insertComments">
+		insert into comment (co_num, co_ori_num, co_me_id, co_content, co_po_num)
+		select
+		 	ifnull(max(co_num), 0) + 1,
+		 	ifnull(max(co_num), 0) + 1,
+		 	#{comment.id}, 
+		 	#{comment.content},
+		 	#{comment.postNum}
+		from comment
+	</insert>
+	<select id="selectComment" resultMap="CommentMap">
+		select * 
+		from comment
+		where
+			co_num = #{coNum}
+	</select>
+	<update id="deleteComments">
+		update comment
+		set
+			co_del = 'Y'
+		where
+			co_num = #{coNum}
+	</update>
 </mapper>
