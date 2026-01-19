@@ -16,6 +16,11 @@
 			<div class="form-control" th:text="${post.po_view}"></div>
 			<div class="form-control" th:text="${post.po_date}"></div>
 		</div>
+		<!-- 추천버튼 추가 -->
+		<div class="d-flex justify-content-center mt-3">
+			<button class="btn btn-outline-primary col-2"
+					onclick ="like(event)">추천</button>
+		</div>
 		<!-- 게시글 내용 -->
 		<pre
 			class="form-control mt-3" 
@@ -31,7 +36,6 @@
 			th:href="@{/post/update/{num}(num=${post.po_num})}"
 			>수정</a>
 			<button class="btn btn-outline-danger">삭제</button>
-			
 		</form>
 		<a 
 		th:href="@{/post/list}"
@@ -56,7 +60,7 @@
 						<div>아이디</div>
 						<div>2026.01.06 09:47</div>
 					</div>
-					<hr>
+
 					<!-- 댓글 내용 -->
 					<pre class="comments-body">
 						댓글 내용입니다.
@@ -209,7 +213,8 @@
 				/* 댓글인 경우 : 대댓글이 보여야함*/
 				if(comment.oriNum == comment.num){
 					replyBtn = `
-						<button class="btn btn-outline-dark">답글</button>
+						<button class="btn btn-outline-dark" 
+								onclick="changeReplyBox(this, ${comment.num})">답글</button>
 
 					`;
 				}
@@ -237,7 +242,8 @@
 				/* 작성자인 경우 수정 삭제 버튼을 추가 */
 				if(comment.id == '[[${#authentication.name}]]'){
 					udBtns = `
-						<button class="btn btn-outline-warning">수정</button>
+						<button class="btn btn-outline-warning"
+								onclick="changeUpdateBox(this, ${comment.num})">수정</button>
 						<button class="btn btn-outline-danger"
 								onclick="deleteComments(${comment.num})">삭제</button>
 					`
@@ -255,9 +261,9 @@
 						<hr>
 						<!-- 댓글 내용 -->
 						<pre class="comments-body">${comment.content}</pre>
-						<hr>
 						<!-- 수정,삭제,대댓글 버튼 -->
 						<div class="comments-footer">
+							<hr>
 							${replyBtn}
 							${udBtns}
 						</div>
@@ -277,10 +283,15 @@
 		
 		<!-- 댓글 등록 -->
 		<script type="text/javascript">
-			/* 댓글을 등록하는 함수*/
-			async function insertComment(event, el){
+			/* 댓글을 등록하는 함수
+			event : 발생한 이벤트 정보
+			el : 이벤트가 발생한 요소(form 태그)
+			oriNum : 참조하는 댓글 번호 
+			*/
+			async function insertComment(event, el, oriNum){
 				/* form태그 기본 이벤트를 막음*/
 				event.preventDefault();
+
 				
 				/* textarea 요소 선택*/
 				//El = Element 줄인거
@@ -289,9 +300,15 @@
 				/* textarea에서 value값을 가져옴*/
 				const content = textareaEl.value;
 				
+				/* 참조 댓글번호가 없으면 0으로 설정*/
+				if(!oriNum){
+					oriNum = 0;
+				}
+				
 				// 가져온 댓글을 객체로 변환
 				let obj = {
 						content,
+						oriNum
 				};
 			
 				try{
@@ -319,7 +336,8 @@
 				}
 			}
 			
-			<!-- 댓글삭제 -->
+
+			// 댓글삭제
 			async function deleteComments(num){
 		
 				  try {
@@ -341,6 +359,127 @@
 				  }
 			}
 			
+		</script>
+		
+		<!-- 대댓글 등록 -->
+		<script type="text/javascript">
+		/*대댓글을 클릭하면 대댓글 입력창이 나오게 하는 함수*/
+		/*대댓은 화면배치고 통신은 댓글이 하기 때문에 async 안해도 됨 */
+		function changeReplyBox(el, oriNum){
+			//대댓글 입력창을 HTML코드로 구성
+			let inputEl = `
+				<div class="comment-input-container">
+					<form class="input-group" onsubmit ="insertComment(event, this, ${oriNum})">
+						<textarea name ="content" class="form-control"></textarea>
+						<button class="btn btn-success">등록</button>
+					</form>
+				</div>
+			`;
+			//원하는 위치에 HTML코드를 배치
+			//.comments-footer 다음에 대댓글 입력창을 배치
+			el.parentElement.insertAdjacentHTML('afterend', inputEl);
+
+		}
+
+		</script>
+		
+		<!-- 추천 -->
+		<script type="text/javascript">
+		async function like(){
+			/*
+			비동기 통신으로 서버에 추천을 요청
+			URL : /api/v2/posts/게시글번호/like
+			method : post
+			서버에서 보낸 문자열을 alert으로 출력
+			*/	
+			try {
+			     const response = await fetch(`/api/v2/posts/${postNum}/like`, {
+			    	 
+			      	method: 'post', /*method의 종류 : get | post | put | patch | delete*/
+			     	headers: {
+			    		  // 'Content-Type' : 'application/json'
+			      	},
+			     // body: JSON.stringify(obj)
+			    });
+			    if(response.ok){
+			    	 const result = await response.text();
+			    	 alert(result);
+			    }
+			}catch(error){
+					console.error(error);		  
+			}
+		}
+		
+		</script>
+		
+		
+		<!-- 댓글 수정 -->
+		<script type="text/javascript">
+
+		function changeUpdateBox(el, coNum){
+			//기존 댓글 내용을 가져옴
+			const contentEl = el.closest(".comments-wrap").querySelector(".comments-body");
+			let content = contentEl.textContent;
+			let inputEl = `
+				<div class="comment-update-container">
+																<!-- event,form태그(submit이 발생된 요소),댓글번호 -->
+					<form class="input-group" onsubmit ="updateComment(event, this, ${coNum})"> 
+						<textarea name ="content" class="form-control">${content}</textarea>
+						<button class="btn btn-success">수정</button>
+					</form>
+				</div>
+			`;
+			
+			/*el.parentElement.insertAdjacentHTML('afterend', inputEl); 나눠쓰면 아래처럼됨*/
+			const parent = el.parentElement; //버튼들이 있는 박스 변수선언해서 묶어주기
+			//수정 버튼 다음에 수정창을 추가
+			parent.insertAdjacentHTML('afterend', inputEl);
+			
+			//수정 버튼 클릭시 버튼들을 감춤 (위에서 선언한 parent 변수를 통해)
+			parent.classList.add('d-none');
+			
+			//기존 댓글창을 감춤
+			contentEl.classList.add('d-none');
+			
+
+		}
+		
+		async function updateComment(e, el, coNum){
+			//form태그의 submit을 막음(서버로 전송하는걸 막음)
+			e.preventDefault();
+			
+			//수정된 댓글 내용을 가져와야 함
+			//1. 댓글 내용이 입력된 요소를 선택(textarea)
+			const inputEl = el.querySelector("[name=content]");
+			
+			//2. 요소에서 내용을 가져옴(value)
+			const content = inputEl.value;
+			
+			let obj = {
+					content				
+			};
+			
+			try {
+			     const response = await fetch(`/api/v1/posts/${postNum}/comments/${coNum}`, {
+			    	 
+			      	method: 'put', /*method의 종류 : get | post | put | patch | delete*/
+			     	headers: {
+			    		  'Content-Type' : 'application/json'
+			      	},
+			      //body : '{"content" : "' + content'"}', 
+			      //body를 위에처럼 obj객체로 만들지않고 JSON 문자열로 직접 작성하면 이렇게도 가능하지만, 유지보수와 안정성 때문에 비추천
+			      body: JSON.stringify(obj)
+			    });
+			    if(response.ok){
+			    	 const result = await response.text();
+			    	 alert(result);
+			    	 getComments();
+			    }
+			}catch(error){
+					console.error(error);		  
+			}
+
+		}			
 		</script>
 	</main>
 </body>

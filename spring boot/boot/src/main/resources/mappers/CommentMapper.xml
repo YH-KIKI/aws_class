@@ -45,7 +45,16 @@
 		insert into comment (co_num, co_ori_num, co_me_id, co_content, co_po_num)
 		select
 		 	ifnull(max(co_num), 0) + 1,
-		 	ifnull(max(co_num), 0) + 1,
+		 	<choose>
+			 	<!-- 댓글 -->
+			 	<when test="comment.oriNum == 0">
+			 		ifnull(max(co_num), 0) + 1,
+			 	</when>
+			 	<!-- 대댓 -->
+			 	<otherwise>
+			 		#{comment.oriNum},
+			 	</otherwise>
+		 	</choose>
 		 	#{comment.id}, 
 		 	#{comment.content},
 		 	#{comment.postNum}
@@ -63,5 +72,17 @@
 			co_del = 'Y'
 		where
 			co_num = #{coNum}
+	</update>
+	<update id="updateComment">
+		update comment
+			<!-- 
+			comment comment로 넘겨서 #{comment.content}
+			만약 String content 였으면 #{content}  
+			-->
+		set
+			co_content = #{comment.content} 
+		where
+			co_num = #{coNum}
+			
 	</update>
 </mapper>

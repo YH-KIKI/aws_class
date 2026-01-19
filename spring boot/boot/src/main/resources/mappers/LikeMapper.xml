@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.hi.boot.dao.LikeDAO">
+	<delete id="deleteLike">
+		delete from `like`
+		where
+			li_po_num = #{postNum} and 
+			li_me_id = #{id}
+	</delete>
+	<insert id="insertLike">
+		insert into `like` (li_me_id, li_po_num, li_state)
+		values(#{id}, #{postNum}, 1)
+	</insert>
+	
+</mapper>
