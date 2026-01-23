@@ -50,13 +50,18 @@ public class HW03_Star {
 		 * 			공백 = 5-i, * = i
 		 */
 		 
-		for(int i = 1; i <= row-i; i++) {
-			for(int j = 1; j <= col; j++) {
-				System.out.print(" ");
-			}
-			System.out.println("*");
+		for(int i = 1; i <= row; i++) {
+		    // 공백
+		    for(int j = 1; j <= row - i; j++) {
+		        System.out.print(" ");
+		    }
+		    // 별
+		    for(int j = 1; j <= i; j++) {
+		        System.out.print("*");
+		    }
+		    System.out.println();
+
 		}
-		
 		 
 		 
 		 
@@ -67,7 +72,6 @@ public class HW03_Star {
 		 *  *******
 		 * *********
 		 */
-		
 		
 
 	}

@@ -63,7 +63,7 @@ public class PostController {
 		model.addAttribute("boardList", boardList);
 		
 		model.addAttribute("pm", pm);
-		return "/post/list"; //post폴더에 list.html을 화면으로 보내줌
+		return "post/list"; //post폴더에 list.html을 화면으로 보내줌
 		
 	}
 	
@@ -90,7 +90,7 @@ public class PostController {
 		// 가져온 첨부파일 목록을 화면에 전달
 		model.addAttribute("files", files);
 		model.addAttribute("user", customUser == null? "" : customUser.getUsername());
-	    return "/post/detail";
+	    return "post/detail";
 	}
 	
 	@GetMapping("/post/insert")
@@ -99,7 +99,7 @@ public class PostController {
 		ArrayList<BoardVO> list = postService.getBoardList();
 		//가져온 게시판 목록을 화면에 전달
 		model.addAttribute("list", list);
-		return "/post/insert";
+		return "post/insert";
 	}
 	
 	@PostMapping("/post/insert")
@@ -155,7 +155,7 @@ public class PostController {
 				
 		model.addAttribute("post", post);
 		model.addAttribute("files", files);
-		return "/post/update";
+		return "post/update";
 	}
 	
 	@PostMapping("/post/update/{num}")

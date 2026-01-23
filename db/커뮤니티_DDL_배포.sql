@@ -1,21 +1,21 @@
 # https://www.erdcloud.com/d/PsDTmWwCgyxQgbSxe
 
-# DROP DATABASE IF EXISTS COMMUNITY;
+# DROP DATABASE IF EXISTS community;
 
-# CREATE DATABASE COMMUNITY;
+# CREATE DATABASE community;
 
-# USE COMMUNITY;
+# USE community;
 
-DROP TABLE IF EXISTS `BOARD`;
+DROP TABLE IF EXISTS `board`;
 
-CREATE TABLE `BOARD` (
+CREATE TABLE `board` (
 	`bo_num`	int  primary key auto_increment	NOT NULL,
 	`bo_name`	varchar(20) unique not	NULL
 );
 
-DROP TABLE IF EXISTS `POST`;
+DROP TABLE IF EXISTS `post`;
 
-CREATE TABLE `POST` (
+CREATE TABLE `post` (
 	`po_num`	int  primary key auto_increment	NOT NULL,
 	`po_title`	varchar(255) not	NULL,
 	`po_content`	longtext not	NULL,
@@ -28,27 +28,27 @@ CREATE TABLE `POST` (
 	`po_del`	char(1) default 'N' not	NULL
 );
 
-DROP TABLE IF EXISTS `LIKE`;
+DROP TABLE IF EXISTS `like`;
 
-CREATE TABLE `LIKE` (
+CREATE TABLE `like` (
 	`li_num`	int primary key auto_increment	NOT NULL,
 	`li_state`	int not	NULL,
 	`li_me_id`	varchar(15)	NOT NULL,
 	`li_po_num`	int	NOT NULL
 );
 
-DROP TABLE IF EXISTS `FILE`;
+DROP TABLE IF EXISTS `file`;
 
-CREATE TABLE `FILE` (
+CREATE TABLE `file` (
 	`fi_num`	int  primary key auto_increment	NOT NULL,
 	`fi_ori_name`	varchar(255) not	NULL,
 	`fi_name`	varchar(255) not	NULL,
 	`fi_po_num`	int	NOT NULL
 );
 
-DROP TABLE IF EXISTS `COMMENT`;
+DROP TABLE IF EXISTS `comment`;
 
-CREATE TABLE `COMMENT` (
+CREATE TABLE `comment` (
 	`co_num`	int primary key	NOT NULL,
 	`co_content`	varchar(200) not	NULL,
 	`co_date`	datetime default current_timestamp not	NULL,
@@ -58,60 +58,61 @@ CREATE TABLE `COMMENT` (
 	`co_po_num`	int	NOT NULL
 );
 
-DROP TABLE IF EXISTS `MEMBER`;
+DROP TABLE IF EXISTS `member`;
 
-CREATE TABLE `MEMBER` (
+CREATE TABLE `member` (
 	`me_id`	varchar(15) primary key	NOT NULL,
 	`me_pw`	varchar(255) not	NULL,
 	`me_email`	varchar(255) not	NULL,
 	`me_role`	varchar(5) default "USER" not	NULL
 );
 
-ALTER TABLE `POST` ADD CONSTRAINT `FK_MEMBER_TO_POST_1` FOREIGN KEY (
+ALTER TABLE `post` ADD CONSTRAINT `FK_MEMBER_TO_POST_1` FOREIGN KEY (
 	`po_me_id`
 )
-REFERENCES `MEMBER` (
+REFERENCES `member` (
 	`me_id`
 );
 
-ALTER TABLE `POST` ADD CONSTRAINT `FK_BOARD_TO_POST_1` FOREIGN KEY (
+ALTER TABLE `post` ADD CONSTRAINT `FK_BOARD_TO_POST_1` FOREIGN KEY (
 	`po_bo_num`
 )
-REFERENCES `BOARD` (
+REFERENCES `board` (
 	`bo_num`
 );
 
-ALTER TABLE `LIKE` ADD CONSTRAINT `FK_MEMBER_TO_LIKE_1` FOREIGN KEY (
+ALTER TABLE `like` ADD CONSTRAINT `FK_MEMBER_TO_LIKE_1` FOREIGN KEY (
 	`li_me_id`
 )
-REFERENCES `MEMBER` (
+REFERENCES `member` (
 	`me_id`
 );
 
-ALTER TABLE `LIKE` ADD CONSTRAINT `FK_POST_TO_LIKE_1` FOREIGN KEY (
+ALTER TABLE `like` ADD CONSTRAINT `FK_POST_TO_LIKE_1` FOREIGN KEY (
 	`li_po_num`
 )
-REFERENCES `POST` (
+REFERENCES `post` (
 	`po_num`
 );
 
-ALTER TABLE `FILE` ADD CONSTRAINT `FK_POST_TO_FILE_1` FOREIGN KEY (
+ALTER TABLE `file` ADD CONSTRAINT `FK_POST_TO_FILE_1` FOREIGN KEY (
 	`fi_po_num`
 )
-REFERENCES `POST` (
+REFERENCES `post` (
 	`po_num`
 );
 
-ALTER TABLE `COMMENT` ADD CONSTRAINT `FK_MEMBER_TO_COMMENT_1` FOREIGN KEY (
+ALTER TABLE `comment` ADD CONSTRAINT `FK_MEMBER_TO_COMMENT_1` FOREIGN KEY (
 	`co_me_id`
 )
-REFERENCES `MEMBER` (
+REFERENCES `member` (
 	`me_id`
 );
 
-ALTER TABLE `COMMENT` ADD CONSTRAINT `FK_POST_TO_COMMENT_1` FOREIGN KEY (
+ALTER TABLE `comment` ADD CONSTRAINT `FK_POST_TO_COMMENT_1` FOREIGN KEY (
 	`co_po_num`
 )
-REFERENCES `POST` (
+REFERENCES `post` (
 	`po_num`
 );
+
