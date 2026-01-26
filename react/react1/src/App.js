@@ -57,11 +57,12 @@ const App = function() {
       <Btn2 />
       <br></br>
       <Select />
+      <br></br>
       <Btn3 text = {btnName1} color = {"red"} />
       <Btn3 />
+      <br></br>
       <Btn4 text = {btnName2} color = {"blue"} />
       <Btn4 />
-
 
       {/*<lable htmlFor ="id">아이디</lable>
       <input type = "text" id="id"/>*/}
