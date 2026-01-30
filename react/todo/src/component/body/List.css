@@ -1,0 +1,27 @@
+@charset "utf=8";
+
+.todo-list{
+  list-style: none; padding: 0;
+}
+
+.todo-item{
+  display: flex; line-height: 22px; margin-bottom: 3px;
+}
+
+.todo-date{
+  margin-right: 10px;
+}
+
+.todo-btn{
+  background-color: #fff;
+  border: 1px solid red;
+  border-radius: 5px;
+  padding: 0;
+  font-size: 20px;
+  width: 22px; height: 22px; margin-left: 3px; color: red;
+  cursor: pointer;
+}
+
+.todo-btn:active{
+  background-color: aliceblue;
+}
