@@ -1,0 +1,24 @@
+@charset "utf-8";
+
+.navbar{
+  background-color: gainsboro;
+
+}
+
+.menu-list{
+  display : flex; list-style : none; padding : 0;
+}
+
+.menu-item{
+  width : 100%;
+  border: 3px solid black;
+}
+
+.menu-item+.menu-item{
+  margin-left: -3px;
+}
+
+.menu-link{
+  width: 100%; height: 50px; text-align: center; line-height : 50px;
+  display : block; color : #000; text-decoration : none;
+}
