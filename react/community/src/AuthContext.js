@@ -16,6 +16,7 @@ export function AuthProvider({children}){
 			if(res){
 				setUser(res);
 			}
+			console.log(res)
 		}catch(e){
 			console.error(e);
 			setUser(null);
