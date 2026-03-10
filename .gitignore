@@ -26,3 +26,5 @@ replay_pid*
 java_kk\.gitignore
 .classpath
 .project
+
+.ipynb_checkpoints/
