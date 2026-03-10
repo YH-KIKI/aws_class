@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.hi.community.dao.TestDAO"> <!-- 패키지명.인터페이스파일명 -->
+	<select id="selectCommentList" resultType="CommentVO">
+		select * from comment
+			where 
+				co_po_num = #{poNum} and 
+				co_del = 'N'
+			order by 
+				co_ori_num desc, co_num asc
+			limit #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="selectCommentCount" resultType="int">
+		select count(*) from comment
+			where 
+				co_po_num = #{poNum} and 
+				co_del = 'N'
+	</select>
+</mapper>
+
+
+
