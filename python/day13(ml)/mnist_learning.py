@@ -83,7 +83,7 @@ def download_mnist(root_path):
 if __name__ == '__main__':
   # images, labels = load_image_dataset('day13(ml)/images', 28, 28)
   # train_model_save_model(images, labels)
-  print(load_model_predict('day13(ml)/6.png', 28, 28))
+  print(load_model_predict('day13(ml)/7.png', 28, 28))
   print(load_model_predict('day13(ml)/3.png', 28, 28))
   print(load_model_predict('day13(ml)/4.png', 28, 28))
 
