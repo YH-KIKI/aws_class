@@ -28,3 +28,4 @@ java_kk\.gitignore
 .project
 
 .ipynb_checkpoints/
+*.pkl

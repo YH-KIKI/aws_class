@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Fast Boot</title>
+</head>
+<body>
+	<a href="/">메인페이지로</a>
+	<h1>영화 추천</h1>
+	<form>
+		<select name="type">
+			<option value="content">내용 기반 추천</option>
+			<option value="etc">정보 기반 추천</option>
+			<option value="director">감독 기반 추천</option>
+		</select>
+		<input type= "text" name="movie" list="movieList" placeholder = "영화제목을 입력하세요">
+		<button type="button" id="btn" onclick="btnClick()">추천받기</button>
+		<datalist id ="movieList"></datalist>
+	</form>
+	<ol id="resultDiv"></ol>
+	<script type="text/javascript">
+		const resultDiv = document.querySelector('#resultDiv')
+		const movieList = document.querySelector('#movieList')
+		const btn = document.querySelector('#btn')
+		const input = document.querySelector('[name = movie]')
+		const typeEl = document.querySelector('[name = type]')
+		
+		async function btnClick(){
+			btn.disabled = true;
+			const title = input.value.trim()
+			const type = typeEl.value
+			try{
+				if(!title){
+					alert("제목을 입력하세요")
+					throw new Error();
+				}
+				const response 
+					= await fetch(`/api/v1/movies/recommend?title=${title}&type=${type}`)
+				if(!response.ok){
+					resultDiv.innerHTML = '<li>연결 실패</li>'
+					throw new Error();
+				}
+				const result = await response.json()
+				let str = ''
+				result.forEach(m=>{
+					str += `<li>${m.title}</li>`
+				})
+				resultDiv.innerHTML = str
+			}catch(e){
+				
+			}finally{
+				btn.disabled = false
+			}
+		}
+		async function getMovieList(){
+			try{
+				const response = await fetch('/api/v1/movies');
+				
+				if(!response.ok){
+					//요청 실패
+					resultDiv.innerHTML = '<li>요청 실패</li>'
+					return;
+				}
+				const result = await response.json();
+				str = ''
+				result.forEach(m=>{
+					str += `<option>${m.title}</option>`
+				})
+ 				movieList.innerHTML = str
+			}catch(e){
+				console.error(e)
+			}
+		} 
+		getMovieList()
+	</script>
+</body>
+</html>
