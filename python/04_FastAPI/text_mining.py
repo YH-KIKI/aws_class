@@ -28,11 +28,11 @@ def train_and_save_model(dataset_x, dataset_y):
 		'vectorizer' : vectorizer, 
 		'model' : model
 	}
-	jl.dump(model_data, 'model.pkl')
+	jl.dump(model_data, 'model/model.pkl')
 
 def predict(text):
 	# 모델과 벡터라이저를 불러옴
-	mode_data = jl.load('model.pkl')
+	mode_data = jl.load('model/model.pkl')
 	model , vectorizer = mode_data['model'], mode_data['vectorizer']
 
 	# 형태소가 처리된 문자열로 변환

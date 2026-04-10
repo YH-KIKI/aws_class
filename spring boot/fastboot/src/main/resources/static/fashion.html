@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Fast Boot</title>
+</head>
+<body>
+	<a href="/">메인페이지로</a>
+	<form method="post" enctype="multipart/form-data" id="form">
+		<span>이미지 선택 : </span>
+		<input type="file" accept="image/*" name="image" id="imageFile">
+		<br>
+		<button type="button" id="btn" onclick="btnClick()">확인</button>
+	</form>
+	<hr>
+	<div id="resultDiv">결과를 알려줄 곳</div>
+	
+	<script type="text/javascript">
+		const form = document.querySelector('#form')
+		const btn = document.querySelector('#btn')
+		const resultDiv = document.querySelector('#resultDiv')
+		
+		async function btnClick(){
+			// form태그 안에 있는 입력 정보들을 하나로 묶어 가져옴
+			const formData = new FormData(form)
+			
+			btn.disabled = true
+			
+			try{
+				const response = await fetch('/api/v1/fashion/predict',{
+					method : 'post',
+					body : formData
+				})
+				if(!response.ok){
+					resultDiv.innerHTML = `<b>요청 실패</b>`
+					return;
+				}
+				const result = await response.json()
+				resultDiv.innerHTML = `<b>${result.msg}</b>`
+			}catch(e){
+				console.error(e)
+				resultDiv.innerHTML = `<b>예외 발생</b>`
+			}finally{
+				btn.disabled = false	
+			}
+		}
+	</script>
+</body>
+</html>

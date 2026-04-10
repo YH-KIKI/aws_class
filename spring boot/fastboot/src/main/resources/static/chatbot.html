@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Fast Boot</title>
+<style type="text/css">
+	.text-right{text-align:right}
+</style>
+</head>
+<body>
+	<a href="/">메인페이지로</a>
+	<h1>채팅 내역</h1>
+	<div id="resultDiv">
+		<!-- 
+		<div class="text-right">오늘 비가 와</div>
+		<div>비가 추적추적 내리네요</div>  
+		-->
+	</div>
+	<hr>
+	<form method="post" id="form">
+		<span>채팅 : </span>
+		<input type="text" name="msg">
+		<button type="submit" id="btn">확인</button>
+	</form>
+	<hr>
+	
+	<script type="text/javascript">
+		const form = document.querySelector('#form')
+		const resultDiv = document.querySelector('#resultDiv')
+		const inputEl = document.querySelector('[name=msg]')
+
+		
+		form.addEventListener('submit', function(e){
+			e.preventDefault()	
+			formSubmit()
+		})
+		let flag = true;
+		async function formSubmit(){
+			// 입력이 없으면 종료			
+			if(inputEl.value.trim() == ''){
+				alert('입력하세요.')
+				return
+			}
+			// 아직 이전 처리가 끝나지 않았으면 종료
+			if(!flag){
+				return
+			}
+			// 지금 진행중임으로 변경
+			flag = false;
+			
+			// 전송 후 입력창 비활성화 시킴
+			setTimeout(()=>inputEl.disabled = true, 100)
+				
+			// form태그 안에 있는 입력 정보들을 하나로 묶어 가져옴
+			const formData = new FormData(form)
+
+			try{
+				resultDiv.innerHTML += `<div class = "text-right">${inputEl.value}</div>`
+				const response = await fetch('/api/v1/chatbot',{
+					method : 'post',
+					body : formData
+				})
+				if(!response.ok){
+					resultDiv.innerHTML += `<div>요청 실패</div>`
+					return;
+				}
+				const result = await response.json()
+				resultDiv.innerHTML += `<div>${result.msg}</div>`
+				inputEl.value=''
+			}catch(e){
+				console.error(e)
+				resultDiv.innerHTML = `<b>예외 발생</b>`
+			}finally{
+				setTimeout(()=>{
+					inputEl.disabled = false
+					inputEl.focus()
+					flag = true
+				}, 100) // 살짝 딜레이 줌
+				//btn.disabled = false
+			
+			}
+		}
+	</script>
+</body>
+</html>
