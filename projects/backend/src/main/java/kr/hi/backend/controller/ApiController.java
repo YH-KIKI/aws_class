@@ -1,5 +1,6 @@
 package kr.hi.backend.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +38,19 @@ public class ApiController {
 	public String testPost(@RequestBody Test dto) {
 		return dto.msg();
 		
+	}
+	
+	@PostMapping("/chat")
+	public ResponseEntity<String> chat(@RequestBody Test dto) {
+		String result = 
+				webClient.post()
+					.uri("/chat")
+					.bodyValue(dto)
+					.retrieve()
+				    .bodyToMono(String.class)
+				    .block();
+				
+		return ResponseEntity.ok(result);
 	}
    
 }
