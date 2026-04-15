@@ -10,6 +10,13 @@ function List(){
         <li>
           <Link to = {"/ask"}>기본 ai 테스트</Link>
         </li>
+        <li>
+          <Link to = {"/translate"}>번역</Link>
+        </li>
+        <li>
+          <Link to = {"/ad-copy"}>광고</Link>
+          {/* 컴포넌트명 AdCopy */}
+        </li>
       </ul>
     </div>
   );

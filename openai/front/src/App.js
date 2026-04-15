@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route} from "react-router-dom";
 import {useEffect, useState} from "react";
 import List from "./List";
 import Ask from "./Ask.jsx";
+import Translate from "./Translate.jsx";
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" exact element={<Main />} />
         <Route path="/list" exact element={<List />} />
         <Route path="/ask" exact element={<Ask />} />
+        <Route path="/translate" exact element={<Translate />} />
       </Routes>
 		</BrowserRouter>
   );

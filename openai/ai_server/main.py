@@ -50,7 +50,7 @@ async def translate(
 	)
 
 	return {
-		"answer": response.text
+		"message": response.text
 	}
 
 @app.get("/ad-copy")
