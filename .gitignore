@@ -28,4 +28,9 @@ java_kk\.gitignore
 .project
 
 .ipynb_checkpoints/
+
+*.keras
+*.model
+*.h5
 *.pkl
+__pycache__
