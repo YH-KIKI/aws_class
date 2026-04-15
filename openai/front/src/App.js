@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import List from "./List";
 import Ask from "./Ask.jsx";
 import Translate from "./Translate.jsx";
+import AdCopy from "./AdCopy.jsx";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/list" exact element={<List />} />
         <Route path="/ask" exact element={<Ask />} />
         <Route path="/translate" exact element={<Translate />} />
+        <Route path="/ad-copy" exact element={<AdCopy />} />
       </Routes>
 		</BrowserRouter>
   );

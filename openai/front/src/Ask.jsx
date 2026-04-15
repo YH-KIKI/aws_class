@@ -33,8 +33,8 @@ function Ask(){
   return(
 
     <div>
-      <h1>기본 ai 테스트 페이지</h1>
       <Link to={"/list"}>뒤로가기</Link>
+      <h1>기본 ai 테스트 페이지</h1>
       <form style={{display:'flex'}} onSubmit={formSubmit}>
         <textarea name="prompt" rows={5} cols={30} onChange={inputChange} value={form.prompt}></textarea>
         <button>전송</button>

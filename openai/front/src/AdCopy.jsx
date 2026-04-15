@@ -5,8 +5,8 @@ function AdCopy(){
 
   return(
     <div>
-      <h1>광고</h1>
       <Link to={"/list"}>뒤로가기</Link>
+      <h1>광고 문구 제작</h1>
     </div>
 
   )
