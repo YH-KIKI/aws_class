@@ -59,7 +59,8 @@ def ad_copy(
 	feature:str = Query(..., description='제품 특징'),
 	target:str = Query('전연령', description='타겟'),
 	# 1과 가까울수록 창의적
-	temp:float = Query(0.8, ge=0.0, le=1.0, description='창의성 온도(0~1)')
+	temp:float = Query(0.8, ge=0.0, le=1.0, description='창의성 온도(0~1)'),
+	count:int = Query(50, description='광고문구 글자제한'),
 ):
 	prompt = f"""
   제미나이 너는 최고의 마케터야, 너는 이 상품을 아래 조건에 맞게 효과적인 문구로 mz들에게 특히 어필할만한 창의적인 문구를 만들어줬으면해
@@ -80,7 +81,7 @@ def ad_copy(
         top_k=20,
     ),
 	)
-	return { 'answer' : response.text}
+	return { 'message' : response.text}
 
 class Summary(BaseModel):
 	text : str
