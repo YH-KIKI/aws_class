@@ -1,0 +1,97 @@
+// 사용자
+GET 		/users				모든 사용자를 조회합니다.
+POST 		/users				사용자를 추가합니다
+GET 		/users/{id}		사용자를 조회합니다
+PUT			/users/{id}		사용자 정보를 업데이트합니다
+PATCH		/users/{id}		사용자 정보를 부분 업데이트합니다
+DELETE  /users/{id}  	사용자를 삭제합니다
+
+// 관리자																	
+GET			/admins				모든 관리자를 조회합니다
+POST		/admins				관리자를 추가합니다
+GET			/admins/{id}	관리자를 조회합니다
+PUT			/admins/{id}	관리자 정보를 업데이트합니다
+PATCH		/admins/{id}	관리자 정보를 부분 업데이트합니다
+DELETE  /admins/{id}	관리자를 삭제합니다
+
+// 병원
+GET			/hospitals				병원 목록을 조회합니다
+GET			/hospitals/{id}		병원 정보를 조회합니다
+POST 		/hospitals				새로운 병원 정보를 등록합니다.
+PATCH		/hospitals/{id}		변경된 병원 정보를 업데이트합니다.
+DELETE	/hospitals/{id}		병원 정보를 삭제합니다.
+
+// 병원 운영시간
+GET 		/hospitals/{id}/hours	 병원시간을 조회합니다
+POST		/hospitals/{id}/hours	 병원시간을 추가합니다
+PATCH 	/hospitals/{id}/hours	 병원시간을 수정합니다
+
+// 예약
+GET			/hospitals/{id}/reservations				병원예약목록을 조회합니다
+POST		/hospitals/{id}/reservations				병원예약을 추가합니다
+PATCH		/hospitals/{id}/reservations/{no}		병원예약을 수정합니다
+DELETE	/hospitals/{id}/reservations/{no}		병원예약을 삭제합니다
+
+// 좋아요
+POST		/hospitals/{id}/like  병원에 대한 좋아요 등록/해제합니다
+GET			/hospitals/{id}/likes 병원에 대한 좋아요 갯수를 조회합니다
+GET			/hospitals/me/likes 	내가 좋아요한 병원목록을 조회합니다
+
+// 리뷰
+GET			/hospitals/{id}/reviews					병원에 대한 리뷰 목록을 조회합니다
+POST		/reviews												리뷰를 추가합니다
+PUT		  /reviews/{id}										리뷰를 수정합니다
+DELETE	/reviews/{id}										리뷰를 삭제합니다
+GET 		/reviews/me											내가 작성한 리뷰를 조회합니다
+GET			/reviews/{id}/comments					특정 리뷰의 댓글을 조회합니다
+POST		/reviews/{id}/comments					특정 리뷰에 댓글을 추가합니다
+PUT			/reviews/{id}/comments/{no}			특정 리뷰의 댓글을 수정합니다
+DELETE	/reviews/{id}/commnets/{no}			특정 리뷰의 댓글을 삭제합니다
+
+// 리뷰 첨부파일
+POST 		/reviews/{id}/files 						리뷰에 파일 업로드
+GET			/reviews/{id}/files							특정 리뷰의 파일목록을 조회
+PATCH		/reviews/files/order						파일 순서를 변경
+DELETE	/reviews/files/{no}            특정 리뷰의 파일을 삭제
+
+
+// 병원 진료과
+GET 		/hospitals/{id}/departments/								병원 진료과 목록을 조회합니다
+GET 		/hospitals/{id}/departments/{code}					병원 진료과 세부정보를 조회합니다
+
+// 챗
+POST 		/chats/rooms									새로운 채팅방을 생성합니다
+GET			/chats/rooms									참여중인 채팅방 목록을 조회합니다
+GET			/chats/rooms/{id}/messages		특정 채팅방의 과거 메세지를 조회합니다
+POST		/chats/rooms/{id}/read				메세지를 읽음 처리합니다
+
+// 약국
+GET			/pharmacies 			모든 약국을 조회합니다
+POST		/pharmacies				약국을 추가합니다
+GET			/pharmacies/{id}	약국정보를 조회합니다
+PATCH		/pharmacies/{id}  약국정보를 수정합니다
+
+// 이벤트
+GET		/events 							이벤트 목록을 조회합니다
+POST	/events								이벤트를 생성합니다
+GET		/events/{id} 	  			특정 이벤트 상세 정보를 조회합니다
+PATCH /events/{id}					이벤트를 수정합니다
+
+// 알림
+GET			/notifications								사용자의 알림 목록을 조회합니다
+PATCH		/notifications/{no}/read			특정 알림을 읽음 처리합니다
+GET			/notifications/unread-count		읽지 않은 알림 개수를 조회합니다
+DELETE	/notifications/{no}						알림 삭제합니다
+
+// QnA
+GET			/qna										전체 질문 목록 조회합니다 (검색 및 페이징)
+POST		/qna										새로운 질문 등록합니다
+GET			/qna/{id}	 							질문 상세 및 답변 내역을 조회합니다
+PATCH		/qna/{id}								질문을 수정합니다 (qn_updated_at 반영)
+DELETE	/qna/{id}								질문 삭제합니다 (qn_deleted_yn 처리)
+POST		/qna/{qn_num}/answers		답변 등록합니다 (관리자 전용)
+
+// 병원 찜 목록
+POST	/hospitals/{id}/favorites			 	찜 목록 등록/해제합니다
+GET		/hospitals/me/favorites		    	내가 찜한 병원목록 조회합니다
+GET 	/hospitals/{id}/favorite-status 특정병원 찜 여부 확인합니다
