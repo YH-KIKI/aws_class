@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { sendData } from "./Ai";
+import { sendDataPost } from "./Ai";
 
 function Summarize(){
 
-  const[result, setResult] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [result, setResult] = useState('')
+  const [keywords, setKeywords] = useState([])
   const [form, setForm] = useState({
-      target_len : "",  max_sentence : 10, text : "",
+      target_len : "Korean",  max_sentence : 3, text : "",
     })
 
   const inputChange = (e) =>{
@@ -17,21 +19,42 @@ function Summarize(){
   const formSubmit = async (e) =>{
     e.preventDefault()
 
-    if(form.max_sentence === ''){
-      alert("줄 수를 입력하세요")
-      return
-    }
-
     if(form.text.trim() === ''){
       alert("내용을 입력하세요.")
       return
     }
 
-    // setIsLoading(true)
-    sendData('/api/v1/ai/summarize', form, 'json', (res) => {
-      setResult(res.message)
-    //   setIsLoading(false)
+    setIsLoading(true)
+    sendDataPost('/api/v1/ai/summarize', form, 'json', (res) => {
+      let msg = res.message
+      // 요약과 키워드 분리
+      let arr = msg.split('====================================')
+      let summary = arr[0]
+      let tmpKeywords = arr[1]
+      
+      setResult(parseSummary(summary))
+      setKeywords(parseKeywords(tmpKeywords))
+
+      //setResult()
+      setIsLoading(false)
     }) 
+  }
+
+  function parseSummary(str){
+    const separator = "- 요약 : "
+    let summary = str;
+    if(str.includes(separator)){
+      summary = str.split(separator)[1].trim()
+    }
+    let summaryArr = summary.split(".").map(item=>item.trim())
+    return summaryArr.join(".\n")
+
+
+  }
+  function parseKeywords(keys){
+    let tmpKeywords = keys.split("- 키워드 : ")[1].trim()
+    return tmpKeywords.split(", ")
+
   }
 
   return(
@@ -40,29 +63,32 @@ function Summarize(){
       <Link to={"/list"}>뒤로가기</Link>
       <h1>요약</h1>
       <form onSubmit={formSubmit}>
-      <div style={{display : 'flex', margin: '10px 0'}}>
-        <label style={{width:'100px'}}>언어</label>
-          <select name="target_len" style={{width:'100%'}} onChange={inputChange}>
-            <option>한국어</option>
-            <option>영어</option>
-            <option>일본어</option>
-            <option>중국어</option>
-            <option>스페인어</option>
-            <option>독일어</option>
+      <div style={{display : 'flex'}}>
+        <label>요약 문장수 : </label>
+        <input type="number" name="max_sentence" onChange={inputChange}
+          defaultValue={3} min={1} max={20}/>
+          <label>요약언어 : </label>
+          <select name="target_len" onChange={inputChange}>
+            <option value="korean">한국어</option>
+            <option value="English">영어</option>
           </select>
         </div>
-        <div style={{display : 'flex', margin: '10px 0'}}>
-        <label style={{width:'100px'}}>최대 요약 줄</label>
-          <input type="number" style={{width:'100%'}} name="max_sentence" placeholder="원하는 줄 수를 숫자로입력하세요" onChange={inputChange}/>
-      </div>
         <div>
-          <p>내용</p>
-          <textarea name="text" rows={10} cols={100} onChange={inputChange}></textarea>
+          <label>내용</label>
+          <textarea name="text" style={{width: '100%', height : '200px', boxSizing : 'border-box'}} onChange={inputChange}></textarea>
         </div>
-          <button>전송</button>
+          <button style={{width : '100%'}}>요약</button>
         </form>
-        <h1>결과</h1>
-        <div style={{border: "1px solid black", minHeight : "200px"}}>{result}</div>
+        <h2>요약 결과</h2>
+        <pre style={{border: "1px solid black", minHeight : "200px", whiteSpace:'pre-wrap'}}>
+          {isLoading ? "[요약 중입니다.......]" : result}</pre>
+        <div>
+          {keywords.map(item=>{
+            return(
+              <span key={item}>{item}</span>
+            )
+          })}
+        </div>
     </div>
   );
 }

@@ -21,10 +21,12 @@ public class AIController {
 	private final WebClient webClient;
 	
 	@GetMapping("/ask")
-	public String ask(@RequestParam("prompt") String prompt) {
+	public String ask(
+			@RequestParam("prompt") String prompt,
+			@RequestParam("endpoint") String endpoint){
 	    String result = webClient.get()
 	      .uri(uriBuilder-> uriBuilder
-	    		  .path("/ask")
+	    		  .path(endpoint)
 	    		  .queryParam("prompt", prompt)
 	    		  .build())
 	      .retrieve()
@@ -73,24 +75,20 @@ public class AIController {
 	}
 	
 	@PostMapping("/summarize")
-	public ResponseEntity<String> chat(@RequestBody TestDTO dto) {
-		System.out.println("dto = " + dto);
-//////		String result = 
-//////				webClient.post()
-//////					.uri("/ad-copy")
-//////					.bodyValue(dto)
-//////					.retrieve()
-//////				    .bodyToMono(String.class)
-//////				    .block();
-////				
-		return ResponseEntity.ok("확인");
+	public String summarize(@RequestBody Summary dto) {
+		String result = 
+				webClient.post()
+					.uri("/summarize")
+					.bodyValue(dto)
+					.retrieve()
+				    .bodyToMono(String.class)
+				    .block();
+		return result;
 	}
 	
 }
 
-@Data
-class TestDTO {
-	String target_len;
-	int max_sentence;
-	String text;
-}
+record Summary(
+	String target_len,
+	String text,
+	int max_sentence){}
