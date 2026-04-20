@@ -122,5 +122,5 @@ def rag_ask(prompt : str):
   except Exception as e:
     log(f"예외 발생 : {e}")
 
-ingest_pdf('2026_미래소프트_복지규정.pdf', 100)
+# ingest_pdf('2026_미래소프트_복지규정.pdf', 100)
 print(rag_ask("해피 프라이데이의 조건이 어떻게 돼?")['message'])

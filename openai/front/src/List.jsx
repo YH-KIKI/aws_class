@@ -18,7 +18,10 @@ function List(){
           {/* 컴포넌트명 AdCopy */}
         </li>
         <li>
-        <Link to = {"/summarize"}>요약</Link>
+          <Link to = {"/summarize"}>요약</Link>
+        </li>
+        <li>
+          <Link to = {"/rag-chatbot"}>Rag 챗봇</Link>
         </li>
       </ul>
     </div>

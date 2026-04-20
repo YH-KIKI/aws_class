@@ -6,6 +6,7 @@ import Ask from "./Ask.jsx";
 import Translate from "./Translate.jsx";
 import AdCopy from "./AdCopy.jsx";
 import Summarize from "./Summarize.jsx";
+import RagChatbot from "./RagChatbot.jsx";
 
 
 function App() {
@@ -19,6 +20,8 @@ function App() {
         <Route path="/translate" exact element={<Translate />} />
         <Route path="/ad-copy" exact element={<AdCopy />} />
         <Route path="/summarize" exact element={<Summarize />} />
+        <Route path="/rag-chatbot" exact element={<RagChatbot />} />
+     
       </Routes>
 		</BrowserRouter>
   );
