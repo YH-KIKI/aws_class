@@ -7,6 +7,7 @@ import Translate from "./Translate.jsx";
 import AdCopy from "./AdCopy.jsx";
 import Summarize from "./Summarize.jsx";
 import RagChatbot from "./RagChatbot.jsx";
+import ImageText from "./ImageText";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/ad-copy" exact element={<AdCopy />} />
         <Route path="/summarize" exact element={<Summarize />} />
         <Route path="/rag-chatbot" exact element={<RagChatbot />} />
+        <Route path="/image-text" element={<ImageText/>} />
      
       </Routes>
 		</BrowserRouter>

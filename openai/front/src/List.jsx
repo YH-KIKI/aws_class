@@ -23,6 +23,9 @@ function List(){
         <li>
           <Link to = {"/rag-chatbot"}>Rag 챗봇</Link>
         </li>
+        <li>
+					<Link to={"/image-text"}>이미지 + 텍스트</Link>
+				</li>
       </ul>
     </div>
   );

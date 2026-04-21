@@ -11,6 +11,11 @@ import pypdf
 import time
 import chromadb
 import io
+import cv2
+import numpy as np
+import json 
+import re
+import base64
 
 
 app = FastAPI()
@@ -343,6 +348,105 @@ async def rag_chatbot(prompt:str=Query(..., description='질문')):
 	# print(prompt)
 	# return {"message" : "ai연결"}
 	return rag_ask(prompt)
+
+async def get_ai_vision_result(image_bytes, user_prompt):
+
+	output_type = '[{"box_2d": [ ymin, xmin, ymax, xmax], "label" : "apple"}]'
+	prompt = f"""
+	질문 : {user_prompt}
+	이미지에서 해당 객체를 모두 찾아주세요.
+	출력 형식은 반드시 {output_type}처럼 json 리스트 형태로만 나열하세요.
+	객체명은 영문으로 해주세요.
+	예 : {output_type}
+	"""
+
+	response = client.models.generate_content(
+    model= GOOGLE_MODEL_NAME,
+    contents=[
+			types.Part.from_text(text=prompt),
+			types.Part.from_bytes(data=image_bytes, mime_type='image/jpeg')
+		]
+	)
+	return response.text
+
+async def save_detection_result(image_bytes, ai_response):
+
+	detections = {}
+	image_data = None	
+
+	try:
+		nparr = np.frombuffer(image_bytes, np.uint8)
+		img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+		height, width, _ = img.shape
+		
+		if img is None:
+			raise Exception("원본 이미지 파일을 찾을 수 없습니다.")
+
+		# ai_response에서 JSON 추출
+		json_match = re.search(r'\[.*\]',ai_response,re.DOTALL)
+		if not json_match :
+			raise Exception("찾을 객체가 없습니다.")
+
+		json_str = json_match.group()
+		detections_json = json.loads(json_str)
+
+		# 찾은 객체들을 그림
+
+		for item in detections_json:
+			# 위에서 box_2d로 설정함. 
+			ymin, xmin, ymax, xmax = item['box_2d']
+			label = item['label']
+			if detections.get(label):
+				detections[label] += 1
+			else:
+				detections[label] = 1
+
+			# 좌표 변환. 
+			# 제미나이 ai는 이미지 해상도와 관계없이 
+			# 이미지 전체 크기를 1000x1000규격의 가상 좌표계로 변환하여 결과를 반환
+			left = int(xmin * width / 1000)
+			top = int(ymin * height / 1000)
+			right = int(xmax * width / 1000)
+			bottom = int(ymax * height / 1000)
+			# cv2는 rgb가 아니라 bgr
+			cv2.rectangle(img, (left, top), (right, bottom), (0, 255, 0), 2)
+			cv2.putText(img, label, (left, top-10), 
+				cv2.FONT_HERSHEY_SIMPLEX, 1.0, 
+				(255, 0, 0), 2)
+		
+		success, encoded_img = cv2.imencode(".jpg", img)
+
+		if success:
+			print("성공!")
+			image_data = encoded_img
+		else :
+			print("실패")
+	except Exception as e:
+		print(f"예외 발생 : {e}")
+	finally:
+		return detections, image_data
+
+@app.post("/image-text")
+async def image_text(
+	file:UploadFile = File(...),
+	query:str=File(...)):
+	# log(query)
+	# log(file.filename)
+	image_bytes = await file.read()
+	ai_response = await get_ai_vision_result(image_bytes, query)
+
+	detections, encoded_img = await save_detection_result(image_bytes, ai_response)
+	base64_image = base64.b64encode(encoded_img).decode('utf-8')
+
+	# log(detections)
+	# log(base64_image)
+
+	return {
+		"detections" : detections, 
+		"image_data" : f"data:image/jpeg:base64,{base64_image}"
+	}
+
 
 
 if __name__ == "__main__":
